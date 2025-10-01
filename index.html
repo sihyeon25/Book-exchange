@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>교환독서 — 책 넘김 랜딩</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="book-wrap" aria-label="책 넘김 데모">
+    <div class="book" id="book">
+      <!-- 1장 -->
+      <div class="page">
+        <div class="face front">📖 교환독서</div>
+        <div class="face back"></div>
+      </div>
+      <!-- 2장 -->
+      <div class="page">
+        <div class="face front">✨ 함께 읽는 즐거움</div>
+        <div class="face back"></div>
+      </div>
+      <!-- 3장 -->
+      <div class="page">
+        <div class="face front">🖊️ 색 펜 코멘트</div>
+        <div class="face back"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint">책을 클릭해 넘겨보세요 · 다시 클릭하면 처음으로 돌아갑니다</p>
+
+  <nav class="bookmark-nav" aria-label="바로가기">
+    <a href="intro.html">소개</a>
+    <a href="books.html">책 목록</a>
+    <a href="calendar.html">캘린더</a>
+    <a href="game.html">게임</a>
+    <a href="faq.html">FAQ</a>
+  </nav>
+
+  <script>
+    const book = document.getElementById('book');
+    const pages = Array.from(book.querySelectorAll('.page'));
+
+    let current = 0;     // 현재 넘길 페이지 인덱스
+    let moved = false;   // 책이 중앙 대칭 위치로 이동했는지
+    let locking = false; // 애니메이션 잠금(연타 방지)
+    const DURATION = 1000; // CSS transition 1s와 동일
+
+    function moveBookToCenterOnce() {
+      if (moved) return;
+      const shift = book.offsetWidth / 2; // 340px -> 170px 이동
+      book.style.transform = `translateX(${shift}px)`;
+      moved = true;
+    }
+
+    function resetBook() {
+      pages.forEach(p => p.classList.remove('flipped'));
+      book.style.transform = 'translateX(0)';
+      current = 0;
+      moved = false;
+    }
+
+    book.addEventListener('click', () => {
+      if (locking) return;
+      locking = true;
+
+      if (current < pages.length) {
+        pages[current].classList.add('flipped');
+        if (current === 0) moveBookToCenterOnce();
+        current++;
+        setTimeout(() => locking = false, DURATION);
+      } else {
+        resetBook();
+        setTimeout(() => locking = false, 300);
+      }
+    });
+  </script>
+</body>
+</html>

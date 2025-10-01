@@ -1,0 +1,167 @@
+:root {
+  --bg:#FAF3E0; --card:#FFFDF7; --sub:#F5E6D3;
+  --text:#2B1B17; --muted:#6b6157; --border:#e6dfd6;
+  --burgundy:#A23E48; --mustard:#D4A373; --brown:#8C5E3C; --olive:#6B8E23;
+  --radius:14px; --maxw:72rem; --shadow:0 2px 12px rgba(0,0,0,.08);
+}
+
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Noto Sans KR',sans-serif; line-height:1.65;
+}
+
+header {
+  background:var(--burgundy);
+}
+
+nav {
+  display:flex; gap:.5rem; justify-content:center; padding:.8rem;
+}
+nav a {
+  padding:.5rem 1rem; border-radius:10px; text-decoration:none;
+  color:white; font-weight:500;
+}
+nav a:hover { background:var(--mustard); color:white }
+nav a[aria-current="page"] { background:var(--brown); color:white }
+
+main {
+  max-width:var(--maxw); margin:auto; padding:1.5rem;
+}
+
+h1,h2 { color:var(--burgundy) }
+
+.card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:1.5rem; margin:1rem; box-shadow:var(--shadow);
+}
+
+.quote-card {
+  border-left:6px solid var(--brown); background:#fff;
+  padding:1rem; border-radius:10px; margin:.5rem 0;
+}
+
+.choice { display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem }
+.choice button {
+  flex:1 1 200px; padding:1rem; border:none; border-radius:16px;
+  cursor:pointer; font-weight:600; color:white;
+}
+.choice button:first-child { background:var(--burgundy) }
+.choice button:last-child { background:var(--mustard) }
+.choice button:hover { filter:brightness(90%) }
+
+footer {
+  background:var(--sub); border-top:1px solid var(--border);
+  padding:1rem; text-align:center; color:var(--muted);
+}
+
+:root{
+  --bg:#FAF3E0; --paper:#FDF6E3; --spine-dark:#5a4636; --spine:#8d6e5f;
+  --ink:#2B1B17; --brand:#A23E48; --accent:#D4A373; --edge:#D9C9A6;
+}
+
+body{
+  margin:0; height:100svh;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  background:var(--bg); color:var(--ink);
+  font-family:'Noto Sans KR', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.book-wrap{
+  position:relative;
+  display:flex; align-items:center; gap:24px;
+}
+
+.book{
+  position:relative;
+  width:340px; height:440px;   /* 책 크기 */
+  perspective:1500px;
+  transition:transform 1s ease; /* 첫 장 넘길 때 중앙으로 슬라이드 */
+}
+
+/* 책등 */
+.book::before{
+  content:"";
+  position:absolute; inset:0 auto 0 -22px;
+  width:22px; border-radius:6px 0 0 6px;
+  background:linear-gradient(to right, var(--spine-dark), var(--spine));
+  box-shadow:inset -2px 0 6px rgba(0,0,0,.35);
+}
+
+/* 오른쪽 모서리 두께 */
+.book::after{
+  content:"";
+  position:absolute; right:-4px; top:0; bottom:0; width:4px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.08), rgba(0,0,0,0));
+  border-radius:0 6px 6px 0;
+}
+
+.page{
+  position:absolute; inset:0;
+  transform-style:preserve-3d;
+  transform-origin:left;
+  transition:transform 1s ease;
+  cursor:pointer; will-change:transform;
+  z-index:3;
+}
+
+.page:nth-child(1){ z-index:5 }
+.page:nth-child(2){ z-index:4 }
+.page:nth-child(3){ z-index:3 }
+
+.face{
+  position:absolute; inset:0;
+  border:1px solid #cfcac0; border-radius:8px;
+  backface-visibility:hidden;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  padding:1.25rem; font-weight:700; font-size:1.25rem;
+  color:var(--ink);
+}
+
+.front, .back{
+  background:
+    repeating-linear-gradient(
+      0deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 10px
+    ),
+    var(--paper);
+}
+
+.front{ box-shadow:2px 2px 8px rgba(0,0,0,.15) }
+.back{
+  transform:rotateY(180deg);
+  box-shadow:inset -2px 0 6px rgba(0,0,0,.18);
+}
+.front::after{
+  content:"";
+  position:absolute; top:0; bottom:0; right:-3px; width:3px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,0));
+  border-radius:0 8px 8px 0;
+}
+
+.page.flipped{
+  transform:rotateY(-180deg);
+  pointer-events:none;
+}
+
+/* 마지막 페이지 넘겼을 때 그림자 제거 */
+.page:last-child.flipped .back{
+  box-shadow:none;
+}
+
+.hint{
+  margin-top:14px; font-size:.95rem; opacity:.7;
+}
+
+.bookmark-nav{
+  margin-top:22px; display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center;
+}
+.bookmark-nav a{
+  display:inline-block; padding:.6rem 1rem;
+  background:var(--brand); color:#fff; text-decoration:none;
+  border-radius:0 0 12px 12px;
+  font-weight:700; box-shadow:0 3px 10px rgba(0,0,0,.15);
+  transition:transform .15s ease, background .2s ease;
+}
+.bookmark-nav a:hover{
+  transform:translateY(-2px);
+  background:var(--accent);
+}

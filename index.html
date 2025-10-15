@@ -3,32 +3,173 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>교환독서 — 책 넘김 랜딩</title>
-  <link rel="stylesheet" href="style.css">
+  <title>교환독서 — 책 넘김 랜딩 + Intro</title>
+  <style>
+    :root{
+      --bg:#FAF3E0;
+      --paper:#FDF6E3;
+      --spine-dark:#5a4636;
+      --spine:#8d6e5f;
+      --ink:#2B1B17;
+      --brand:#A23E48;
+      --accent:#D4A373;
+    }
+
+    body{
+      margin:0; height:100vh;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      background:var(--bg); color:var(--ink);
+      font-family:'Noto Sans KR',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      overflow:hidden; /* 인트로 중 스크롤 방지 */
+    }
+
+    /* =============== [ Intro Overlay ] =============== */
+    .intro-overlay{
+      position:fixed; inset:0; z-index:999;
+      display:flex; align-items:center; justify-content:center; flex-direction:column;
+      background:radial-gradient(1200px 600px at 50% 40%, rgba(0,0,0,.05), transparent 60%), var(--bg);
+      transition:opacity .6s ease;
+    }
+    .intro-overlay.hide{ opacity:0; pointer-events:none; }
+    .intro-box{
+      padding:2rem 2.2rem; border-radius:14px;
+      background:rgba(253,246,227,.8);
+      box-shadow:0 8px 30px rgba(0,0,0,.15);
+      border:1px solid #e6dfd6; text-align:center;
+    }
+    .intro-title{
+      font-weight:800; font-size:1.6rem; line-height:1.3;
+      color:var(--brand); margin:0 0 .75rem 0;
+      white-space:nowrap; overflow:hidden; border-right:2px solid var(--brand);
+      width:0; /* 타자기 시작점 */
+      animation:typing 1.8s steps(22,end) .2s forwards, caret .8s step-end infinite .2s;
+    }
+    .intro-sub{
+      margin:.25rem 0 0 0; color:#6b6157; font-size:1rem; opacity:0;
+      animation:fadeIn .6s ease 2.1s forwards;
+    }
+    .intro-tip{
+      margin-top:1rem; font-size:.9rem; color:#7a7268; opacity:0;
+      animation:fadeIn .6s ease 2.35s forwards;
+    }
+    @keyframes typing{ to{ width:16.5ch } } /* 글자수에 맞게 조정 */
+    @keyframes caret{ 50%{ border-color:transparent } }
+    @keyframes fadeIn{ to{ opacity:1 } }
+
+    /* 모션 민감 사용자 */
+    @media (prefers-reduced-motion:reduce){
+      .intro-title{ animation:none; width:auto; border-right:0 }
+      .intro-sub,.intro-tip{ animation:none; opacity:1 }
+      .intro-overlay{ transition:none }
+    }
+
+    /* 인트로 종료 후 컨텐츠 등장 */
+    #bookWrap{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease }
+    .ready #bookWrap{ opacity:1; transform:none }
+    .hint{ opacity:0; transition:opacity .6s ease .15s }
+    .ready .hint{ opacity:1 }
+
+    /* =============== [ Book ] =============== */
+    .book-wrap{
+  position:relative; display:flex; align-items:center; justify-content:center; gap:24px;
+  width: 100vw;
+    }
+    .book{
+  position:relative; width:360px; height:460px;
+  perspective:1500px; transition:transform 1s cubic-bezier(.77,0,.18,1);
+}
+.book.spine-centered {
+  margin-left: -22px;
+}
+    
+    .book::before{
+  content:""; position:absolute; left:-22px; top:0; bottom:0; width:22px; border-radius:6px 0 0 6px;
+  background:linear-gradient(to right, var(--spine-dark), var(--spine));
+  box-shadow:inset -2px 0 6px rgba(0,0,0,.35);
+    }
+    .page{
+      position:absolute; inset:0;
+      transform-style:preserve-3d; transform-origin:left;
+      transition:transform 1s ease; cursor:pointer; will-change:transform;
+    }
+    .page:nth-child(1){ z-index:7 }
+    .page:nth-child(2){ z-index:6 }
+    .page:nth-child(3){ z-index:5 }
+    .page:nth-child(4){ z-index:4 }
+    .page:nth-child(5){ z-index:3 }
+
+    .face{
+      position:absolute; inset:0;
+      border:1px solid #cfcac0; border-radius:8px; backface-visibility:hidden;
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      padding:1.25rem; font-weight:700; font-size:1.2rem; color:var(--ink);
+    }
+    .front,.back{ background:var(--paper) }
+    .front{ box-shadow:2px 2px 8px rgba(0,0,0,.15) }
+    .back{ transform:rotateY(180deg); box-shadow:inset -2px 0 6px rgba(0,0,0,.18) }
+
+    /* 표지/뒷표지 */
+    .cover .front{ background:var(--brand); color:#fff; font-size:1.5rem }
+    .back-cover .back{ background:var(--brand); color:#fff }
+
+    /* 넘긴 페이지가 오른쪽에 살짝 쌓이게 */
+    .page.flipped{ transform:rotateY(-180deg) translateX(6px); pointer-events:none }
+
+    /* 북마크 네비 */
+    .bookmark-nav{
+      margin-top:22px; display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center;
+    }
+    .bookmark-nav a{
+      display:inline-block; padding:.6rem 1rem;
+      background:var(--brand); color:#fff; text-decoration:none;
+      border-radius:0 0 12px 12px; font-weight:700;
+      box-shadow:0 3px 10px rgba(0,0,0,.15);
+      transition:transform .15s ease, background .2s ease;
+    }
+    .bookmark-nav a:hover{ transform:translateY(-2px); background:var(--accent) }
+  </style>
 </head>
 <body>
 
-  <div class="book-wrap" aria-label="책 넘김 데모">
+  <!-- Intro Overlay -->
+  <div class="intro-overlay" id="intro">
+    <div class="intro-box">
+      <h1 class="intro-title">교환독서 — 함께 넘기는 페이지</h1>
+      <p class="intro-sub">각자 고른 책을, 한 달씩 돌려 읽고 색 펜으로 남기는 코멘트</p>
+      <p class="intro-tip">잠시 후 책이 나타납니다 · 클릭해서 넘겨보세요</p>
+    </div>
+  </div>
+
+  <!-- Book -->
+  <div class="book-wrap" id="bookWrap" aria-label="책 넘김 데모">
     <div class="book" id="book">
-      <!-- 1장 -->
-      <div class="page">
-        <div class="face front">📖 교환독서</div>
+      <!-- 표지 -->
+      <div class="page cover">
+        <div class="face front">📕 교환독서</div>
         <div class="face back"></div>
       </div>
-      <!-- 2장 -->
+      <!-- 속지들 -->
       <div class="page">
         <div class="face front">✨ 함께 읽는 즐거움</div>
         <div class="face back"></div>
       </div>
-      <!-- 3장 -->
       <div class="page">
         <div class="face front">🖊️ 색 펜 코멘트</div>
         <div class="face back"></div>
       </div>
+      <div class="page">
+        <div class="face front">📚 책을 나누는 시간</div>
+        <div class="face back"></div>
+      </div>
+      <!-- 뒷표지 -->
+      <div class="page back-cover">
+        <div class="face front"></div>
+        <div class="face back">📕 끝</div>
+      </div>
     </div>
   </div>
 
-  <p class="hint">책을 클릭해 넘겨보세요 · 다시 클릭하면 처음으로 돌아갑니다</p>
+  <p class="hint">책을 클릭해 넘겨보세요 · 다 넘기면 다시 처음으로 돌아갑니다</p>
 
   <nav class="bookmark-nav" aria-label="바로가기">
     <a href="intro.html">소개</a>
@@ -39,36 +180,60 @@
   </nav>
 
   <script>
-    const book = document.getElementById('book');
-    const pages = Array.from(book.querySelectorAll('.page'));
+    // Intro 제어
+    const intro = document.getElementById('intro');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let current = 0;     // 현재 넘길 페이지 인덱스
-    let moved = false;   // 책이 중앙 대칭 위치로 이동했는지
-    let locking = false; // 애니메이션 잠금(연타 방지)
-    const DURATION = 1000; // CSS transition 1s와 동일
-
-    function moveBookToCenterOnce() {
-      if (moved) return;
-      const shift = book.offsetWidth / 2; // 340px -> 170px 이동
-      book.style.transform = `translateX(${shift}px)`;
-      moved = true;
+    function startSite(){
+      intro.classList.add('hide');
+      document.body.classList.add('ready'); // 책/힌트 등장
+      // 인트로 사라진 뒤 스크롤 허용하고 싶다면 다음 줄 주석 해제:
+      // document.body.style.overflow = 'auto';
     }
 
+    // 자동 종료(타자기 + 서브 문구 노출 후)
+    if (!reduceMotion) {
+      setTimeout(startSite, 3600); // 체류 시간 2600 → 3600ms로 증가
+    } else {
+      // 모션 민감 사용자는 즉시 시작
+      startSite();
+    }
+    // 클릭으로도 바로 시작 가능
+    intro.addEventListener('click', startSite);
+
+    // Book 넘김
+    const book = document.getElementById('book');
+    const pages = Array.from(book.querySelectorAll('.page'));
+    let current = 0;
+    let locking = false;
+    const DURATION = 1000;
+
+    let closed = true;
     function resetBook() {
       pages.forEach(p => p.classList.remove('flipped'));
-      book.style.transform = 'translateX(0)';
       current = 0;
-      moved = false;
+      book.classList.remove('spine-centered');
+      closed = true;
     }
 
     book.addEventListener('click', () => {
       if (locking) return;
       locking = true;
 
+      if (closed) {
+        closed = false;
+        // 표지로 이동
+        book.classList.remove('spine-centered');
+        return setTimeout(() => locking = false, 300);
+      }
+
       if (current < pages.length) {
         pages[current].classList.add('flipped');
-        if (current === 0) moveBookToCenterOnce();
         current++;
+        // 첫 장 넘길 때 화면 기준 중앙 정렬(스파인)
+        if (current === 1) {
+          book.classList.add('spine-centered');
+        }
         setTimeout(() => locking = false, DURATION);
       } else {
         resetBook();

@@ -10,14 +10,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
-  
-  <!-- 외부 스타일시트 -->
+
+  <!-- 외부 스타일시트 (루트에서 참조) -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Skip link for accessibility -->
-  <a href="#main" class="sr-only">본문으로 건너뛰기</a>
-  
   <!-- ============================================
        INTRO OVERLAY
        페이지 로딩 시 4.5초간 표시되는 인트로 화면
@@ -40,7 +37,8 @@
         <li><a aria-current="page" href="index.html">홈</a></li>
         <li><a href="pages/schedule.html">일정</a></li>
         <li><a href="pages/library.html">도서관</a></li>
-        <li><a href="pages/community.html">커뮤니티</a></li>
+          <li><a href="pages/community.html">커뮤니티</a></li>
+          <li><a href="pages/myspace.html">내 공간</a></li>
       </ul>
     </nav>
   </header>
@@ -167,7 +165,33 @@
   <footer class="site-footer">
     <small>© 2025 ExchangeBook</small>
   </footer>
+  <script>
+    // 인트로(오버레이) 배경만 랜덤 적용 (모바일은 고정 유지)
+    // 같은 이미지가 연속으로 나오지 않도록 직전 선택값을 세션에 저장
+    (() => {
+      const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+      if(!isDesktop) return; // 모바일은 CSS의 three.jpg 유지
 
-  
+      // images 폴더 내 준비된 후보 (three.jpg, index 전용 five.jpg 제외)
+      const images = ['six.JPG','one.jpg','sh.jpg','hs.jpg','jw.jpg','te.jpg'];
+      if(!images.length) return;
+
+      const last = sessionStorage.getItem('intro_last_bg');
+      let pick = images[Math.floor(Math.random() * images.length)];
+      if(images.length > 1 && last && pick === last){
+        // 바로 다음 후보로 스킵하여 연속 중복 방지
+        const idx = (images.indexOf(pick) + 1) % images.length;
+        pick = images[idx];
+      }
+      sessionStorage.setItem('intro_last_bg', pick);
+
+      const intro = document.querySelector('#intro.page-intro--overlay.intro-hero.vintage-shelves');
+      if(!intro) return;
+
+      const gradient = 'linear-gradient(180deg, rgba(30,20,15,.50) 0%, rgba(30,20,15,.65) 50%, rgba(30,20,15,.78) 100%)';
+      const fallback = 'color-mix(in oklab, var(--accent) 30%, var(--paper))';
+      intro.style.background = `${gradient}, url("images/${pick}") center/cover no-repeat, ${fallback}`;
+    })();
+  </script>
 </body>
 </html>

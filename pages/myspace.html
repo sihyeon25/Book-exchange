@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="heritage">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>교환독서 – 내 공간</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.8rem}
+    .stat-card{text-align:center;padding:1rem;background:var(--paper);border:1px solid var(--line);border-radius:.8rem}
+    .stat-value{font-size:2rem;font-weight:700;color:var(--brand)}
+    .stat-label{font-size:.9rem;color:var(--spine);margin-top:.3rem}
+    .badge{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .8rem;border-radius:.6rem;background:color-mix(in oklab,var(--accent) 40%, var(--paper));border:1px solid var(--accent);margin:.3rem}
+    .badge.locked{opacity:.4;background:var(--paper)}
+    .memo-item{border-bottom:1px solid var(--line);padding:.8rem 0}
+    .memo-item:last-child{border:none}
+  </style>
+</head>
+<body>
+  <a href="#main" class="sr-only">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <a class="logo" href="../index.html">교환독서</a>
+    <nav aria-label="주요">
+      <ul class="gnb">
+        <li><a href="../index.html">홈</a></li>
+        <li><a href="schedule.html">일정</a></li>
+        <li><a href="library.html">도서관</a></li>
+        <li><a href="community.html">커뮤니티</a></li>
+        <li><a aria-current="page" href="myspace.html">내 공간</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main id="main">
+    <h1>내 공간</h1>
+    
+    <!-- 독서 대시보드 -->
+    <section class="panel">
+      <h2>독서 대시보드</h2>
+      <div class="stat-grid" id="statsGrid"></div>
+    </section>
+    
+    <!-- 올해 목표 -->
+    <section class="panel">
+      <h2>올해 독서 목표</h2>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.6rem">
+        <input type="number" id="goalInput" min="1" placeholder="목표 권수" style="width:100px;padding:.5rem;border:1px solid var(--line);border-radius:.5rem">
+        <button class="btn" id="setGoalBtn">설정</button>
+      </div>
+      <div id="goalProgress"></div>
+    </section>
+    
+    <!-- 취향 분석 -->
+    <section class="panel">
+      <h2>나의 취향 분석</h2>
+      <div id="tasteAnalysis"></div>
+    </section>
+    
+    <!-- 업적 -->
+    <section class="panel">
+      <h2>🏆 업적</h2>
+      <div id="achievements"></div>
+    </section>
+    
+    <!-- 내가 쓴 리뷰 -->
+    <section class="panel">
+      <h2>내가 쓴 리뷰</h2>
+      <div id="myReviews"></div>
+    </section>
+    
+    <!-- 즐겨찾기 -->
+    <section class="panel">
+      <h2>즐겨찾기한 책</h2>
+      <div id="myFavorites" class="card-grid"></div>
+    </section>
+    
+    <!-- 개인 메모장 -->
+    <section class="panel">
+      <h2>기억에 남는 문구/메모</h2>
+      <form id="memoForm" style="display:grid;gap:.5rem;margin-bottom:1rem">
+        <input name="book" placeholder="책 제목 (선택)" style="padding:.5rem;border:1px solid var(--line);border-radius:.5rem">
+        <textarea name="content" placeholder="기억하고 싶은 문구나 메모를 남겨보세요..." required style="min-height:80px;padding:.6rem;border:1px solid var(--line);border-radius:.6rem;resize:vertical"></textarea>
+        <button class="btn" type="submit">메모 추가</button>
+      </form>
+      <div id="memoList"></div>
+    </section>
+    
+    <!-- 데이터 관리 -->
+    <section class="panel">
+      <h2>데이터 관리</h2>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn" id="exportBtn">내보내기 (백업)</button>
+        <button class="btn ghost" id="importBtn">가져오기</button>
+        <button class="btn ghost" id="resetBtn" style="margin-left:auto;background:transparent;color:var(--brand);border:1px solid var(--brand)">초기화</button>
+      </div>
+    </section>
+    
+    <nav class="page-nav" aria-label="페이지 네비게이션">
+      <a href="../index.html" class="page-link"><span class="page-number">1</span></a>
+      <a href="schedule.html" class="page-link"><span class="page-number">2</span></a>
+      <a href="library.html" class="page-link"><span class="page-number">3</span></a>
+    </nav>
+  </main>
+  
+  <footer class="site-footer">
+    <small>© 2025 ExchangeBook</small>
+  </footer>
+  
+  <script src="../js/bookData.js"></script>
+  <script src="../js/myspace.js"></script>
+</body>
+</html>

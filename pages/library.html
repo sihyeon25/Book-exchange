@@ -28,7 +28,8 @@
       <ul class="gnb">
         <li><a href="../index.html">홈</a></li>
         <li><a href="schedule.html">일정</a></li>
-        <li><a aria-current="page" href="library.html">도서 목록</a></li>
+        <li><a aria-current="page" href="library.html">도서관</a></li>
+        <li><a href="community.html">커뮤니티</a></li>
       </ul>
     </nav>
   </header>
@@ -50,21 +51,21 @@
       <!-- 북 카드 그리드 -->
       <div class="card-grid">
         <!-- 책 1: 지뢰 글리코 -->
-        <article class="card book-card" tabindex="0">
+        <article class="card book-card" data-book-id="glico" tabindex="0">
           <div class="book-status reading">읽는 중</div>
           <h3 class="book-title">지뢰 글리코</h3>
           <p class="book-author">아오사키유고</p>
         </article>
         
         <!-- 책 2: 일억 번째 여름 -->
-        <article class="card book-card" tabindex="0">
+        <article class="card book-card" data-book-id="summer-100m" tabindex="0">
           <div class="book-status reading">읽는 중</div>
           <h3 class="book-title">일억 번째 여름</h3>
           <p class="book-author">청예</p>
         </article>
         
         <!-- 책 3: 바깥은 여름 -->
-        <article class="card book-card" tabindex="0">
+        <article class="card book-card" data-book-id="summer-outside" tabindex="0">
           <div class="book-status reading">읽는 중</div>
           <h3 class="book-title">바깥은 여름</h3>
           <p class="book-author">김애란</p>
@@ -82,21 +83,21 @@
       <!-- 북 카드 그리드 -->
       <div class="card-grid">
         <!-- 책 1: 궤도의 밖에서, 나의 룸메이트에게 -->
-        <article class="card book-card" tabindex="0">
+        <article class="card book-card" data-book-id="orbit-roommate" tabindex="0">
           <div class="book-status completed">완독</div>
           <h3 class="book-title">궤도의 밖에서,<br>나의 룸메이트에게</h3>
           <p class="book-author">전삼혜</p>
         </article>
         
         <!-- 책 2: 지구끝의 온실 -->
-        <article class="card book-card" tabindex="0">
+        <article class="card book-card" data-book-id="greenhouse-earthend" tabindex="0">
           <div class="book-status completed">완독</div>
           <h3 class="book-title">지구끝의 온실</h3>
           <p class="book-author">김초엽</p>
         </article>
         
         <!-- 책 3: 여름 -->
-        <article class="card book-card" tabindex="0">
+        <article class="card book-card" data-book-id="summer-wharton" tabindex="0">
           <div class="book-status completed">완독</div>
           <h3 class="book-title">여름</h3>
           <p class="book-author">이디스 워튼</p>
@@ -125,6 +126,8 @@
   <footer class="site-footer">
     <small>© 2025 ExchangeBook</small>
   </footer>
-  
+
+  <!-- 라이브러리 상호작용 스크립트 -->
+  <script src="../js/script.js"></script>
 </body>
 </html>

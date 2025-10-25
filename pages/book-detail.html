@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="heritage">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>교환독서 – 책 상세</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .detail-wrap{display:grid;gap:1.25rem;grid-template-columns: 1fr;}
+    @media(min-width:900px){.detail-wrap{grid-template-columns: 320px 1fr}}
+    .cover{aspect-ratio:2/3;border:1px solid var(--line);border-radius:.8rem;background:linear-gradient(135deg, color-mix(in oklab,var(--accent) 30%, var(--paper)), var(--paper));display:grid;place-items:center;box-shadow:0 2px 0 rgba(0,0,0,.04),0 12px 28px rgba(0,0,0,.08)}
+    .cover img{width:100%;height:100%;object-fit:cover;border-radius:.8rem}
+    .cover .placeholder{font-family:'Nanum Myeongjo',serif;color:#000a;font-size:1.1rem;text-align:center;padding:1rem}
+    .meta{display:grid;gap:.4rem}
+    .rating{display:flex;align-items:center;gap:.5rem}
+    .stars{--size:22px;display:inline-flex;gap:2px}
+    .star{width:var(--size);height:var(--size);color:gold;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
+    .star.empty{color:#ccc}
+    .pill{display:inline-flex;align-items:center;gap:.25rem;margin-right:.35rem}
+    .review-form{display:grid;gap:.5rem;margin-top:1rem}
+    .review-form textarea{min-height:88px;resize:vertical;padding:.6rem;border-radius:.6rem;border:1px solid var(--line)}
+    .review{border-top:1px solid var(--line);padding:.75rem 0}
+    .review .who{font-weight:700;margin-right:.4rem}
+
+    /* 별점 입력 (라디오) */
+    .star-input{display:inline-flex;flex-direction:row-reverse;gap:.25rem}
+    .star-input input{display:none}
+    .star-input label{cursor:pointer;font-size:1.6rem;color:#ccc;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
+    .star-input input:checked ~ label,
+    .star-input label:hover,
+    .star-input label:hover ~ label{color:gold}
+  </style>
+</head>
+<body>
+  <a href="#main" class="sr-only">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <a class="logo" href="../index.html">교환독서</a>
+    <nav aria-label="주요">
+      <ul class="gnb">
+        <li><a href="../index.html">홈</a></li>
+        <li><a href="schedule.html">일정</a></li>
+        <li><a href="library.html">도서관</a></li>
+        <li><a href="community.html">커뮤니티</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <h1>책 상세</h1>
+    <section class="detail-wrap">
+      <div class="cover" id="cover"></div>
+      <div class="meta">
+        <h2 id="title" style="margin:0"></h2>
+        <p id="author" class="muted" style="margin:.2rem 0 0 0"></p>
+        <div class="rating" id="rating"></div>
+        <div id="tags" style="margin-top:.3rem"></div>
+        <p id="desc" style="margin-top:.6rem"></p>
+
+        <div class="panel">
+          <h3 style="margin:.2rem 0">후기 남기기</h3>
+          <form id="reviewForm" class="review-form">
+            <div class="star-input" aria-label="별점 주기">
+              <input type="radio" name="rating" id="r5" value="5"><label for="r5">★</label>
+              <input type="radio" name="rating" id="r4" value="4"><label for="r4">★</label>
+              <input type="radio" name="rating" id="r3" value="3" checked><label for="r3">★</label>
+              <input type="radio" name="rating" id="r2" value="2"><label for="r2">★</label>
+              <input type="radio" name="rating" id="r1" value="1"><label for="r1">★</label>
+            </div>
+            <textarea name="comment" placeholder="어땠는지 짧게 남겨 주세요" required></textarea>
+            <div style="display:flex;gap:.5rem;align-items:center">
+              <input name="user" placeholder="이름(선택)" style="flex:1;min-width:120px;padding:.5rem;border:1px solid var(--line);border-radius:.5rem">
+              <button class="btn" type="submit">후기 등록</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:1rem">
+      <h3 style="margin:.2rem 0">리뷰</h3>
+      <div id="reviews"></div>
+    </section>
+
+    <nav class="page-nav" aria-label="페이지 네비게이션">
+      <a href="../index.html" class="page-link"><span class="page-number">1</span></a>
+      <a href="schedule.html" class="page-link"><span class="page-number">2</span></a>
+      <a href="library.html" class="page-link current" aria-current="page"><span class="page-number">3</span></a>
+    </nav>
+  </main>
+  <footer class="site-footer">
+    <small>© 2025 ExchangeBook</small>
+  </footer>
+
+  <script src="../js/bookData.js"></script>
+  <script>
+    function qs(k){return new URL(location.href).searchParams.get(k)}
+    function renderStars(avg){
+      const s = [];
+      for(let i=1;i<=5;i++){
+        const cls = i <= Math.round(avg) ? 'star' : 'star empty';
+        s.push(`<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
+      }
+      return `<div class="stars" aria-hidden="true">${s.join('')}</div>`
+    }
+
+    const id = qs('id');
+    const book = getBookById?.(id);
+    const coverEl = document.getElementById('cover');
+    const titleEl = document.getElementById('title');
+    const authorEl = document.getElementById('author');
+    const ratingEl = document.getElementById('rating');
+    const descEl = document.getElementById('desc');
+    const tagsEl = document.getElementById('tags');
+    const reviewsEl = document.getElementById('reviews');
+
+    function render(){
+      if(!book){
+        titleEl.textContent = '책을 찾을 수 없습니다';
+        authorEl.textContent = '';
+        coverEl.innerHTML = '<div class="placeholder">잘못된 접근입니다. 도서 목록에서 다시 선택해 주세요.</div>';
+        return;
+      }
+      titleEl.textContent = book.title;
+      authorEl.textContent = `${book.author}${book.publisher? ' · ' + book.publisher : ''}${book.year? ' · ' + book.year : ''}`;
+      const avg = computeAverageRating(book);
+      ratingEl.innerHTML = `${renderStars(avg)} <strong>${avg || '0.0'}</strong><span class="muted"> / 5</span>`;
+      descEl.textContent = book.description || '';
+      tagsEl.innerHTML = (book.tags||[]).map(t=>`<span class="pill">#${t}</span>`).join('');
+
+      if(book.cover){
+        coverEl.innerHTML = `<img src="${book.cover}" alt="${book.title} 표지">`;
+      }else{
+        coverEl.innerHTML = `<div class="placeholder">${book.title}\n표지 이미지가 없어요</div>`;
+      }
+
+      // 리뷰 렌더링
+      const locals = getLocalReviews(book.id);
+      const all = [...(book.reviews||[]), ...(locals||[])];
+      if(!all.length){
+        reviewsEl.innerHTML = '<p class="muted">아직 후기가 없어요. 첫번째 후기를 남겨보세요!</p>';
+      }else{
+        reviewsEl.innerHTML = all.map(r=>`<div class="review"><span class="who">${r.user||'익명'}</span> <span class="muted">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span><div>${r.comment||''}</div></div>`).join('');
+      }
+    }
+
+    render();
+
+    // 후기 작성 처리
+    const form = document.getElementById('reviewForm');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if(!book) return;
+      const fd = new FormData(form);
+      const rating = Number(fd.get('rating')) || 3;
+      const comment = String(fd.get('comment')||'').trim();
+      const user = String(fd.get('user')||'').trim();
+      if(!comment){
+        alert('후기를 입력해 주세요.');
+        return;
+      }
+      addLocalReview(book.id, { user: user||'익명', rating, comment });
+      form.reset();
+      render();
+    });
+  </script>
+</body>
+</html>

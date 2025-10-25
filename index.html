@@ -1,245 +1,172 @@
-<!doctype html>
-<html lang="ko">
+<!DOCTYPE html>
+<html lang="ko" data-theme="heritage">
 <head>
+  <!-- 문자 인코딩 및 뷰포트 설정 -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>교환독서 — 책 넘김 랜딩 + Intro</title>
-  <style>
-    :root{
-      --bg:#FAF3E0;
-      --paper:#FDF6E3;
-      --spine-dark:#5a4636;
-      --spine:#8d6e5f;
-      --ink:#2B1B17;
-      --brand:#A23E48;
-      --accent:#D4A373;
-    }
-
-    body{
-      margin:0; height:100vh;
-      display:flex; flex-direction:column; justify-content:center; align-items:center;
-      background:var(--bg); color:var(--ink);
-      font-family:'Noto Sans KR',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      overflow:hidden; /* 인트로 중 스크롤 방지 */
-    }
-
-    /* =============== [ Intro Overlay ] =============== */
-    .intro-overlay{
-      position:fixed; inset:0; z-index:999;
-      display:flex; align-items:center; justify-content:center; flex-direction:column;
-      background:radial-gradient(1200px 600px at 50% 40%, rgba(0,0,0,.05), transparent 60%), var(--bg);
-      transition:opacity .6s ease;
-    }
-    .intro-overlay.hide{ opacity:0; pointer-events:none; }
-    .intro-box{
-      padding:2rem 2.2rem; border-radius:14px;
-      background:rgba(253,246,227,.8);
-      box-shadow:0 8px 30px rgba(0,0,0,.15);
-      border:1px solid #e6dfd6; text-align:center;
-    }
-    .intro-title{
-      font-weight:800; font-size:1.6rem; line-height:1.3;
-      color:var(--brand); margin:0 0 .75rem 0;
-      white-space:nowrap; overflow:hidden; border-right:2px solid var(--brand);
-      width:0; /* 타자기 시작점 */
-      animation:typing 1.8s steps(22,end) .2s forwards, caret .8s step-end infinite .2s;
-    }
-    .intro-sub{
-      margin:.25rem 0 0 0; color:#6b6157; font-size:1rem; opacity:0;
-      animation:fadeIn .6s ease 2.1s forwards;
-    }
-    .intro-tip{
-      margin-top:1rem; font-size:.9rem; color:#7a7268; opacity:0;
-      animation:fadeIn .6s ease 2.35s forwards;
-    }
-    @keyframes typing{ to{ width:16.5ch } } /* 글자수에 맞게 조정 */
-    @keyframes caret{ 50%{ border-color:transparent } }
-    @keyframes fadeIn{ to{ opacity:1 } }
-
-    /* 모션 민감 사용자 */
-    @media (prefers-reduced-motion:reduce){
-      .intro-title{ animation:none; width:auto; border-right:0 }
-      .intro-sub,.intro-tip{ animation:none; opacity:1 }
-      .intro-overlay{ transition:none }
-    }
-
-    /* 인트로 종료 후 컨텐츠 등장 */
-    #bookWrap{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease }
-    .ready #bookWrap{ opacity:1; transform:none }
-    .hint{ opacity:0; transition:opacity .6s ease .15s }
-    .ready .hint{ opacity:1 }
-
-    /* =============== [ Book ] =============== */
-    .book-wrap{
-  position:relative; display:flex; align-items:center; justify-content:center; gap:24px;
-  width: 100vw;
-    }
-    .book{
-  position:relative; width:360px; height:460px;
-  perspective:1500px; transition:transform 1s cubic-bezier(.77,0,.18,1);
-}
-.book.spine-centered {
-  margin-left: -22px;
-}
-    
-    .book::before{
-  content:""; position:absolute; left:-22px; top:0; bottom:0; width:22px; border-radius:6px 0 0 6px;
-  background:linear-gradient(to right, var(--spine-dark), var(--spine));
-  box-shadow:inset -2px 0 6px rgba(0,0,0,.35);
-    }
-    .page{
-      position:absolute; inset:0;
-      transform-style:preserve-3d; transform-origin:left;
-      transition:transform 1s ease; cursor:pointer; will-change:transform;
-    }
-    .page:nth-child(1){ z-index:7 }
-    .page:nth-child(2){ z-index:6 }
-    .page:nth-child(3){ z-index:5 }
-    .page:nth-child(4){ z-index:4 }
-    .page:nth-child(5){ z-index:3 }
-
-    .face{
-      position:absolute; inset:0;
-      border:1px solid #cfcac0; border-radius:8px; backface-visibility:hidden;
-      display:flex; align-items:center; justify-content:center; text-align:center;
-      padding:1.25rem; font-weight:700; font-size:1.2rem; color:var(--ink);
-    }
-    .front,.back{ background:var(--paper) }
-    .front{ box-shadow:2px 2px 8px rgba(0,0,0,.15) }
-    .back{ transform:rotateY(180deg); box-shadow:inset -2px 0 6px rgba(0,0,0,.18) }
-
-    /* 표지/뒷표지 */
-    .cover .front{ background:var(--brand); color:#fff; font-size:1.5rem }
-    .back-cover .back{ background:var(--brand); color:#fff }
-
-    /* 넘긴 페이지가 오른쪽에 살짝 쌓이게 */
-    .page.flipped{ transform:rotateY(-180deg) translateX(6px); pointer-events:none }
-
-    /* 북마크 네비 */
-    .bookmark-nav{
-      margin-top:22px; display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center;
-    }
-    .bookmark-nav a{
-      display:inline-block; padding:.6rem 1rem;
-      background:var(--brand); color:#fff; text-decoration:none;
-      border-radius:0 0 12px 12px; font-weight:700;
-      box-shadow:0 3px 10px rgba(0,0,0,.15);
-      transition:transform .15s ease, background .2s ease;
-    }
-    .bookmark-nav a:hover{ transform:translateY(-2px); background:var(--accent) }
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>교환독서 – 홈</title>
+  
+  <!-- Google Fonts: Nanum Myeongjo (나눔명조) 로딩 최적화 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+  
+  <!-- 외부 스타일시트 -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="sr-only">본문으로 건너뛰기</a>
+  
+  <!-- ============================================
+       INTRO OVERLAY
+       페이지 로딩 시 4.5초간 표시되는 인트로 화면
+       CSS 애니메이션으로 자동 페이드아웃
+  ============================================= -->
+  <section id="intro" class="page-intro page-intro--overlay splash-hero intro-hero vintage-shelves" aria-label="페이지 인트로">
+    <h1 class="intro-title draw-title">교환독서</h1>
+    <p class="intro-subtitle">내 책 줄게, 네 책 다오</p>
+    <p class="intro-sub">Share books, exchange stories, connect hearts</p>
+  </section>
 
-  <!-- Intro Overlay -->
-  <div class="intro-overlay" id="intro">
-    <div class="intro-box">
-      <h1 class="intro-title">교환독서 — 함께 넘기는 페이지</h1>
-      <p class="intro-sub">각자 고른 책을, 한 달씩 돌려 읽고 색 펜으로 남기는 코멘트</p>
-      <p class="intro-tip">잠시 후 책이 나타납니다 · 클릭해서 넘겨보세요</p>
-    </div>
-  </div>
+  <!-- ============================================
+       HEADER
+       상단 고정 헤더: 로고 + 네비게이션
+  ============================================= -->
+  <header class="site-header">
+    <a class="logo" href="index.html">교환독서</a>
+    <nav aria-label="주요">
+      <ul class="gnb">
+        <li><a aria-current="page" href="index.html">홈</a></li>
+        <li><a href="pages/schedule.html">일정</a></li>
+        <li><a href="pages/library.html">도서 목록</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <!-- Book -->
-  <div class="book-wrap" id="bookWrap" aria-label="책 넘김 데모">
-    <div class="book" id="book">
-      <!-- 표지 -->
-      <div class="page cover">
-        <div class="face front">📕 교환독서</div>
-        <div class="face back"></div>
+  <!-- ============================================
+       MAIN CONTENT
+       메인 콘텐츠 영역
+  ============================================= -->
+  <main id="main">
+    
+    <!-- Hero Section: 전체 화면 히어로 섹션 -->
+    <section class="page-intro splash-hero intro-hero vintage-shelves" aria-label="메인 히어로">
+      <h1 class="intro-title">교환독서, 우리끼리 돌려읽기</h1>
+      <p class="intro-sub">부담은 낮게, 재미는 높게</p>
+      
+      <!-- CTA 버튼들 -->
+      <div class="intro-actions">
+        <a class="btn" href="pages/schedule.html">일정 보기</a>
+        <a class="btn ghost" href="pages/library.html">도서 둘러보기</a>
       </div>
-      <!-- 속지들 -->
-      <div class="page">
-        <div class="face front">✨ 함께 읽는 즐거움</div>
-        <div class="face back"></div>
+      
+      <!-- 스크롤 힌트 (장식용) -->
+      <div class="scroll-hint" aria-hidden="true">아래로 스크롤</div>
+    </section>
+
+    <!-- About Section: 교환독서 소개 -->
+    <section aria-labelledby="about" class="about-section">
+      <h2 id="about">교환독서란?</h2>
+      <div class="about-content">
+        <!-- 소개 문구: 캐주얼하고 친근한 톤 -->
+        <p>교환독서는 서로의 책을 나누며 새로운 이야기를 만나는 독서 모임입니다.</p>
+        <p>한 달에 한 번, 각자가 읽은 책을 다른 사람의 책과 교환하며,<br>평소 선택하지 않았을 책들을 만나고 다양한 관점을 경험합니다.</p>
+        <p>책을 교환하는 것은 단순히 책을 빌려주는 것이 아니라,<br>나의 생각과 감상을 누군가에게 전하고 그들의 이야기를 받아오는 특별한 경험입니다.</p>
+        <p>서로의 취향과 생각을 알아가는 시간입니다. 원하는 책을 골라 읽고, 책을 읽으면서 코멘트를 남깁니다.</p>
+        <p>다음 사람에게 패스하고, 한 바퀴가 돌면 한 회차가 종료되고, 함께 모여 이야기를 나눕니다.</p>
+        <p>혼자 고르기 어렵다면 서로의 선택을 빌려 보세요.</p>
       </div>
-      <div class="page">
-        <div class="face front">🖊️ 색 펜 코멘트</div>
-        <div class="face back"></div>
+    </section>
+
+    <!-- How Section: 진행 방법 5단계 -->
+    <section aria-labelledby="how" class="how-section">
+      <h2 id="how">진행 방법</h2>
+      <div class="how-content">
+        <div class="how-step">
+          <span class="step-number">1</span>
+          <p>각자 읽고 싶은 책을 골라 가져옵니다</p>
+        </div>
+        <div class="how-step">
+          <span class="step-number">2</span>
+          <p>1~2달 동안 주어진 책을 읽고 간단한 코멘트를 남깁니다</p>
+        </div>
+        <div class="how-step">
+          <span class="step-number">3</span>
+          <p>다음 달이 되면 책을 다음 사람에게 전달합니다</p>
+        </div>
+        <div class="how-step">
+          <span class="step-number">4</span>
+          <p>모든 책을 돌려 읽으면 한 회차가 마무리됩니다</p>
+        </div>
+        <div class="how-step">
+          <span class="step-number">5</span>
+          <p>함께 모여 책에 대한 생각을 나누고 토의합니다</p>
+        </div>
       </div>
-      <div class="page">
-        <div class="face front">📚 책을 나누는 시간</div>
-        <div class="face back"></div>
+    </section>
+
+    <!-- Team Section: 진행 인원 소개 -->
+    <section aria-labelledby="team" class="team-section">
+      <h2 id="team">진행 인원</h2>
+      <div class="team-grid">
+        <!-- 시현 카드 -->
+        <article class="card team-card" data-person="시현">
+          <div class="team-avatar">시현</div>
+          <h3 class="team-name">시현</h3>
+          <p class="team-bio">SF와 판타지, 인문학, 인문서 등 가리지 않고 흥미가 있다면 다 좋아해요.</p>
+        </article>
+        
+        <!-- 태이 카드 -->
+        <article class="card team-card" data-person="태이">
+          <div class="team-avatar">태이</div>
+          <h3 class="team-name">태이</h3>
+          <p class="team-bio">미스터리하고 박진감 넘치는 전개를 좋아해요.</p>
+        </article>
+        
+        <!-- 희수 카드 -->
+        <article class="card team-card" data-person="희수">
+          <div class="team-avatar">희수</div>
+          <h3 class="team-name">희수</h3>
+          <p class="team-bio">누군가 아름답게 엔딩을 맞이하는 것을 보는 걸 좋아해요. 아름다운 죽음만 있다면 장르는 상관 없답니다.</p>
+        </article>
       </div>
-      <!-- 뒷표지 -->
-      <div class="page back-cover">
-        <div class="face front"></div>
-        <div class="face back">📕 끝</div>
+    </section>
+
+    <!-- About Site Section: 웹사이트 제작 배경 -->
+    <section aria-labelledby="about-site" class="about-site-section">
+      <h2 id="about-site">이 사이트를 만든 이유</h2>
+      <div class="about-content">
+        <p>교환독서를 하면서 누가 어떤 책을 읽고 있는지, 언제 교환해야 하는지 헷갈릴 때가 많았어요.</p>
+        <p>단톡방에 흩어진 일정과 책 정보를 한곳에 모아두면 편하겠다는 생각에 이 웹사이트를 만들었습니다.</p>
+        <p>우리만의 작은 도서관처럼, 기록하고 공유하는 공간이 되었으면 좋겠어요. 📚</p>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <p class="hint">책을 클릭해 넘겨보세요 · 다 넘기면 다시 처음으로 돌아갑니다</p>
+      
+      <!-- Page Navigation: 책 페이지 스타일 네비게이션 -->
+      <nav class="page-nav" aria-label="페이지 네비게이션">
+        <a href="index.html" class="page-link current" aria-current="page">
+          <span class="page-number">1</span>
+        </a>
+        <a href="pages/schedule.html" class="page-link">
+          <span class="page-number">2</span>
+        </a>
+        <a href="pages/library.html" class="page-link">
+          <span class="page-number">3</span>
+        </a>
+      </nav>
 
-  <nav class="bookmark-nav" aria-label="바로가기">
-    <a href="intro.html">소개</a>
-    <a href="books.html">책 목록</a>
-    <a href="calendar.html">캘린더</a>
-    <a href="game.html">게임</a>
-    <a href="faq.html">FAQ</a>
-  </nav>
+  </main>
 
-  <script>
-    // Intro 제어
-    const intro = document.getElementById('intro');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  <!-- ============================================
+       FOOTER
+       하단 푸터
+  ============================================= -->
+  <footer class="site-footer">
+    <small>© 2025 ExchangeBook</small>
+  </footer>
 
-    function startSite(){
-      intro.classList.add('hide');
-      document.body.classList.add('ready'); // 책/힌트 등장
-      // 인트로 사라진 뒤 스크롤 허용하고 싶다면 다음 줄 주석 해제:
-      // document.body.style.overflow = 'auto';
-    }
-
-    // 자동 종료(타자기 + 서브 문구 노출 후)
-    if (!reduceMotion) {
-      setTimeout(startSite, 3600); // 체류 시간 2600 → 3600ms로 증가
-    } else {
-      // 모션 민감 사용자는 즉시 시작
-      startSite();
-    }
-    // 클릭으로도 바로 시작 가능
-    intro.addEventListener('click', startSite);
-
-    // Book 넘김
-    const book = document.getElementById('book');
-    const pages = Array.from(book.querySelectorAll('.page'));
-    let current = 0;
-    let locking = false;
-    const DURATION = 1000;
-
-    let closed = true;
-    function resetBook() {
-      pages.forEach(p => p.classList.remove('flipped'));
-      current = 0;
-      book.classList.remove('spine-centered');
-      closed = true;
-    }
-
-    book.addEventListener('click', () => {
-      if (locking) return;
-      locking = true;
-
-      if (closed) {
-        closed = false;
-        // 표지로 이동
-        book.classList.remove('spine-centered');
-        return setTimeout(() => locking = false, 300);
-      }
-
-      if (current < pages.length) {
-        pages[current].classList.add('flipped');
-        current++;
-        // 첫 장 넘길 때 화면 기준 중앙 정렬(스파인)
-        if (current === 1) {
-          book.classList.add('spine-centered');
-        }
-        setTimeout(() => locking = false, DURATION);
-      } else {
-        resetBook();
-        setTimeout(() => locking = false, 300);
-      }
-    });
-  </script>
+  
 </body>
 </html>

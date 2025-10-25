@@ -39,71 +39,38 @@
        도서 목록 페이지 메인 콘텐츠
   ============================================= -->
   <main id="main">
-    <h1>< 도서 목록 ></h1>
+    <h1>< 도서관 ></h1>
 
-    <!-- ============================================
-         READING SECTION
-         현재 읽고 있는 책들
-    ============================================= -->
-    <section class="library-section">
-      <h2 class="section-title">읽는 중</h2>
-      
-      <!-- 북 카드 그리드 -->
-      <div class="card-grid">
-        <!-- 책 1: 지뢰 글리코 -->
-        <article class="card book-card" data-book-id="glico" tabindex="0">
-          <div class="book-status reading">읽는 중</div>
-          <h3 class="book-title">지뢰 글리코</h3>
-          <p class="book-author">아오사키유고</p>
-        </article>
+    <!-- 검색/필터/정렬 툴바 -->
+    <div class="panel" style="margin-bottom:1.5rem">
+      <div style="display:grid;gap:.8rem">
+        <!-- 검색바 -->
+        <input 
+          type="search" 
+          id="searchInput" 
+          placeholder="제목이나 저자로 검색..." 
+          style="padding:.6rem;border:1px solid var(--line);border-radius:.6rem;font-family:'Nanum Myeongjo',serif">
         
-        <!-- 책 2: 일억 번째 여름 -->
-        <article class="card book-card" data-book-id="summer-100m" tabindex="0">
-          <div class="book-status reading">읽는 중</div>
-          <h3 class="book-title">일억 번째 여름</h3>
-          <p class="book-author">청예</p>
-        </article>
-        
-        <!-- 책 3: 바깥은 여름 -->
-        <article class="card book-card" data-book-id="summer-outside" tabindex="0">
-          <div class="book-status reading">읽는 중</div>
-          <h3 class="book-title">바깥은 여름</h3>
-          <p class="book-author">김애란</p>
-        </article>
+        <!-- 필터와 정렬 -->
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+          <div style="display:flex;gap:.3rem;flex-wrap:wrap" id="tagFilters"></div>
+          <label style="margin-left:auto;display:flex;align-items:center;gap:.4rem">
+            <span class="muted">정렬:</span>
+            <select id="sortSelect" style="padding:.4rem;border:1px solid var(--line);border-radius:.5rem;font-family:'Nanum Myeongjo',serif">
+              <option value="title">제목순</option>
+              <option value="rating">평점순</option>
+            </select>
+          </label>
+          <label style="display:flex;align-items:center;gap:.4rem">
+            <input type="checkbox" id="favOnlyCheck">
+            <span>즐겨찾기만</span>
+          </label>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ============================================
-         COMPLETED SECTION
-         완독한 책들
-    ============================================= -->
-    <section class="library-section">
-      <h2 class="section-title">완독</h2>
-      
-      <!-- 북 카드 그리드 -->
-      <div class="card-grid">
-        <!-- 책 1: 궤도의 밖에서, 나의 룸메이트에게 -->
-        <article class="card book-card" data-book-id="orbit-roommate" tabindex="0">
-          <div class="book-status completed">완독</div>
-          <h3 class="book-title">궤도의 밖에서,<br>나의 룸메이트에게</h3>
-          <p class="book-author">전삼혜</p>
-        </article>
-        
-        <!-- 책 2: 지구끝의 온실 -->
-        <article class="card book-card" data-book-id="greenhouse-earthend" tabindex="0">
-          <div class="book-status completed">완독</div>
-          <h3 class="book-title">지구끝의 온실</h3>
-          <p class="book-author">김초엽</p>
-        </article>
-        
-        <!-- 책 3: 여름 -->
-        <article class="card book-card" data-book-id="summer-wharton" tabindex="0">
-          <div class="book-status completed">완독</div>
-          <h3 class="book-title">여름</h3>
-          <p class="book-author">이디스 워튼</p>
-        </article>
-      </div>
-    </section>
+    <!-- 동적 렌더링 영역 -->
+    <div id="bookList"></div>
 
     <!-- Page Navigation: 책 페이지 스타일 네비게이션 -->
     <nav class="page-nav" aria-label="페이지 네비게이션">
@@ -128,6 +95,7 @@
   </footer>
 
   <!-- 라이브러리 상호작용 스크립트 -->
-  <script src="../js/script.js"></script>
+  <script src="../js/bookData.js"></script>
+  <script src="../js/library.js"></script>
 </body>
 </html>

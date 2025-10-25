@@ -32,12 +32,27 @@
   </header>
   <main id="main">
     <h1>커뮤니티</h1>
+    
+    <section class="panel">
+      <h2>📚 랜덤 책 뽑기</h2>
+      <p class="muted">오늘 읽을 책을 랜덤으로 추천받아보세요!</p>
+      <div style="margin-top:1rem;text-align:center">
+        <button class="btn" id="randomBtn" style="font-size:1.1rem;padding:.8rem 1.5rem">🎲 책 뽑기</button>
+      </div>
+      <div id="randomResult" style="margin-top:1rem"></div>
+    </section>
 
     <section class="panel">
       <h2>독서 퀴즈</h2>
       <div class="quiz" id="quiz"></div>
       <div id="quizResult" class="muted"></div>
       <div style="margin-top:.6rem"><button class="btn" id="quizStart">퀴즈 시작/다시하기</button></div>
+      
+      <!-- 리더보드 -->
+      <div style="margin-top:1.5rem;border-top:1px solid var(--line);padding-top:1rem">
+        <h3 style="margin:0 0 .5rem 0">내 기록</h3>
+        <div id="leaderboard"></div>
+      </div>
     </section>
 
     <section class="panel">
@@ -48,11 +63,6 @@
     <section class="panel">
       <h2>독서 뉴스</h2>
       <ul class="news" id="news"></ul>
-    </section>
-
-    <section class="panel">
-      <h2>이벤트</h2>
-      <ul class="events" id="events"></ul>
     </section>
 
     <nav class="page-nav" aria-label="페이지 네비게이션">
@@ -67,6 +77,20 @@
 
   <script src="../js/bookData.js"></script>
   <script>
+    // 랜덤 책 뽑기
+    document.getElementById('randomBtn').addEventListener('click', () => {
+      const rnd = books[Math.floor(Math.random() * books.length)];
+      const avg = computeAverageRating(rnd);
+      document.getElementById('randomResult').innerHTML = `
+        <div class="card" style="cursor:pointer;text-align:center" onclick="location.href='book-detail.html?id=${rnd.id}'">
+          <h3 style="margin:.3rem 0">${rnd.title}</h3>
+          <p class="muted">${rnd.author}</p>
+          <div style="margin-top:.3rem">★ ${avg||'0.0'}</div>
+          <button class="btn" style="margin-top:.6rem">상세 보기</button>
+        </div>
+      `;
+    });
+    
     // 간단한 퀴즈
     const QUESTIONS = [
       { q: '다음 중 단편 소설집은?', c: ['지뢰 글리코', '바깥은 여름', '지구끝의 온실'], a: 1 },
@@ -101,7 +125,39 @@
         if(sel && Number(sel.value) === item.a) score++;
       });
       quizResult.textContent = `점수: ${score} / ${QUESTIONS.length}`;
-      localStorage.setItem('quiz_score', String(score));
+      
+      // 로컬 스토리지에 기록 저장
+      const history = getQuizHistory();
+      const today = new Date().toISOString().split('T')[0];
+      history.push({ date: today, score });
+      localStorage.setItem('quiz_history', JSON.stringify(history.slice(-10))); // 최근 10개만
+      renderLeaderboard();
+    }
+
+    function getQuizHistory(){
+      try{
+        return JSON.parse(localStorage.getItem('quiz_history')||'[]');
+      }catch{return []}
+    }
+    
+    function renderLeaderboard(){
+      const history = getQuizHistory();
+      const el = document.getElementById('leaderboard');
+      if(!history.length){
+        el.innerHTML = '<p class="muted">아직 기록이 없어요.</p>';
+        return;
+      }
+      const sorted = history.slice().sort((a,b) => b.score - a.score);
+      el.innerHTML = `
+        <div style="font-size:.9rem">
+          <div style="display:grid;grid-template-columns:1fr auto;gap:.3rem">
+            ${sorted.slice(0,5).map((r,i) => `
+              <div>${i+1}. ${r.date}</div>
+              <div><strong>${r.score}점</strong></div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     }
 
     startBtn.addEventListener('click', () => {
@@ -133,9 +189,8 @@
       `).join('');
     }
 
-    // 뉴스/이벤트 (하드코딩 데모)
+    // 뉴스 (하드코딩 데모)
     const newsEl = document.getElementById('news');
-    const eventsEl = document.getElementById('events');
     function renderNews(){
       const items = [
         '올해의 책 후보 공개 – 다양한 장르의 작품들이 경쟁',
@@ -144,20 +199,12 @@
       ];
       newsEl.innerHTML = items.map(t => `<li>• ${t}</li>`).join('');
     }
-    function renderEvents(){
-      const items = [
-        '11/10(월) 온라인 북토크 – 우리는 왜 책을 돌려 읽을까',
-        '11/23(토) 교환독서 번개 – 가벼운 책 한 권과 함께',
-        '12/05(금) 올해 결산 모임 – 베스트 리뷰 시상'
-      ];
-      eventsEl.innerHTML = items.map(t => `<li>• ${t}</li>`).join('');
-    }
 
     // 초기 렌더
     renderQuiz();
     renderTrending();
     renderNews();
-    renderEvents();
+    renderLeaderboard();
   </script>
 </body>
 </html>

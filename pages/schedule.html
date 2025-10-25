@@ -126,6 +126,24 @@
         </tbody>
       </table>
     </section>
+    
+    <!-- 일정 조율 도구 -->
+    <section class="panel" style="margin-top:2rem">
+      <h2>일정 조율 도구</h2>
+      <p class="muted">모일 수 있는 날짜를 선택하고 친구와 공유해서 교집합을 찾아보세요.</p>
+      
+      <div style="margin-top:1rem">
+        <label style="display:block;margin-bottom:.4rem;font-weight:700">내가 가능한 날짜 선택</label>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.4rem" id="dateGrid"></div>
+      </div>
+      
+      <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn" id="exportBtn">내 코드 복사</button>
+        <button class="btn ghost" id="importBtn">친구 코드 붙여넣기</button>
+      </div>
+      
+      <div id="resultArea" style="margin-top:1rem"></div>
+    </section>
 
     <!-- Page Navigation: 책 페이지 스타일 네비게이션 -->
     <nav class="page-nav" aria-label="페이지 네비게이션">
@@ -149,5 +167,6 @@
     <small>© 2025 ExchangeBook</small>
   </footer>
   
+  <script src="../js/schedule-tool.js"></script>
 </body>
 </html>

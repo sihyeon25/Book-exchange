@@ -57,6 +57,9 @@
         <div class="rating" id="rating"></div>
         <div id="tags" style="margin-top:.3rem"></div>
         <p id="desc" style="margin-top:.6rem"></p>
+        
+        <!-- 링크 복사 버튼 -->
+        <button id="copyLinkBtn" class="btn ghost" style="margin-top:.6rem;width:fit-content">🔗 링크 복사</button>
 
         <div class="panel">
           <h3 style="margin:.2rem 0">후기 남기기</h3>
@@ -79,7 +82,13 @@
     </section>
 
     <section class="panel" style="margin-top:1rem">
-      <h3 style="margin:.2rem 0">리뷰</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <h3 style="margin:0">리뷰</h3>
+        <select id="reviewSort" style="padding:.4rem;border:1px solid var(--line);border-radius:.5rem;font-size:.9rem">
+          <option value="recent">최신순</option>
+          <option value="rating">별점순</option>
+        </select>
+      </div>
       <div id="reviews"></div>
     </section>
 
@@ -114,6 +123,8 @@
     const descEl = document.getElementById('desc');
     const tagsEl = document.getElementById('tags');
     const reviewsEl = document.getElementById('reviews');
+    
+    let reviewSortOrder = 'recent';
 
     function render(){
       if(!book){
@@ -137,7 +148,15 @@
 
       // 리뷰 렌더링
       const locals = getLocalReviews(book.id);
-      const all = [...(book.reviews||[]), ...(locals||[])];
+      let all = [...(book.reviews||[]), ...(locals||[])];
+      
+      // 정렬
+      if(reviewSortOrder==='rating'){
+        all.sort((a,b) => (b.rating||0) - (a.rating||0));
+      }else{
+        all.reverse(); // 최신순 (나중에 추가된 것이 위로)
+      }
+      
       if(!all.length){
         reviewsEl.innerHTML = '<p class="muted">아직 후기가 없어요. 첫번째 후기를 남겨보세요!</p>';
       }else{
@@ -146,6 +165,22 @@
     }
 
     render();
+    
+    // 리뷰 정렬
+    document.getElementById('reviewSort')?.addEventListener('change', e => {
+      reviewSortOrder = e.target.value;
+      render();
+    });
+    
+    // 링크 복사
+    document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
+      const url = location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('링크가 클립보드에 복사되었습니다!');
+      }).catch(() => {
+        alert('복사 실패. 브라우저가 지원하지 않을 수 있습니다.');
+      });
+    });
 
     // 후기 작성 처리
     const form = document.getElementById('reviewForm');

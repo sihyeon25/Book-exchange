@@ -110,24 +110,52 @@
       <h2 id="team">진행 인원</h2>
       <div class="team-grid">
         <!-- 시현 카드 -->
-        <article class="card team-card" data-person="시현">
-          <div class="team-avatar">시현</div>
-          <h3 class="team-name">시현</h3>
-          <p class="team-bio">SF와 판타지, 인문학, 인문서 등 가리지 않고 흥미가 있다면 다 좋아해요.</p>
+        <article class="card team-card flip-card" data-person="시현">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="images/sh.jpg" alt="시현 사진" class="team-photo" loading="lazy" />
+            </div>
+            <div class="flip-card-back">
+              <div class="team-avatar">시현</div>
+              <p class="team-bio">SF와 판타지, 인문학, 인문서 등 가리지 않고 흥미가 있다면 다 좋아해요.</p>
+            </div>
+          </div>
         </article>
-        
         <!-- 태이 카드 -->
-        <article class="card team-card" data-person="태이">
-          <div class="team-avatar">태이</div>
-          <h3 class="team-name">태이</h3>
-          <p class="team-bio">미스터리하고 박진감 넘치는 전개를 좋아해요.</p>
+        <article class="card team-card flip-card" data-person="태이">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="images/te.jpg" alt="태이 사진" class="team-photo" loading="lazy" />
+            </div>
+            <div class="flip-card-back">
+              <div class="team-avatar">태이</div>
+              <p class="team-bio">미스터리하고 박진감 넘치는 전개를 좋아해요.</p>
+            </div>
+          </div>
         </article>
-        
         <!-- 희수 카드 -->
-        <article class="card team-card" data-person="희수">
-          <div class="team-avatar">희수</div>
-          <h3 class="team-name">희수</h3>
-          <p class="team-bio">누군가 아름답게 엔딩을 맞이하는 것을 보는 걸 좋아해요. 아름다운 죽음만 있다면 장르는 상관 없답니다.</p>
+        <article class="card team-card flip-card" data-person="희수">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="images/hs.jpg" alt="희수 사진" class="team-photo" loading="lazy" />
+            </div>
+            <div class="flip-card-back">
+              <div class="team-avatar">희수</div>
+              <p class="team-bio">누군가 아름답게 엔딩을 맞이하는 것을 보는 걸 좋아해요. 아름다운 죽음만 있다면 장르는 상관 없답니다.</p>
+            </div>
+          </div>
+        </article>
+        <!-- 지원 카드 -->
+        <article class="card team-card flip-card" data-person="지원">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="images/jw.jpg" alt="지원 사진" class="team-photo" loading="lazy" />
+            </div>
+            <div class="flip-card-back">
+              <div class="team-avatar">지원</div>
+              <p class="team-bio">에세이를 좋아해요. 일상의 소소한 이야기와 따뜻한 감성이 담긴 글을 읽는 것을 즐깁니다.</p>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -166,6 +194,22 @@
     <small>© 2025 ExchangeBook</small>
   </footer>
   <script>
+    // 헤더 색상 전환: 히어로가 보일 때는 투명/흰 글자, 지나가면 솔리드/어두운 글자
+    (() => {
+      const header = document.querySelector('.site-header');
+      const hero = document.querySelector('main .intro-hero');
+      if(!header || !hero) return;
+      const io = new IntersectionObserver(([entry]) => {
+        if(entry.isIntersecting){
+          header.classList.remove('is-solid');
+        } else {
+          header.classList.add('is-solid');
+        }
+      }, {root: null, threshold: 0, rootMargin: '-64px 0px 0px 0px'});
+      io.observe(hero);
+    })();
+  </script>
+  <script>
     // 인트로(오버레이) 배경만 랜덤 적용 (모바일은 고정 유지)
     // 같은 이미지가 연속으로 나오지 않도록 직전 선택값을 세션에 저장
     (() => {
@@ -191,6 +235,32 @@
       const gradient = 'linear-gradient(180deg, rgba(30,20,15,.50) 0%, rgba(30,20,15,.65) 50%, rgba(30,20,15,.78) 100%)';
       const fallback = 'color-mix(in oklab, var(--accent) 30%, var(--paper))';
       intro.style.background = `${gradient}, url("images/${pick}") center/cover no-repeat, ${fallback}`;
+    })();
+  </script>
+  <script>
+    // 팀 카드 스크롤 페이드인 애니메이션 (순차적 등장)
+    (() => {
+      const cards = document.querySelectorAll('.team-card');
+      if(!cards.length) return;
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, idx) => {
+          if(entry.isIntersecting){
+            // 각 카드마다 0.1초씩 지연시켜 순차적으로 나타남
+            const delay = Array.from(cards).indexOf(entry.target) * 100;
+            setTimeout(() => {
+              entry.target.classList.add('fade-in');
+            }, delay);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      cards.forEach(card => observer.observe(card));
     })();
   </script>
 </body>

@@ -60,16 +60,23 @@ html[data-theme="heritage"]{
    상단 헤더와 하단 푸터 레이아웃
 ======================================== */
 
-/* 헤더와 푸터: 양쪽 끝 정렬, 패딩, 배경색 */
+/* 헤더와 푸터: 양쪽 끝 정렬, 패딩 */
 .site-header,.site-footer{
   display:flex;align-items:center;justify-content:space-between;
-  padding:1rem;background:var(--brand);
+  padding:1rem;
 }
 
-/* 헤더: 상단 고정 (스크롤해도 따라다님) */
+/* 헤더: 상단 고정, 완전 투명 배경 */
 .site-header{
-  position:sticky;top:0;z-index:100;
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:transparent;
   border-bottom:none;
+  transition:background .25s ease, backdrop-filter .25s ease, color .25s ease;
+}
+
+/* 푸터: 배경색 유지 */
+.site-footer{
+  background:var(--brand);
 }
 
 /* 푸터: 상단 구분선 */
@@ -78,24 +85,42 @@ html[data-theme="heritage"]{
 }
 .site-footer{border-top:1px solid var(--line-strong);border-bottom:0;color:#0008}
 
-/* 로고: 굵은 글씨, 종이색, 호버 시 확대 효과 */
-.logo{font-weight:700;color:var(--paper);transition:all .2s ease;font-family:'Nanum Myeongjo', serif}
-.logo:hover{transform:scale(1.05);text-shadow:0 2px 8px rgba(0,0,0,.2)}
+/* 로고: 굵은 글씨, 흰색, 호버 시 확대 효과 */
+.logo{font-weight:700;color:#fff;transition:all .2s ease;font-family:'Nanum Myeongjo', serif;text-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.logo:hover{transform:scale(1.05);text-shadow:0 2px 8px rgba(0,0,0,.4)}
 
 /* 글로벌 내비게이션 메뉴: 가로 나열 */
 .gnb{display:flex;gap:.75rem;list-style:none;padding:0;margin:0;flex-wrap:wrap}
 .gnb a{
-  color:var(--paper);padding:.35rem .6rem;border-radius:.5rem;
+  color:#fff;padding:.35rem .6rem;border-radius:.5rem;
   transition:all .2s ease;
   font-family:'Nanum Myeongjo', serif;
+  text-shadow:0 1px 2px rgba(0,0,0,0.3);
 }
 
 /* 현재 페이지 및 호버 효과: 배경색, 테두리, 상승 효과 */
 [aria-current="page"], .gnb a:hover{
-  background:color-mix(in oklab,var(--paper) 20%, transparent);
-  outline:1px solid color-mix(in oklab,var(--paper) 40%, transparent);
+  background:rgba(255,255,255,0.2);
+  outline:1px solid rgba(255,255,255,0.3);
   transform:translateY(-2px);
-  box-shadow:0 4px 8px rgba(0,0,0,.15);
+  box-shadow:0 4px 8px rgba(0,0,0,.25);
+  text-shadow:0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* 스크롤 후: 헤더가 일반 배경 위로 넘어가면 브랜드 색상 배경 + 흰 글자 */
+.site-header.is-solid{
+  background:var(--brand);
+  backdrop-filter:none;
+  border-bottom:1px solid color-mix(in oklab,var(--brand) 40%, #0000);
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+}
+.site-header.is-solid .logo{color:#fff;text-shadow:none}
+.site-header.is-solid .gnb a{color:#fff;text-shadow:none}
+.site-header.is-solid [aria-current="page"],
+.site-header.is-solid .gnb a:hover{
+  background:rgba(255,255,255,0.18);
+  outline:1px solid rgba(255,255,255,0.28);
+  box-shadow:0 4px 10px rgba(0,0,0,.14);
 }
 
 /* 테마 선택 드롭다운 */
@@ -110,7 +135,7 @@ html[data-theme="heritage"]{
 ======================================== */
 
 /* main: 패딩 없음, 최대 너비 제한 없음 (전체 화면 사용) */
-main{padding:0;max-width:none;margin:0}
+main{padding:0;max-width:none;margin:0;margin-top:-3.5rem}
 
 /* main 내부 h1: 나눔명조 폰트, 큰 사이즈, 굵게 */
 main h1{
@@ -141,6 +166,7 @@ main h2{
   position:relative;
   display:grid;gap:.75rem;place-content:center;
   min-height:100svh;margin:0;padding:clamp(1.25rem,4vw,3rem);
+  padding-bottom:clamp(1.25rem,4vw,3rem);
   border-radius:0;
   color:#fff;
   /* 배경: 어두운 그라데이션 + 기본 이미지 */
@@ -198,13 +224,17 @@ main h2{
     color-mix(in oklab, var(--accent) 30%, var(--paper));
 }
 
-/* Index 페이지 히어로: 다른 이미지 사용 (five.jpg) */
+/* Index 페이지 히어로: 다른 이미지 사용 (five.jpg), 화면 가득 채우기 */
 main .intro-hero.vintage-shelves{
   background:
     linear-gradient(180deg, rgba(30,20,15,.50) 0%, rgba(30,20,15,.65) 50%, rgba(30,20,15,.78) 100%),
     url("../images/five.jpg") center/cover no-repeat,
     color-mix(in oklab, var(--accent) 30%, var(--paper));
-  margin:-2rem;margin-bottom:0;
+  background-size:cover;
+  background-position:center center;
+  margin:0;
+  margin-top:-3.5rem;
+  min-height:calc(100vh + 3.5rem);
 }
 
 /* 모바일: 모든 히어로에 three.jpg 사용 */
@@ -287,6 +317,7 @@ main section:not(.page-intro):not(.intro-hero){
 /* Library와 schedule 페이지: main에 패딩 적용 */
 body:has(h1:first-of-type:not(.intro-title)) main{
   padding:2rem;max-width:1200px;margin:0 auto;
+  margin-top:4rem;
 }
 
 /* Overlay intro: 고정된 오버레이로 4.5초 후 자동 페이드아웃 */
@@ -430,7 +461,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .team-grid{
   display:flex;
   flex-wrap:wrap;
-  gap:1.5rem;
+  gap:2rem 2.5rem;
   justify-content:center;
   margin-top:2rem;
 }
@@ -439,63 +470,257 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .team-card{
   flex:1;
   min-width:200px;
-  max-width:280px;
+  max-width:100%;
   text-align:center;
-  padding:2rem 1.5rem;
-  transition:all .3s ease;
+  padding:2.5rem 1.5rem;
+  transition:all .4s cubic-bezier(0.4, 0, 0.2, 1);
   background:var(--paper);
-  border:1px solid var(--line);
+  border:1px solid rgba(0,0,0,0.06);
+  position:relative;
+  overflow:hidden;
 }
 
-/* 호버 효과 */
+/* 플립카드만 페이드인 애니메이션 적용 */
+.flip-card {
+  width: 260px;
+  height: 340px;
+  margin: 0 auto;
+  min-width: 200px;
+  max-width: 100vw;
+  min-height: 280px;
+  max-height: 90vw;
+  display: flex;
+  align-items: stretch;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+}
+.flip-card.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.flip-card .flip-card-inner {
+  width: 100%;
+  height: 100%;
+}
+.flip-card-front, .flip-card-back {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+}
+.team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.10);
+  margin-bottom: 0;
+  background: #eee;
+}
+@media (max-width: 600px) {
+  .flip-card { width: 90vw; height: 60vw; min-width: 0; min-height: 0; }
+  .team-photo { height: 100%; }
+}
+
+/* 호버 효과: 떠오르고 확대 */
 .team-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 12px 32px rgba(0,0,0,.15);
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 16px 40px rgba(0,0,0,.15);
+  border-color:transparent;
 }
 
-/* 아바타: 원형 배지 */
+/* 아바타: 원형 배지 - 더 크고 입체적 */
 .team-avatar{
-  width:80px;
-  height:80px;
+  width:100px;
+  height:100px;
   border-radius:50%;
-  margin:0 auto 1rem;
+  margin:0 auto 1.5rem;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.5rem;
+  font-size:2rem;
   font-weight:700;
   color:#fff;
   font-family:'Nanum Myeongjo', serif;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  transition:all .4s ease;
+}
+
+.team-card:hover .team-avatar{
+  transform:scale(1.08);
+  box-shadow:0 12px 28px rgba(0,0,0,.2);
 }
 
 /* 인물별 아바타 색상 (차분하고 홈페이지와 어울리는 톤) */
+.team-card[data-person="시현"]{
+  background:linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
+}
 .team-card[data-person="시현"] .team-avatar{
-  background:#6B8CAE;
+  background:linear-gradient(135deg, #6B8CAE 0%, #5a7a9a 100%);
 }
 
+.team-card[data-person="태이"]{
+  background:linear-gradient(135deg, #fef5f8 0%, #fde8ef 100%);
+}
 .team-card[data-person="태이"] .team-avatar{
-  background:#C07D8F;
+  background:linear-gradient(135deg, #C07D8F 0%, #b06d7f 100%);
 }
 
+.team-card[data-person="희수"]{
+  background:linear-gradient(135deg, #f5faf7 0%, #e8f5ec 100%);
+}
 .team-card[data-person="희수"] .team-avatar{
-  background:#7BA881;
+  background:linear-gradient(135deg, #7BA881 0%, #6b9871 100%);
+}
+
+.team-card[data-person="지원"]{
+  background:linear-gradient(135deg, #f9f7fb 0%, #f0ebf5 100%);
+}
+.team-card[data-person="지원"] .team-avatar{
+  background:linear-gradient(135deg, #9B7EBD 0%, #8b6ead 100%);
 }
 
 /* 팀 멤버 이름 */
 .team-name{
-  font-size:1.3rem;
+  font-size:1.4rem;
   font-weight:700;
   color:var(--spine-dark);
-  margin:.5rem 0;
+  margin:.75rem 0;
   font-family:'Nanum Myeongjo', serif;
+  letter-spacing:-.02em;
 }
 
 /* 팀 멤버 소개 */
 .team-bio{
-  font-size:.95rem;
-  color:var(--spine);
-  line-height:1.6;
+  font-size:1rem;
+  color:color-mix(in oklab, var(--spine) 85%, transparent);
+  line-height:1.65;
   margin:.5rem 0 0;
+  letter-spacing:.01em;
+}
+
+/* 카드 뒷면 소개글 가독성 개선 */
+.flip-card .flip-card-back .team-bio {
+  font-size: 0.95rem;
+  color: color-mix(in oklab, var(--spine) 90%, #fff 10%);
+  line-height: 1.7;
+  margin: 1.1rem 0 0 0;
+  letter-spacing: 0.01em;
+  text-align: center;
+  word-break: keep-all;
+  white-space: pre-line;
+  padding: 0 1rem;
+}
+@media (max-width: 600px) {
+  .flip-card .flip-card-back .team-bio {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* =============================
+   TEAM FLIP CARD EFFECT
+   ============================= */
+.flip-card {
+  perspective: 1200px;
+  background: none !important;
+  border: none;
+  box-shadow: none;
+}
+.flip-card .flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(.4,1.6,.4,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card-inner,
+.flip-card:focus-within .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.flip-card-front {
+  background: #fff;
+  z-index: 2;
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+  padding: 0;
+}
+.flip-card-back {
+  background: rgba(255,255,255,0.98);
+  transform: rotateY(180deg);
+  z-index: 1;
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+  padding: 2.5rem 1.5rem;
+}
+.team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.10);
+  margin-bottom: 0;
+  background: #eee;
+}
+@media (max-width: 600px) {
+  .flip-card { width: 90vw; height: 60vw; min-width: 0; min-height: 0; }
+  .team-photo { height: 100%; }
+}
+
+/* 카드 뒷면에서도 아바타 크기 고정 */
+.flip-card .flip-card-back .team-avatar {
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
+  max-width: 90px;
+  max-height: 90px;
+  margin: 0 auto 1.1rem auto;
+  font-size: 1.5rem;
+}
+
+/* 카드 뒷면(소개)에서 기존 .team-card 스타일 유지 */
+.flip-card .flip-card-back .team-avatar {
+  margin-bottom: 1rem;
+}
+.flip-card .flip-card-back .team-name {
+  margin-top: 0;
+}
+.flip-card .flip-card-back .team-bio {
+  margin-bottom: 0;
+}
+
+/* 카드 뒷면 아바타에 멤버별 색상 강제 적용 */
+.flip-card[data-person="시현"] .flip-card-back .team-avatar {
+  background: linear-gradient(135deg, #6B8CAE 0%, #5a7a9a 100%) !important;
+  color: #fff !important;
+}
+.flip-card[data-person="태이"] .flip-card-back .team-avatar {
+  background: linear-gradient(135deg, #C07D8F 0%, #b06d7f 100%) !important;
+  color: #fff !important;
+}
+.flip-card[data-person="희수"] .flip-card-back .team-avatar {
+  background: linear-gradient(135deg, #7BA881 0%, #6b9871 100%) !important;
+  color: #fff !important;
+}
+.flip-card[data-person="지원"] .flip-card-back .team-avatar {
+  background: linear-gradient(135deg, #9B7EBD 0%, #8b6ead 100%) !important;
+  color: #fff !important;
+}
+.flip-card .flip-card-back .team-avatar {
+  background: #888;
+  color: #fff;
 }
 
 /* ========================================
@@ -506,34 +731,29 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .about-site-section{
   text-align:center;
   position:relative;
-  background:color-mix(in oklab,var(--brand) 3%, var(--paper));
+  background:var(--brand); /* 단색 배경 */
+  color:#fff; /* 내부 텍스트 가독성 향상 */
   padding:3rem 2rem;
   margin:3rem -2rem 0;
   border-radius:1rem;
-  border:1px solid color-mix(in oklab,var(--brand) 10%, var(--line));
+  border:none;
   box-shadow:0 2px 0 rgba(0,0,0,.03), 0 12px 28px rgba(0,0,0,.08);
   transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
 
 .about-site-section h2{
   margin-bottom:1.5rem;
-  color:var(--brand);
+  color:#fff; /* 제목도 흰색으로 */
 }
 
 /* 상단 리본 효과 */
 .about-site-section::after{
-  content:"";
-  position:absolute;left:0;right:0;top:0;height:10px;
-  background:linear-gradient(90deg, color-mix(in oklab,var(--brand) 90%, #0000) 0%, var(--accent) 100%);
-  border-top-left-radius:1rem;border-top-right-radius:1rem;
+  content:none; /* 리본 제거로 단색 유지 */
 }
 
 /* 종이 질감 (아주 옅게) */
 .about-site-section::before{
-  content:"";
-  position:absolute;inset:0;pointer-events:none;border-radius:inherit;
-  background:repeating-linear-gradient(0deg, #0000 0 6px, rgba(0,0,0,.03) 6px 7px);
-  mix-blend-mode:soft-light;opacity:.06;
+  content:none; /* 질감 제거로 완전 단색 */
 }
 
 /* 호버/포커스 상승 효과 */
@@ -541,7 +761,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .about-site-section:focus-within{
   transform:translateY(-4px);
   box-shadow:0 4px 0 rgba(0,0,0,.04), 0 18px 36px rgba(0,0,0,.12);
-  background:color-mix(in oklab,var(--brand) 2.2%, var(--paper));
+  /* 배경색은 단색 유지 */
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -938,13 +1158,12 @@ html{scroll-behavior:smooth}
     padding: 2rem 1.5rem;
     margin: 3rem -1.5rem 0;
   }
-  
+   
   /* 테이블 컨테이너에 가로 스크롤 추가 */
   .panel {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
   /* 테이블 최소 너비 설정으로 레이아웃 유지 */
   .table {
     min-width: 500px;

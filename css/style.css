@@ -164,8 +164,11 @@ main h2{
 /* 인트로 히어로: 전체 화면, 중앙 정렬, 배경 이미지 + 그라데이션 */
 .intro-hero{
   position:relative;
-  display:grid;gap:.75rem;place-content:center;
+  display:grid;gap:.75rem;
+  align-content:center;
+  justify-content:center;
   min-height:100svh;margin:0;padding:clamp(1.25rem,4vw,3rem);
+  padding-top:clamp(7rem,12vh,10rem);
   padding-bottom:clamp(1.25rem,4vw,3rem);
   border-radius:0;
   color:#fff;

@@ -17,18 +17,31 @@
     .meta{display:grid;gap:.4rem}
     .rating{display:flex;align-items:center;gap:.5rem}
     .stars{--size:22px;display:inline-flex;gap:2px}
-    .star{width:var(--size);height:var(--size);color:gold;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
-    .star.empty{color:#ccc}
+    .star{width:var(--size);height:var(--size);fill:gold;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
+    .star.empty{fill:#ccc}
+    .star.half{fill:gold}
     .pill{display:inline-flex;align-items:center;gap:.25rem;margin-right:.35rem}
     .review-form{display:grid;gap:.5rem;margin-top:1rem}
     .review-form textarea{min-height:88px;resize:vertical;padding:.6rem;border-radius:.6rem;border:1px solid var(--line)}
     .review{border-top:1px solid var(--line);padding:.75rem 0}
     .review .who{font-weight:700;margin-right:.4rem}
+    
+    /* 답글 스타일 */
+    .replies{margin-left:1.5rem;margin-top:.8rem;margin-bottom:.6rem;padding:.6rem .8rem;background:color-mix(in oklab,#8B4513 8%, var(--paper));border-radius:.5rem;border-left:3px solid #8B4513}
+    .reply{padding:.5rem 0;font-size:.9rem;position:relative;line-height:1.5}
+    .reply:not(:last-child){border-bottom:1px solid color-mix(in oklab,#8B4513 15%, var(--paper))}
+    .reply .who{font-weight:600;margin-right:.5rem;color:#8B4513;opacity:.9}
+    .reply .who::before{content:'↳';margin-right:.3rem;opacity:.6}
+    .reply-form{display:grid;gap:.3rem;margin-top:.6rem;padding:.5rem;background:color-mix(in oklab,var(--accent) 5%, var(--paper));border-radius:.5rem}
+    .reply-form input{padding:.4rem;border:1px solid var(--line);border-radius:.4rem;font-size:.85rem}
+    .reply-btn{padding:.3rem .6rem;font-size:.8rem;cursor:pointer;background:none;border:1px solid var(--line);border-radius:.4rem;color:var(--spine);transition:all .2s;margin-top:.3rem}
+    .reply-btn:hover{background:var(--accent);border-color:var(--line-strong)}
 
     /* 별점 입력 (라디오) */
-    .star-input{display:inline-flex;flex-direction:row-reverse;gap:.25rem}
+    .star-input{display:inline-flex;flex-direction:row-reverse;gap:.05rem}
     .star-input input{display:none}
-    .star-input label{cursor:pointer;font-size:1.6rem;color:#ccc;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
+    .star-input label{cursor:pointer;font-size:1.6rem;color:#ccc;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12));position:relative}
+    .star-input label.half-star{width:0.5em;overflow:hidden;margin-right:-0.5em}
     .star-input input:checked ~ label,
     .star-input label:hover,
     .star-input label:hover ~ label{color:gold}
@@ -49,12 +62,13 @@
     </nav>
   </header>
   <main id="main">
-    <h1>책 상세</h1>
+    <h1>< 책 상세 ></h1>
     <section class="detail-wrap">
       <div class="cover" id="cover"></div>
       <div class="meta">
         <h2 id="title" style="margin:0"></h2>
         <p id="author" class="muted" style="margin:.2rem 0 0 0"></p>
+        <p id="bookInfo" class="muted" style="margin:.2rem 0 0 0"></p>
         <div class="rating" id="rating"></div>
         <div id="tags" style="margin-top:.3rem"></div>
         <p id="desc" style="margin-top:.6rem"></p>
@@ -67,10 +81,15 @@
           <form id="reviewForm" class="review-form">
             <div class="star-input" aria-label="별점 주기">
               <input type="radio" name="rating" id="r5" value="5"><label for="r5">★</label>
+              <input type="radio" name="rating" id="r4_5" value="4.5"><label for="r4_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r4" value="4"><label for="r4">★</label>
+              <input type="radio" name="rating" id="r3_5" value="3.5"><label for="r3_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r3" value="3" checked><label for="r3">★</label>
+              <input type="radio" name="rating" id="r2_5" value="2.5"><label for="r2_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r2" value="2"><label for="r2">★</label>
+              <input type="radio" name="rating" id="r1_5" value="1.5"><label for="r1_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r1" value="1"><label for="r1">★</label>
+              <input type="radio" name="rating" id="r0_5" value="0.5"><label for="r0_5" class="half-star">★</label>
             </div>
             <textarea name="comment" placeholder="어땠는지 짧게 남겨 주세요" required></textarea>
             <div style="display:flex;gap:.5rem;align-items:center">
@@ -108,9 +127,19 @@
     function qs(k){return new URL(location.href).searchParams.get(k)}
     function renderStars(avg){
       const s = [];
-      for(let i=1;i<=5;i++){
-        const cls = i <= Math.round(avg) ? 'star' : 'star empty';
-        s.push(`<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
+      const fullStars = Math.floor(avg);
+      const decimal = avg - fullStars;
+      const hasHalf = decimal >= 0.25 && decimal < 0.75;
+      const roundUp = decimal >= 0.75;
+      
+      for(let i=1; i<=5; i++){
+        if(i <= fullStars || (i === fullStars + 1 && roundUp)) {
+          s.push(`<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
+        } else if(i === fullStars + 1 && hasHalf) {
+          s.push(`<svg class="star half" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="half"><stop offset="50%" stop-color="gold"/><stop offset="50%" stop-color="#ccc"/></linearGradient></defs><path fill="url(#half)" d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
+        } else {
+          s.push(`<svg class="star empty" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
+        }
       }
       return `<div class="stars" aria-hidden="true">${s.join('')}</div>`
     }
@@ -120,6 +149,7 @@
     const coverEl = document.getElementById('cover');
     const titleEl = document.getElementById('title');
     const authorEl = document.getElementById('author');
+    const bookInfoEl = document.getElementById('bookInfo');
     const ratingEl = document.getElementById('rating');
     const descEl = document.getElementById('desc');
     const tagsEl = document.getElementById('tags');
@@ -136,6 +166,28 @@
       }
       titleEl.textContent = book.title;
       authorEl.textContent = `${book.author}${book.publisher? ' · ' + book.publisher : ''}${book.year? ' · ' + book.year : ''}`;
+      
+      // 분류와 페이지 수 표시
+      const infoArr = [];
+      if(book.category) infoArr.push(book.category);
+      if(book.pages) infoArr.push(book.pages);
+      if(book.selectedBy) {
+        const memberHearts = {
+          '시현': '💙',
+          '태이': '🩷',
+          '희수': '💚',
+          '지원': '💜'
+        };
+        const heart = memberHearts[book.selectedBy] || '📚';
+        infoArr.push(`${heart} ${book.selectedBy} 추천`);
+      }
+      if(infoArr.length > 0) {
+        bookInfoEl.textContent = infoArr.join(' · ');
+        bookInfoEl.style.display = 'block';
+      } else {
+        bookInfoEl.style.display = 'none';
+      }
+      
       const avg = computeAverageRating(book);
       ratingEl.innerHTML = `${renderStars(avg)} <strong>${avg || '0.0'}</strong><span class="muted"> / 5</span>`;
       descEl.textContent = book.description || '';
@@ -151,6 +203,9 @@
       const locals = getLocalReviews(book.id);
       let all = [...(book.reviews||[]), ...(locals||[])];
       
+      // 로컬 리뷰에 ID가 없으면 생성
+      all = all.map((r, idx) => ({...r, id: r.id || `review_${Date.now()}_${idx}`}));
+      
       // 정렬
       if(reviewSortOrder==='rating'){
         all.sort((a,b) => (b.rating||0) - (a.rating||0));
@@ -161,11 +216,118 @@
       if(!all.length){
         reviewsEl.innerHTML = '<p class="muted">아직 후기가 없어요. 첫번째 후기를 남겨보세요!</p>';
       }else{
-        reviewsEl.innerHTML = all.map(r=>`<div class="review"><span class="who">${r.user||'익명'}</span> <span class="muted">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span><div>${r.comment||''}</div></div>`).join('');
+        reviewsEl.innerHTML = all.map(r => {
+          // 로컬스토리지 답글 + 기본 리뷰의 replies 합치기
+          const localReplies = getReviewReplies(book.id, r.id);
+          const defaultReplies = r.replies || [];
+          const allReplies = [...defaultReplies, ...localReplies];
+          
+          const repliesHtml = allReplies.length ? 
+            `<div class="replies">
+              ${allReplies.map((rep, repIdx) => `
+                <div class="reply">
+                  <span class="who">${rep.user||'익명'}</span>${rep.comment}
+                </div>
+              `).join('')}
+            </div>` : '';
+          
+          // 별점 표시 (반개 지원)
+          const fullStars = Math.floor(r.rating);
+          const decimal = r.rating - fullStars;
+          const hasHalf = decimal >= 0.25 && decimal < 0.75;
+          const roundUp = decimal >= 0.75;
+          
+          let starDisplay = '★'.repeat(fullStars + (roundUp ? 1 : 0));
+          if(hasHalf) starDisplay += '⯨';
+          starDisplay += '☆'.repeat(5 - fullStars - (hasHalf ? 1 : 0) - (roundUp ? 1 : 0));
+          
+          return `
+            <div class="review" data-review-id="${r.id}">
+              <span class="who">${r.user||'익명'}</span> 
+              <span class="muted">${starDisplay}</span>
+              <div>${r.comment||''}</div>
+              ${repliesHtml}
+              <button class="reply-btn" data-review-id="${r.id}">답글</button>
+              <div class="reply-form" id="replyForm_${r.id}" style="display:none">
+                <input type="text" placeholder="이름(선택)" class="reply-user">
+                <input type="text" placeholder="답글을 입력하세요" class="reply-comment">
+                <div style="display:flex;gap:.3rem">
+                  <button type="button" class="btn" style="flex:1;font-size:.85rem;padding:.3rem" onclick="window.submitReply('${r.id}')">등록</button>
+                  <button type="button" class="btn ghost" style="flex:1;font-size:.85rem;padding:.3rem" onclick="window.cancelReply('${r.id}')">취소</button>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+        
+        // 답글 버튼 이벤트
+        document.querySelectorAll('.reply-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const reviewId = btn.dataset.reviewId;
+            const form = document.getElementById(`replyForm_${reviewId}`);
+            form.style.display = form.style.display === 'none' ? 'grid' : 'none';
+          });
+        });
       }
+    }
+    
+    // 답글 등록
+    window.submitReply = function(reviewId) {
+      const form = document.getElementById(`replyForm_${reviewId}`);
+      const user = form.querySelector('.reply-user').value.trim();
+      const comment = form.querySelector('.reply-comment').value.trim();
+      
+      if(!comment) {
+        alert('답글을 입력해주세요.');
+        return;
+      }
+      
+      addReviewReply(book.id, reviewId, { user: user || '익명', comment });
+      form.querySelector('.reply-user').value = '';
+      form.querySelector('.reply-comment').value = '';
+      form.style.display = 'none';
+      render();
+    }
+    
+    // 답글 취소
+    window.cancelReply = function(reviewId) {
+      const form = document.getElementById(`replyForm_${reviewId}`);
+      form.querySelector('.reply-user').value = '';
+      form.querySelector('.reply-comment').value = '';
+      form.style.display = 'none';
     }
 
     render();
+    
+    // 추천인 색상에 따라 헤더 스타일 변경
+    if(book && book.selectedBy) {
+      const memberColors = {
+        '시현': '#5B7A9E',
+        '태이': '#D989A8',
+        '희수': '#6D9872',
+        '지원': '#9B86BD'
+      };
+      const color = memberColors[book.selectedBy];
+      if(color) {
+        const header = document.querySelector('.site-header');
+        header.style.background = 'var(--paper)';
+        header.style.borderBottom = `2px solid ${color}`;
+        
+        // 로고와 네비게이션 링크 색상 변경
+        const logo = header.querySelector('.logo');
+        const navLinks = header.querySelectorAll('.gnb a');
+        
+        if(logo) {
+          logo.style.color = color;
+          logo.style.fontWeight = '800';
+          logo.style.textShadow = 'none';
+        }
+        navLinks.forEach(link => {
+          link.style.color = color;
+          link.style.textShadow = 'none';
+          link.style.fontWeight = '700';
+        });
+      }
+    }
     
     // 리뷰 정렬
     document.getElementById('reviewSort')?.addEventListener('change', e => {

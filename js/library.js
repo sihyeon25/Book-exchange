@@ -40,7 +40,8 @@ function getFilteredBooks(){
     const q = currentSearch.toLowerCase();
     list = list.filter(b => 
       b.title.toLowerCase().includes(q) || 
-      b.author.toLowerCase().includes(q)
+      b.author.toLowerCase().includes(q) ||
+      (b.selectedBy && b.selectedBy.toLowerCase().includes(q))
     );
   }
   
@@ -78,7 +79,7 @@ function renderLibrary(){
   // 읽는중/완독 분류
   const reading = list.filter(b => {
     // 임시: id에 따라 나눔 (실제로는 status 필드 추가 권장)
-    return ['glico','summer-100m','summer-outside'].includes(b.id);
+    return ['glico','summer-100m','summer-outside','kind-wins'].includes(b.id);
   });
   const completed = list.filter(b => !reading.includes(b));
   
@@ -124,6 +125,16 @@ function renderBookCard(b, status){
   const statusLabel = status==='reading'?'읽는 중':'완독';
   const statusClass = status==='reading'?'reading':'completed';
   
+  // 멤버별 색상 하트
+  const memberHearts = {
+    '시현': '💙',
+    '태이': '🩷',
+    '희수': '💚',
+    '지원': '💜'
+  };
+  const selectedHeart = b.selectedBy ? memberHearts[b.selectedBy] || '📚' : '📚';
+  const selectedBy = b.selectedBy ? `<div style="margin-top:.3rem;font-size:.75rem;color:var(--spine);opacity:.8">${selectedHeart} ${b.selectedBy} 추천</div>` : '';
+  
   return `
     <article class="card book-card" data-book-id="${b.id}" tabindex="0">
       <div class="book-status ${statusClass}">${statusLabel}</div>
@@ -131,20 +142,32 @@ function renderBookCard(b, status){
       <h3 class="book-title">${b.title}</h3>
       <p class="book-author">${b.author}</p>
       <div style="margin-top:.4rem;font-size:.85rem;color:var(--spine)">★ ${avg||'0.0'}</div>
+      ${selectedBy}
     </article>
   `;
 }
 
 // 태그 필터 버튼
+let tagsExpanded = false;
+
 function renderTagFilters(){
   const tags = getAllTags();
   const el = document.getElementById('tagFilters');
   if(!tags.length){el.innerHTML='';return}
   
-  el.innerHTML = tags.map(t => {
+  const maxVisible = 5; // 처음에 보이는 태그 수
+  const visibleTags = tagsExpanded ? tags : tags.slice(0, maxVisible);
+  const hasMore = tags.length > maxVisible;
+  
+  el.innerHTML = visibleTags.map(t => {
     const active = currentTag===t ? ' active' : '';
     return `<button class="tag-filter${active}" data-tag="${t}" style="padding:.3rem .6rem;border:1px solid var(--line-strong);border-radius:999px;background:${active?'var(--accent)':'var(--paper)'};cursor:pointer;font-size:.85rem">#${t}</button>`;
   }).join('');
+  
+  // 더보기 버튼
+  if(hasMore){
+    el.innerHTML += `<button id="toggleTagsBtn" style="padding:.3rem .6rem;border:1px solid var(--line-strong);border-radius:999px;background:var(--paper);cursor:pointer;font-size:.85rem;color:var(--ink);opacity:.7">${tagsExpanded ? '접기 ▲' : `더보기 (+${tags.length - maxVisible}) ▼`}</button>`;
+  }
   
   el.querySelectorAll('.tag-filter').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -153,6 +176,15 @@ function renderTagFilters(){
       renderLibrary();
     });
   });
+  
+  // 더보기/접기 버튼
+  const toggleBtn = document.getElementById('toggleTagsBtn');
+  if(toggleBtn){
+    toggleBtn.addEventListener('click', () => {
+      tagsExpanded = !tagsExpanded;
+      renderTagFilters();
+    });
+  }
 }
 
 // 이벤트 리스너

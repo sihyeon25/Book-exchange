@@ -86,7 +86,7 @@ html[data-theme="heritage"]{
 .site-footer{border-top:1px solid var(--line-strong);border-bottom:0;color:#0008}
 
 /* 로고: 굵은 글씨, 흰색, 호버 시 확대 효과 */
-.logo{font-weight:700;color:#fff;transition:all .2s ease;font-family:'Nanum Myeongjo', serif;text-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.logo{font-weight:700;color:#fff;transition:all .2s ease;font-family:'Nanum Myeongjo', serif;text-shadow:0 1px 3px rgba(0,0,0,0.3);text-decoration:none}
 .logo:hover{transform:scale(1.05);text-shadow:0 2px 8px rgba(0,0,0,.4)}
 
 /* 글로벌 내비게이션 메뉴: 가로 나열 */
@@ -661,11 +661,65 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   padding: 0;
 }
 .flip-card-back {
-  background: rgba(255,255,255,0.98);
+  background: #fff;
   transform: rotateY(180deg);
   z-index: 1;
   box-shadow: 0 8px 24px rgba(0,0,0,.10);
   padding: 2.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+/* 배경에 각자 사진을 투명하게 깔기 */
+.flip-card[data-person="시현"] .flip-card-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../images/sh.jpg') center/cover no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+.flip-card[data-person="태이"] .flip-card-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../images/te.jpg') center/cover no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+.flip-card[data-person="희수"] .flip-card-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../images/hs.jpg') center/cover no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+.flip-card[data-person="지원"] .flip-card-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../images/jw.jpg') center/cover no-repeat;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+/* 책갈피 느낌: 상단에 구멍 장식 */
+.flip-card-back::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 3;
 }
 .team-photo {
   width: 100%;
@@ -681,16 +735,27 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   .team-photo { height: 100%; }
 }
 
-/* 카드 뒷면에서도 아바타 크기 고정 */
+/* 카드 뒷면에서 이름만 표시 - 동그라미 제거 */
 .flip-card .flip-card-back .team-avatar {
-  width: 90px;
-  height: 90px;
-  min-width: 90px;
-  min-height: 90px;
-  max-width: 90px;
-  max-height: 90px;
-  margin: 0 auto 1.1rem auto;
-  font-size: 1.5rem;
+  width: auto;
+  height: auto;
+  min-width: auto;
+  min-height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0 auto 1.5rem auto;
+  padding: 0.3rem 0;
+  font-size: 2.2rem;
+  font-family: 'Grandiflora One', serif;
+  position: relative;
+  z-index: 2;
+  background: none !important;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--spine-dark) !important;
+  border-bottom: 2px solid currentColor;
+  display: inline-block;
 }
 
 /* 카드 뒷면(소개)에서 기존 .team-card 스타일 유지 */
@@ -702,24 +767,35 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 }
 .flip-card .flip-card-back .team-bio {
   margin-bottom: 0;
+  font-family: 'Grandiflora One', serif;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  position: relative;
+  z-index: 2;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  padding: 0 0.8rem;
+  text-align: center;
+  color: var(--ink);
+  opacity: 0.9;
 }
 
-/* 카드 뒷면 아바타에 멤버별 색상 강제 적용 */
+/* 카드 뒷면 아바타에 멤버별 색상 적용 - 사진에서 추출한 색상 */
 .flip-card[data-person="시현"] .flip-card-back .team-avatar {
-  background: linear-gradient(135deg, #6B8CAE 0%, #5a7a9a 100%) !important;
-  color: #fff !important;
+  color: #5B7A9E !important;
+  border-bottom-color: #5B7A9E !important;
 }
 .flip-card[data-person="태이"] .flip-card-back .team-avatar {
-  background: linear-gradient(135deg, #C07D8F 0%, #b06d7f 100%) !important;
-  color: #fff !important;
+  color: #B8707F !important;
+  border-bottom-color: #B8707F !important;
 }
 .flip-card[data-person="희수"] .flip-card-back .team-avatar {
-  background: linear-gradient(135deg, #7BA881 0%, #6b9871 100%) !important;
-  color: #fff !important;
+  color: #6D9872 !important;
+  border-bottom-color: #6D9872 !important;
 }
 .flip-card[data-person="지원"] .flip-card-back .team-avatar {
-  background: linear-gradient(135deg, #9B7EBD 0%, #8b6ead 100%) !important;
-  color: #fff !important;
+  color: #8B71AC !important;
+  border-bottom-color: #8B71AC !important;
 }
 .flip-card .flip-card-back .team-avatar {
   background: #888;
@@ -858,11 +934,6 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .table{width:100%;border-collapse:collapse;background:var(--paper);font-family:'Nanum Myeongjo', serif}
 .table th,.table td{padding:.65rem;border-bottom:1px solid var(--line);transition:all .2s ease}
 
-/* 날짜 그룹핑: 3개 행마다 두꺼운 구분선 (한 기간 = 3권) */
-.table tbody tr:nth-child(3n){
-  border-bottom:2px solid color-mix(in oklab,var(--brand) 15%, var(--paper));
-}
-
 /* 테이블 헤더: 밝은 브랜드 색상 배경 */
 .table thead th{
   background:color-mix(in oklab,var(--brand) 15%, var(--paper));
@@ -871,10 +942,22 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   font-weight:700;
 }
 
-/* 3색 얼룩말 줄무늬: 3개 행마다 다른 밝기 */
-.table tbody tr:nth-child(3n+1){background:color-mix(in oklab,var(--paper) 96%, var(--accent))}
-.table tbody tr:nth-child(3n+2){background:color-mix(in oklab,var(--paper) 92%, var(--accent))}
-.table tbody tr:nth-child(3n+3){background:color-mix(in oklab,var(--paper) 88%, var(--accent))}
+/* 1차 일정: 3권 기준 스타일 */
+.table-3books tbody tr:nth-child(3n){
+  border-bottom:2px solid color-mix(in oklab,var(--brand) 15%, var(--paper));
+}
+.table-3books tbody tr:nth-child(3n+1){background:color-mix(in oklab,var(--paper) 96%, var(--accent))}
+.table-3books tbody tr:nth-child(3n+2){background:color-mix(in oklab,var(--paper) 92%, var(--accent))}
+.table-3books tbody tr:nth-child(3n+3){background:color-mix(in oklab,var(--paper) 88%, var(--accent))}
+
+/* 2차 일정: 4권 기준 스타일 */
+.table:not(.table-3books) tbody tr:nth-child(4n){
+  border-bottom:2px solid color-mix(in oklab,var(--brand) 15%, var(--paper));
+}
+.table:not(.table-3books) tbody tr:nth-child(4n+1){background:color-mix(in oklab,var(--paper) 96%, var(--accent))}
+.table:not(.table-3books) tbody tr:nth-child(4n+2){background:color-mix(in oklab,var(--paper) 92%, var(--accent))}
+.table:not(.table-3books) tbody tr:nth-child(4n+3){background:color-mix(in oklab,var(--paper) 88%, var(--accent))}
+.table:not(.table-3books) tbody tr:nth-child(4n+4){background:color-mix(in oklab,var(--paper) 84%, var(--accent))}
 
 /* 호버 효과: 마우스 올리면 오른쪽으로 이동 */
 .table tbody tr{
@@ -905,6 +988,11 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   background:color-mix(in oklab, #6BC47D 8%, var(--paper)) !important;
 }
 
+/* 지원: 진한 보라색 (8% 틴트) */
+.table tbody tr:has(td[data-person="지원"]){
+  background:color-mix(in oklab, #7B5FA3 8%, var(--paper)) !important;
+}
+
 /* 호버 시: 인물 색상 더 진하게 (15% 틴트) */
 .table tbody tr:has(td[data-person="시현"]):hover{
   background:color-mix(in oklab, #4A90E2 15%, var(--paper)) !important;
@@ -914,6 +1002,9 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 }
 .table tbody tr:has(td[data-person="희수"]):hover{
   background:color-mix(in oklab, #6BC47D 15%, var(--paper)) !important;
+}
+.table tbody tr:has(td[data-person="지원"]):hover{
+  background:color-mix(in oklab, #7B5FA3 15%, var(--paper)) !important;
 }
 
 /* ========================================

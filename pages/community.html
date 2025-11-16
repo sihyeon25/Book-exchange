@@ -9,12 +9,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    .quiz{display:grid;gap:.8rem}
-    .quiz .q{font-weight:700}
-    .quiz .choices{display:grid;gap:.4rem}
-    .badge{display:inline-flex;align-items:center;gap:.35rem;background:color-mix(in oklab,var(--accent) 55%, white);border:1px solid color-mix(in oklab,var(--accent) 80%, var(--paper));border-radius:999px;padding:.25rem .6rem}
-    .news li{margin:.35rem 0}
-    .events li{margin:.35rem 0}
+    .gossip-banner{background:linear-gradient(135deg, #f6e1c3, #e8d4b8);border:2px solid #d4a574;border-radius:.8rem;padding:1rem 1.5rem;margin-bottom:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .gossip-banner h2{margin:0 0 .5rem 0;font-size:1.3rem;color:#8B4513}
+    .gossip-content{font-size:1rem;line-height:1.6;color:#333}
+    .board-list{display:grid;gap:.6rem}
+    .board-item{padding:.8rem;border:1px solid var(--line);border-radius:.6rem;cursor:pointer;transition:all .2s}
+    .board-item:hover{background:color-mix(in oklab,var(--accent) 8%, var(--paper));border-color:var(--accent)}
+    .board-item .title{font-weight:600;margin-bottom:.2rem}
+    .board-item .meta{font-size:.85rem;color:var(--spine-dark);opacity:.7}
+    .coming-soon{text-align:center;padding:2rem;color:var(--spine-dark);opacity:.6}
+    .wishlist-item{display:flex;justify-content:space-between;align-items:center;padding:.6rem;border-bottom:1px solid var(--line)}
+    .wishlist-item:last-child{border-bottom:none}
+    .vote-btn{padding:.2rem .5rem;font-size:.8rem;border:1px solid var(--line);border-radius:.3rem;background:none;cursor:pointer;transition:all .2s}
+    .vote-btn:hover{background:var(--accent);border-color:var(--accent)}
+    .game-container{text-align:center;padding:2rem}
+    .game-btn{font-size:1.1rem;padding:.8rem 1.5rem}
   </style>
 </head>
 <body class="subpage">
@@ -26,44 +35,60 @@
         <li><a href="../index.html">홈</a></li>
         <li><a href="schedule.html">일정</a></li>
         <li><a href="library.html">도서관</a></li>
-          <li><a aria-current="page" href="community.html">커뮤니티</a></li>
-          <li><a href="myspace.html">내 공간</a></li>
+        <li><a aria-current="page" href="community.html">커뮤니티</a></li>
+        <li><a href="myspace.html">내 프로필</a></li>
+        <li><a href="faq.html">FAQ</a></li>
       </ul>
     </nav>
   </header>
   <main id="main">
     <h1>커뮤니티</h1>
     
-    <section class="panel">
-      <h2>📚 랜덤 책 뽑기</h2>
-      <p class="muted">오늘 읽을 책을 랜덤으로 추천받아보세요!</p>
-      <div style="margin-top:1rem;text-align:center">
-        <button class="btn" id="randomBtn" style="font-size:1.1rem;padding:.8rem 1.5rem">🎲 책 뽑기</button>
+    <!-- 오늘의 독서 가십 -->
+    <div class="gossip-banner">
+      <h2>� 오늘의 독서 가십</h2>
+      <div class="gossip-content" id="gossipContent">
+        "책을 읽는 사람은 두 번 산다" - 독서는 우리에게 무한한 경험을 선사합니다 ✨
       </div>
-      <div id="randomResult" style="margin-top:1rem"></div>
+    </div>
+
+    <!-- 1. 공지 게시판 -->
+    <section class="panel">
+      <h2>📢 공지사항</h2>
+      <div class="board-list" id="noticeBoard"></div>
     </section>
 
+    <!-- 2. 자유 게시판 (백엔드 시 활성화) -->
     <section class="panel">
-      <h2>독서 퀴즈</h2>
-      <div class="quiz" id="quiz"></div>
-      <div id="quizResult" class="muted"></div>
-      <div style="margin-top:.6rem"><button class="btn" id="quizStart">퀴즈 시작/다시하기</button></div>
-      
-      <!-- 리더보드 -->
-      <div style="margin-top:1.5rem;border-top:1px solid var(--line);padding-top:1rem">
-        <h3 style="margin:0 0 .5rem 0">내 기록</h3>
-        <div id="leaderboard"></div>
+      <h2>💬 자유 게시판</h2>
+      <div class="coming-soon">
+        <p>🚧 백엔드 연동 후 활성화 예정입니다</p>
+        <p class="muted" style="font-size:.9rem;margin-top:.5rem">곧 여러분의 이야기를 들을 수 있어요!</p>
       </div>
     </section>
 
+    <!-- 3. 읽고 싶은 책 위시리스트 -->
     <section class="panel">
-      <h2>요즘 뜨는 책</h2>
-      <div id="trending" class="card-grid"></div>
+      <h2>📚 읽고 싶은 책 위시리스트</h2>
+      <p class="muted" style="margin-bottom:1rem">다음에 읽고 싶은 책에 투표해주세요!</p>
+      <div id="wishlist"></div>
+      <div style="margin-top:1rem">
+        <input type="text" id="newWishBook" placeholder="책 제목 입력" style="padding:.5rem;border:1px solid var(--line);border-radius:.5rem;width:100%;max-width:300px">
+        <button class="btn" id="addWishBtn" style="margin-left:.5rem">추가</button>
+      </div>
     </section>
 
+    <!-- 4. 간단한 게임 -->
     <section class="panel">
-      <h2>독서 뉴스</h2>
-      <ul class="news" id="news"></ul>
+      <h2>🎮 독서 게임</h2>
+      <div class="game-container">
+        <p style="margin-bottom:1rem">오늘 읽을 책을 랜덤으로 뽑아보세요!</p>
+        <button class="btn game-btn" id="randomBookBtn">🎲 랜덤 책 뽑기</button>
+        <div id="randomResult" style="margin-top:1.5rem"></div>
+      </div>
+      <div style="border-top:1px solid var(--line);margin-top:1.5rem;padding-top:1.5rem">
+        <a href="game.html" class="btn ghost" style="width:100%;text-align:center">더 많은 게임 보기 →</a>
+      </div>
     </section>
 
     <nav class="page-nav" aria-label="페이지 네비게이션">
@@ -78,134 +103,107 @@
 
   <script src="../js/bookData.js"></script>
   <script>
+    // 오늘의 가십 랜덤 표시
+    const gossips = [
+      '"책을 읽는 사람은 두 번 산다" - 독서는 우리에게 무한한 경험을 선사합니다 ✨',
+      '📚 오늘 하루 30분만 책을 읽어보세요. 작은 습관이 큰 변화를 만듭니다!',
+      '🌟 책장을 넘길 때마다 새로운 세계가 펼쳐집니다',
+      '☕ 커피 한 잔과 함께하는 독서 시간, 최고의 힐링이죠!',
+      '💡 독서는 마음의 양식이자 영혼의 창문입니다'
+    ];
+    document.getElementById('gossipContent').textContent = gossips[Math.floor(Math.random() * gossips.length)];
+
+    // 공지사항 데이터
+    const notices = [
+      { id: 1, title: '🎉 12월 독서 모임 일정 공지', date: '2025-11-10', content: '12월 15일 오후 7시, 강남 카페에서 만나요!' },
+      { id: 2, title: '🎂 희수님 생일 축하합니다!', date: '2025-11-08', content: '11월 20일은 희수님의 생일! 축하 메시지를 남겨주세요 🎈' },
+      { id: 3, title: '📖 신규 도서 추가 안내', date: '2025-11-05', content: '도서관에 새로운 책들이 추가되었어요. 확인해보세요!' }
+    ];
+
+    function renderNotices() {
+      const el = document.getElementById('noticeBoard');
+      el.innerHTML = notices.map(n => `
+        <div class="board-item">
+          <div class="title">${n.title}</div>
+          <div class="meta">${n.date} · ${n.content}</div>
+        </div>
+      `).join('');
+    }
+
+    // 위시리스트
+    function getWishlist() {
+      try {
+        return JSON.parse(localStorage.getItem('wishlist') || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function saveWishlist(list) {
+      localStorage.setItem('wishlist', JSON.stringify(list));
+    }
+
+    function renderWishlist() {
+      const list = getWishlist();
+      const el = document.getElementById('wishlist');
+      
+      if (list.length === 0) {
+        el.innerHTML = '<p class="muted">아직 추가된 책이 없어요. 첫 번째 책을 추가해보세요!</p>';
+        return;
+      }
+
+      el.innerHTML = list.map((item, idx) => `
+        <div class="wishlist-item">
+          <div>
+            <strong>${item.title}</strong>
+            <span class="muted" style="margin-left:.5rem">${item.votes || 0}표</span>
+          </div>
+          <button class="vote-btn" onclick="voteBook(${idx})">👍 투표</button>
+        </div>
+      `).join('');
+    }
+
+    window.voteBook = function(index) {
+      const list = getWishlist();
+      if (!list[index].votes) list[index].votes = 0;
+      list[index].votes++;
+      saveWishlist(list);
+      renderWishlist();
+    }
+
+    document.getElementById('addWishBtn').addEventListener('click', () => {
+      const input = document.getElementById('newWishBook');
+      const title = input.value.trim();
+      
+      if (!title) {
+        alert('책 제목을 입력해주세요!');
+        return;
+      }
+
+      const list = getWishlist();
+      list.push({ title, votes: 0 });
+      saveWishlist(list);
+      input.value = '';
+      renderWishlist();
+    });
+
     // 랜덤 책 뽑기
-    document.getElementById('randomBtn').addEventListener('click', () => {
+    document.getElementById('randomBookBtn').addEventListener('click', () => {
       const rnd = books[Math.floor(Math.random() * books.length)];
       const avg = computeAverageRating(rnd);
       document.getElementById('randomResult').innerHTML = `
-        <div class="card" style="cursor:pointer;text-align:center" onclick="location.href='book-detail.html?id=${rnd.id}'">
+        <div class="card" style="cursor:pointer;max-width:400px;margin:0 auto" onclick="location.href='book-detail.html?id=${rnd.id}'">
           <h3 style="margin:.3rem 0">${rnd.title}</h3>
           <p class="muted">${rnd.author}</p>
-          <div style="margin-top:.3rem">★ ${avg||'0.0'}</div>
-          <button class="btn" style="margin-top:.6rem">상세 보기</button>
+          <div style="margin-top:.5rem">⭐ ${avg || '0.0'} / 5</div>
+          <button class="btn" style="margin-top:.8rem">상세 보기</button>
         </div>
       `;
     });
-    
-    // 간단한 퀴즈
-    const QUESTIONS = [
-      { q: '다음 중 단편 소설집은?', c: ['지뢰 글리코', '바깥은 여름', '지구끝의 온실'], a: 1 },
-      { q: '김초엽 작가는 어떤 장르로 유명할까요?', c: ['추리', 'SF', '에세이'], a: 1 },
-      { q: '교환독서의 취지와 가장 가까운 것은?', c: ['책을 모아 전시한다', '서로 책을 교환하며 읽는다', '오로지 전자책만 읽는다'], a: 1 }
-    ];
 
-    const quizEl = document.getElementById('quiz');
-    const quizResult = document.getElementById('quizResult');
-    const startBtn = document.getElementById('quizStart');
-
-    function renderQuiz(){
-      quizEl.innerHTML = QUESTIONS.map((item, idx) => `
-        <div>
-          <div class="q">Q${idx+1}. ${item.q}</div>
-          <div class="choices">
-            ${item.c.map((choice, cidx)=>`
-              <label class="card" style="display:flex;align-items:center;gap:.5rem">
-                <input type="radio" name="q${idx}" value="${cidx}"> ${choice}
-              </label>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-      quizResult.textContent = '';
-    }
-
-    function grade(){
-      let score = 0;
-      QUESTIONS.forEach((item, idx) => {
-        const sel = document.querySelector(`input[name="q${idx}"]:checked`);
-        if(sel && Number(sel.value) === item.a) score++;
-      });
-      quizResult.textContent = `점수: ${score} / ${QUESTIONS.length}`;
-      
-      // 로컬 스토리지에 기록 저장
-      const history = getQuizHistory();
-      const today = new Date().toISOString().split('T')[0];
-      history.push({ date: today, score });
-      localStorage.setItem('quiz_history', JSON.stringify(history.slice(-10))); // 최근 10개만
-      renderLeaderboard();
-    }
-
-    function getQuizHistory(){
-      try{
-        return JSON.parse(localStorage.getItem('quiz_history')||'[]');
-      }catch{return []}
-    }
-    
-    function renderLeaderboard(){
-      const history = getQuizHistory();
-      const el = document.getElementById('leaderboard');
-      if(!history.length){
-        el.innerHTML = '<p class="muted">아직 기록이 없어요.</p>';
-        return;
-      }
-      const sorted = history.slice().sort((a,b) => b.score - a.score);
-      el.innerHTML = `
-        <div style="font-size:.9rem">
-          <div style="display:grid;grid-template-columns:1fr auto;gap:.3rem">
-            ${sorted.slice(0,5).map((r,i) => `
-              <div>${i+1}. ${r.date}</div>
-              <div><strong>${r.score}점</strong></div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    startBtn.addEventListener('click', () => {
-      renderQuiz();
-    });
-
-    quizEl.addEventListener('change', () => {
-      grade();
-    });
-
-    // 트렌딩: 별점 상위 3개 (데이터 + 로컬 리뷰 기반)
-    function topTrending(n=3){
-      const enriched = books.map(b => ({...b, avg: computeAverageRating(b)}));
-      enriched.sort((a,b) => (b.avg||0) - (a.avg||0));
-      return enriched.slice(0,n);
-    }
-
-    const trendingEl = document.getElementById('trending');
-    function renderTrending(){
-      const list = topTrending(3);
-      trendingEl.innerHTML = list.map(b => `
-        <article class="card" style="cursor:pointer" onclick="location.href='book-detail.html?id=${b.id}'">
-          <div class="book-meta" style="margin-bottom:.4rem">
-            <strong>${b.title}</strong>
-            <span class="badge">★ ${computeAverageRating(b) || '0.0'}</span>
-          </div>
-          <div class="muted">${b.author}</div>
-        </article>
-      `).join('');
-    }
-
-    // 뉴스 (하드코딩 데모)
-    const newsEl = document.getElementById('news');
-    function renderNews(){
-      const items = [
-        '올해의 책 후보 공개 – 다양한 장르의 작품들이 경쟁',
-        '독서 주간 맞이 전국 도서관 행사 풍성',
-        '신간 알림: 화제의 작가 신작 출간'
-      ];
-      newsEl.innerHTML = items.map(t => `<li>• ${t}</li>`).join('');
-    }
-
-    // 초기 렌더
-    renderQuiz();
-    renderTrending();
-    renderNews();
-    renderLeaderboard();
+    // 초기 렌더링
+    renderNotices();
+    renderWishlist();
   </script>
 </body>
 </html>

@@ -1,32 +1,443 @@
-<!doctype html>
-<html lang="ko">
-<head>
+<!DOCTYPE html><!DOCTYPE html><!doctype html>
+
+<html lang="ko" data-theme="heritage">
+
+<head><html lang="ko" data-theme="heritage"><html lang="ko">
+
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>교환독서 — FAQ</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1"><head><head>
+
+  <title>교환독서 – FAQ</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">  <meta charset="utf-8">  <meta charset="utf-8">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">  <meta name="viewport" content="width=device-width,initial-scale=1">  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="../css/style.css">
-</head>
-<body class="page-faq">
-<header>
-  <nav>
-    <a href="intro.html">소개</a>
-    <a href="books.html">책 목록</a>
-    <a href="calendar.html">캘린더</a>
-    <a href="game.html">게임</a>
-    <a href="faq.html" aria-current="page">FAQ</a>
-  </nav>
-</header>
-<main>
-  <section class="card">
-    <h1>코멘트 샘플 갤러리</h1>
-    <blockquote class="quote-card">(현) “비유가 인상적.”</blockquote>
-    <blockquote class="quote-card">(A) “여름은 사람 같다.”</blockquote>
-  </section>
-  <section class="card">
-    <h2>다음 업데이트 예고</h2>
-    <p>📌 댓글 저장 기능<br>📌 그룹별 페이지 생성</p>
-  </section>
-</main>
-<footer><p>© 2025 교환독서</p></footer>
+
+  <style>  <title>교환독서 – FAQ</title>  <title>교환독서 — FAQ</title>
+
+    .faq-item{border-bottom:1px solid var(--line);padding:1rem 0}
+
+    .faq-item:last-child{border-bottom:none}  <link rel="preconnect" href="https://fonts.googleapis.com">  <link rel="stylesheet" href="../css/style.css">
+
+    .faq-question{font-weight:700;font-size:1.05rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:.5rem;border-radius:.5rem;transition:all .2s}
+
+    .faq-question:hover{background:color-mix(in oklab,var(--accent) 8%, var(--paper))}  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></head>
+
+    .faq-question::after{content:'▼';font-size:.8rem;transition:transform .3s;opacity:.6}
+
+    .faq-question.active::after{transform:rotate(180deg)}  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet"><body class="page-faq">
+
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 .5rem;color:var(--spine-dark);line-height:1.6}
+
+    .faq-answer.active{max-height:500px;padding:1rem .5rem}  <link rel="stylesheet" href="../css/style.css"><header>
+
+    .contact-box{background:linear-gradient(135deg, color-mix(in oklab,var(--accent) 15%, var(--paper)), var(--paper));padding:1.5rem;border-radius:.8rem;margin-top:1.5rem;text-align:center}
+
+    .contact-box h3{margin:0 0 .5rem 0}  <style>  <nav>
+
+  </style>
+
+</head>    .faq-item{border-bottom:1px solid var(--line);padding:1rem 0}    <a href="intro.html">소개</a>
+
+<body class="subpage">
+
+  <a href="#main" class="sr-only">본문으로 건너뛰기</a>    .faq-item:last-child{border-bottom:none}    <a href="books.html">책 목록</a>
+
+  <header class="site-header is-solid">
+
+    <a class="logo" href="../index.html">교환독서</a>    .faq-question{font-weight:700;font-size:1.05rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:.5rem;border-radius:.5rem;transition:all .2s}    <a href="calendar.html">캘린더</a>
+
+    <nav aria-label="주요">
+
+      <ul class="gnb">    .faq-question:hover{background:color-mix(in oklab,var(--accent) 8%, var(--paper))}    <a href="game.html">게임</a>
+
+        <li><a href="../index.html">홈</a></li>
+
+        <li><a href="schedule.html">일정</a></li>    .faq-question::after{content:'▼';font-size:.8rem;transition:transform .3s;opacity:.6}    <a href="faq.html" aria-current="page">FAQ</a>
+
+        <li><a href="library.html">도서관</a></li>
+
+        <li><a href="community.html">커뮤니티</a></li>    .faq-question.active::after{transform:rotate(180deg)}  </nav>
+
+        <li><a href="myspace.html">내 프로필</a></li>
+
+        <li><a href="faq.html" aria-current="page">FAQ</a></li>    .faq-answer{max-height:0;overflow:hidden;transition:max-height .3s;padding:0 .5rem;color:var(--spine-dark);line-height:1.6}</header>
+
+      </ul>
+
+    </nav>    .faq-answer.active{max-height:500px;padding:1rem .5rem}<main>
+
+  </header>
+
+      .contact-box{background:linear-gradient(135deg, color-mix(in oklab,var(--accent) 15%, var(--paper)), var(--paper));padding:1.5rem;border-radius:.8rem;margin-top:1.5rem;text-align:center}  <section class="card">
+
+  <main id="main">
+
+    <h1>자주 묻는 질문</h1>    .contact-box h3{margin:0 0 .5rem 0}    <h1>코멘트 샘플 갤러리</h1>
+
+    
+
+    <section class="panel">  </style>    <blockquote class="quote-card">(현) “비유가 인상적.”</blockquote>
+
+      <h2>📚 교환독서에 대해</h2>
+
+      <div class="faq-list"></head>    <blockquote class="quote-card">(A) “여름은 사람 같다.”</blockquote>
+
+        <div class="faq-item">
+
+          <div class="faq-question">Q. 교환독서란 무엇인가요?</div><body class="subpage">  </section>
+
+          <div class="faq-answer">
+
+            교환독서는 멤버들이 함께 책을 선정하고, 읽고, 생각을 나누는 독서 모임입니다.   <a href="#main" class="sr-only">본문으로 건너뛰기</a>  <section class="card">
+
+            각자 책을 추천하고 교환하며 다양한 장르와 관점을 경험할 수 있어요.
+
+          </div>  <header class="site-header is-solid">    <h2>다음 업데이트 예고</h2>
+
+        </div>
+
+            <a class="logo" href="../index.html">교환독서</a>    <p>📌 댓글 저장 기능<br>📌 그룹별 페이지 생성</p>
+
+        <div class="faq-item">
+
+          <div class="faq-question">Q. 어떻게 시작되었나요?</div>    <nav aria-label="주요">  </section>
+
+          <div class="faq-answer">
+
+            2025년, 책을 사랑하는 친구들이 모여 시작한 작은 독서 모임이 시작이었어요.       <ul class="gnb"></main>
+
+            서로의 취향을 공유하고 새로운 책을 발견하는 즐거움을 함께 나누고 있습니다.
+
+          </div>        <li><a href="../index.html">홈</a></li><footer><p>© 2025 교환독서</p></footer>
+
+        </div>
+
+                <li><a href="schedule.html">일정</a></li></body>
+
+        <div class="faq-item">
+
+          <div class="faq-question">Q. 멤버는 누구인가요?</div>        <li><a href="library.html">도서관</a></li></html>
+
+          <div class="faq-answer">
+
+            현재 시현, 태이, 희수, 지원 네 명의 멤버가 활동하고 있습니다.         <li><a href="community.html">커뮤니티</a></li>
+
+            각자 개성 있는 취향으로 다채로운 책들을 추천하고 있어요!        <li><a href="myspace.html">내 프로필</a></li>
+
+          </div>      </ul>
+
+        </div>    </nav>
+
+      </div>  </header>
+
+    </section>  
+
+  <main id="main">
+
+    <section class="panel">    <h1>자주 묻는 질문</h1>
+
+      <h2>📖 활동 방식</h2>    
+
+      <div class="faq-list">    <section class="panel">
+
+        <div class="faq-item">      <h2>📚 교환독서에 대해</h2>
+
+          <div class="faq-question">Q. 책은 어떻게 선정하나요?</div>      <div class="faq-list">
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            매 기수마다 각 멤버가 읽고 싶은 책을 추천하고, 함께 논의하여 선정합니다.           <div class="faq-question">Q. 교환독서란 무엇인가요?</div>
+
+            다양한 장르를 골고루 경험할 수 있도록 노력하고 있어요.          <div class="faq-answer">
+
+          </div>            교환독서는 멤버들이 함께 책을 선정하고, 읽고, 생각을 나누는 독서 모임입니다. 
+
+        </div>            각자 책을 추천하고 교환하며 다양한 장르와 관점을 경험할 수 있어요.
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 얼마나 자주 만나나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            대략 한 달에 한 번 정도 모여 책에 대한 이야기를 나눕니다.           <div class="faq-question">Q. 어떻게 시작되었나요?</div>
+
+            일정은 멤버들의 스케줄에 맞춰 유동적으로 조정해요.          <div class="faq-answer">
+
+          </div>            2025년, 책을 사랑하는 친구들이 모여 시작한 작은 독서 모임이 시작이었어요. 
+
+        </div>            서로의 취향을 공유하고 새로운 책을 발견하는 즐거움을 함께 나누고 있습니다.
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 꼭 모임에 참석해야 하나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            아니요! 참석이 어려울 때는 온라인으로 리뷰를 남기거나           <div class="faq-question">Q. 멤버는 누구인가요?</div>
+
+            커뮤니티에서 생각을 공유할 수 있어요. 부담 없이 즐기는 것이 중요합니다.          <div class="faq-answer">
+
+          </div>            현재 시현, 태이, 희수, 지원 네 명의 멤버가 활동하고 있습니다. 
+
+        </div>            각자 개성 있는 취향으로 다채로운 책들을 추천하고 있어요!
+
+      </div>          </div>
+
+    </section>        </div>
+
+      </div>
+
+    <section class="panel">    </section>
+
+      <h2>💬 사이트 이용</h2>
+
+      <div class="faq-list">    <section class="panel">
+
+        <div class="faq-item">      <h2>📖 활동 방식</h2>
+
+          <div class="faq-question">Q. 리뷰는 어떻게 작성하나요?</div>      <div class="faq-list">
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            도서관 페이지에서 책을 선택한 후, 책 상세 페이지에서           <div class="faq-question">Q. 책은 어떻게 선정하나요?</div>
+
+            별점과 함께 리뷰를 작성할 수 있어요. 간단한 감상부터 깊이 있는 분석까지 자유롭게!          <div class="faq-answer">
+
+          </div>            매 기수마다 각 멤버가 읽고 싶은 책을 추천하고, 함께 논의하여 선정합니다. 
+
+        </div>            다양한 장르를 골고루 경험할 수 있도록 노력하고 있어요.
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 답글 기능은 어떻게 사용하나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            각 리뷰 아래의 '답글' 버튼을 클릭하면 댓글을 남길 수 있어요.           <div class="faq-question">Q. 얼마나 자주 만나나요?</div>
+
+            책에 대한 다양한 의견을 나누고 소통할 수 있습니다.          <div class="faq-answer">
+
+          </div>            대략 한 달에 한 번 정도 모여 책에 대한 이야기를 나눕니다. 
+
+        </div>            일정은 멤버들의 스케줄에 맞춰 유동적으로 조정해요.
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 업적 뱃지는 어떻게 획득하나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            리뷰 작성, 답글 달기, 다양한 장르 읽기 등의 활동을 하면           <div class="faq-question">Q. 꼭 모임에 참석해야 하나요?</div>
+
+            자동으로 뱃지가 잠금 해제됩니다. (백엔드 연동 후 활성화 예정)          <div class="faq-answer">
+
+          </div>            아니요! 참석이 어려울 때는 온라인으로 리뷰를 남기거나 
+
+        </div>            커뮤니티에서 생각을 공유할 수 있어요. 부담 없이 즐기는 것이 중요합니다.
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 데이터는 어디에 저장되나요?</div>      </div>
+
+          <div class="faq-answer">    </section>
+
+            현재는 브라우저의 로컬 스토리지에 저장됩니다. 
+
+            백엔드 연동 후에는 서버에 안전하게 저장되어 어디서든 접근할 수 있어요.    <section class="panel">
+
+          </div>      <h2>💬 사이트 이용</h2>
+
+        </div>      <div class="faq-list">
+
+      </div>        <div class="faq-item">
+
+    </section>          <div class="faq-question">Q. 리뷰는 어떻게 작성하나요?</div>
+
+          <div class="faq-answer">
+
+    <section class="panel">            도서관 페이지에서 책을 선택한 후, 책 상세 페이지에서 
+
+      <h2>🔮 향후 계획</h2>            별점과 함께 리뷰를 작성할 수 있어요. 간단한 감상부터 깊이 있는 분석까지 자유롭게!
+
+      <div class="faq-list">          </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 백엔드 연동은 언제 되나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            기말고사 이후 Firebase를 활용한 백엔드 연동을 계획하고 있습니다.           <div class="faq-question">Q. 답글 기능은 어떻게 사용하나요?</div>
+
+            그때부터는 모든 멤버의 데이터가 실시간으로 동기화될 예정이에요!          <div class="faq-answer">
+
+          </div>            각 리뷰 아래의 '답글' 버튼을 클릭하면 댓글을 남길 수 있어요. 
+
+        </div>            책에 대한 다양한 의견을 나누고 소통할 수 있습니다.
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 새로운 멤버를 받나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            현재는 4명의 고정 멤버로 운영 중이지만,           <div class="faq-question">Q. 업적 뱃지는 어떻게 획득하나요?</div>
+
+            향후 백엔드 연동 후 게스트 모드나 확장 가능성을 검토하고 있습니다.          <div class="faq-answer">
+
+          </div>            리뷰 작성, 답글 달기, 다양한 장르 읽기 등의 활동을 하면 
+
+        </div>            자동으로 뱃지가 잠금 해제됩니다. (백엔드 연동 후 활성화 예정)
+
+                  </div>
+
+        <div class="faq-item">        </div>
+
+          <div class="faq-question">Q. 추가될 기능이 있나요?</div>        
+
+          <div class="faq-answer">        <div class="faq-item">
+
+            자유 게시판, 실시간 채팅, 읽기 진행률 추적,           <div class="faq-question">Q. 데이터는 어디에 저장되나요?</div>
+
+            더 다양한 게임과 챌린지 등 많은 기능을 준비하고 있어요!          <div class="faq-answer">
+
+          </div>            현재는 브라우저의 로컬 스토리지에 저장됩니다. 
+
+        </div>            백엔드 연동 후에는 서버에 안전하게 저장되어 어디서든 접근할 수 있어요.
+
+      </div>          </div>
+
+    </section>        </div>
+
+      </div>
+
+    <div class="contact-box">    </section>
+
+      <h3>💌 더 궁금한 점이 있나요?</h3>
+
+      <p>언제든 편하게 문의해주세요!</p>    <section class="panel">
+
+      <p class="muted" style="margin-top:.5rem;font-size:.9rem">      <h2>🔮 향후 계획</h2>
+
+        📧 contact@bookexchange.com (백엔드 연동 후 활성화)      <div class="faq-list">
+
+      </p>        <div class="faq-item">
+
+    </div>          <div class="faq-question">Q. 백엔드 연동은 언제 되나요?</div>
+
+          <div class="faq-answer">
+
+    <nav class="page-nav" aria-label="페이지 네비게이션">            기말고사 이후 Firebase를 활용한 백엔드 연동을 계획하고 있습니다. 
+
+      <a href="../index.html" class="page-link"><span class="page-number">1</span></a>            그때부터는 모든 멤버의 데이터가 실시간으로 동기화될 예정이에요!
+
+      <a href="schedule.html" class="page-link"><span class="page-number">2</span></a>          </div>
+
+      <a href="library.html" class="page-link"><span class="page-number">3</span></a>        </div>
+
+    </nav>        
+
+  </main>        <div class="faq-item">
+
+            <div class="faq-question">Q. 새로운 멤버를 받나요?</div>
+
+  <footer class="site-footer">          <div class="faq-answer">
+
+    <small>© 2025 ExchangeBook</small>            현재는 4명의 고정 멤버로 운영 중이지만, 
+
+  </footer>            향후 백엔드 연동 후 게스트 모드나 확장 가능성을 검토하고 있습니다.
+
+          </div>
+
+  <script>        </div>
+
+    // FAQ 아코디언        
+
+    document.querySelectorAll('.faq-question').forEach(q => {        <div class="faq-item">
+
+      q.addEventListener('click', () => {          <div class="faq-question">Q. 추가될 기능이 있나요?</div>
+
+        const answer = q.nextElementSibling;          <div class="faq-answer">
+
+        const isActive = answer.classList.contains('active');            자유 게시판, 실시간 채팅, 읽기 진행률 추적, 
+
+                    더 다양한 게임과 챌린지 등 많은 기능을 준비하고 있어요!
+
+        // 모든 답변 닫기          </div>
+
+        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));        </div>
+
+        document.querySelectorAll('.faq-question').forEach(qu => qu.classList.remove('active'));      </div>
+
+            </section>
+
+        // 클릭한 항목만 토글
+
+        if (!isActive) {    <div class="contact-box">
+
+          answer.classList.add('active');      <h3>💌 더 궁금한 점이 있나요?</h3>
+
+          q.classList.add('active');      <p>언제든 편하게 문의해주세요!</p>
+
+        }      <p class="muted" style="margin-top:.5rem;font-size:.9rem">
+
+      });        📧 contact@bookexchange.com (백엔드 연동 후 활성화)
+
+    });      </p>
+
+  </script>    </div>
+
+</body>
+
+</html>    <nav class="page-nav" aria-label="페이지 네비게이션">
+
+      <a href="../index.html" class="page-link"><span class="page-number">1</span></a>
+      <a href="schedule.html" class="page-link"><span class="page-number">2</span></a>
+      <a href="library.html" class="page-link"><span class="page-number">3</span></a>
+    </nav>
+  </main>
+  
+  <footer class="site-footer">
+    <small>© 2025 ExchangeBook</small>
+  </footer>
+
+  <script>
+    // FAQ 아코디언
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const answer = q.nextElementSibling;
+        const isActive = answer.classList.contains('active');
+        
+        // 모든 답변 닫기
+        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
+        document.querySelectorAll('.faq-question').forEach(qu => qu.classList.remove('active'));
+        
+        // 클릭한 항목만 토글
+        if (!isActive) {
+          answer.classList.add('active');
+          q.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

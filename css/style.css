@@ -172,6 +172,7 @@ main h2{
   padding-bottom:clamp(1.25rem,4vw,3rem);
   border-radius:0;
   color:#fff;
+  /* 캐시 무효화용 주석 추가 2025-11-16 */
   /* 배경: 어두운 그라데이션 + 기본 이미지 */
   background:
     linear-gradient(180deg, color-mix(in oklab,var(--spine-dark) 20%, transparent) 0%,
@@ -238,6 +239,8 @@ main .intro-hero.vintage-shelves{
   margin:0;
   margin-top:-3.5rem;
   min-height:calc(100vh + 3.5rem);
+  padding-top:clamp(12rem,20vh,16rem);
+  padding-bottom:clamp(4rem,8vh,6rem);
 }
 
 /* 모바일: 모든 히어로에 three.jpg 사용 */
@@ -292,7 +295,10 @@ main .intro-hero.vintage-shelves{
 }
 .splash-hero .intro-title{font-size:clamp(2rem,6vw,3rem)}
 .splash-hero .intro-sub{font-size:clamp(1.05rem,2vw,1.2rem);max-width:52ch}
-.splash-hero .intro-actions{margin-top:.8rem}
+.splash-hero .intro-actions{margin-top:.8rem;justify-content:center}
+
+/* 메인 페이지 히어로만 위로 조정 */
+main .splash-hero .intro-title{margin-top:-4rem}
 
 /* 스플래시 텍스트 페이드 인 애니메이션 */
 @keyframes fadeUp{

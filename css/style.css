@@ -484,7 +484,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 }
 
 .how-section{
-  margin:6rem auto 3rem;
+  margin:6rem auto 10rem;
 }
 
 .about-section{
@@ -611,7 +611,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   display:flex;
   align-items:center;
   gap:1.5rem;
-  text-align:left;
+  text-align:center;
   padding:1.2rem 1.8rem;
   background:var(--paper);
   border-radius:.6rem;

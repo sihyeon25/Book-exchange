@@ -12,7 +12,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Grandiflora+One&display=swap" rel="stylesheet">
 
   <!-- 외부 스타일시트 (루트에서 참조) -->
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=26">
+  
+  <!-- 인트로 배경 이미지 preload -->
+  <link rel="preload" as="image" href="images/five.jpg">
+  
+  <style>
+    /* 이미지 로딩 전까지 인트로 숨김 */
+    #intro {
+      opacity: 0;
+      transition: opacity 0.3s ease-in;
+    }
+    #intro.loaded {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
   <!-- ============================================
@@ -34,7 +48,7 @@
     <a class="logo" href="index.html">교환독서</a>
     <nav aria-label="주요">
       <ul class="gnb">
-        <li><a aria-current="page" href="index.html">홈</a></li>
+        <li><a aria-current="page" href="index.html?from=internal">홈</a></li>
         <li><a href="pages/schedule.html">일정</a></li>
         <li><a href="pages/library.html">도서관</a></li>
           <li><a href="pages/community.html">커뮤니티</a></li>
@@ -110,7 +124,7 @@
       <h2 id="team">진행 인원</h2>
       <div class="team-grid">
         <!-- 시현 카드 -->
-        <article class="card team-card flip-card" data-person="시현">
+        <a href="pages/members.html" class="card team-card flip-card" data-person="시현" style="cursor:pointer">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/sh.jpg" alt="시현 사진" class="team-photo" loading="lazy" />
@@ -120,9 +134,9 @@
               <p class="team-bio">SF와 판타지, 인문학, 인문서 등 가리지 않고 흥미가 있다면 다 좋아해요.</p>
             </div>
           </div>
-        </article>
+        </a>
         <!-- 태이 카드 -->
-        <article class="card team-card flip-card" data-person="태이">
+        <a href="pages/members.html" class="card team-card flip-card" data-person="태이" style="cursor:pointer">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/te.jpg" alt="태이 사진" class="team-photo" loading="lazy" />
@@ -132,9 +146,9 @@
               <p class="team-bio">미스터리하고 박진감 넘치는 전개를 좋아해요.</p>
             </div>
           </div>
-        </article>
+        </a>
         <!-- 희수 카드 -->
-        <article class="card team-card flip-card" data-person="희수">
+        <a href="pages/members.html" class="card team-card flip-card" data-person="희수" style="cursor:pointer">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/hs.jpg" alt="희수 사진" class="team-photo" loading="lazy" />
@@ -144,9 +158,9 @@
               <p class="team-bio">아름답게 엔딩을 맞이하는 것을 좋아해요. 아름다운 죽음만 있다면 장르는 상관 없답니다.</p>
             </div>
           </div>
-        </article>
+        </a>
         <!-- 지원 카드 -->
-        <article class="card team-card flip-card" data-person="지원">
+        <a href="pages/members.html" class="card team-card flip-card" data-person="지원" style="cursor:pointer">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/jw.jpg" alt="지원 사진" class="team-photo" loading="lazy" />
@@ -156,7 +170,7 @@
               <p class="team-bio">에세이를 좋아해요. 일상의 소소한 이야기와 따뜻한 감성이 담긴 글을 읽는 것을 즐깁니다.</p>
             </div>
           </div>
-        </article>
+        </a>
       </div>
     </section>
 
@@ -173,7 +187,7 @@
       
       <!-- Page Navigation: 책 페이지 스타일 네비게이션 -->
       <nav class="page-nav" aria-label="페이지 네비게이션">
-        <a href="index.html" class="page-link current" aria-current="page">
+        <a href="index.html?from=internal" class="page-link current" aria-current="page">
           <span class="page-number">1</span>
         </a>
         <a href="pages/schedule.html" class="page-link">
@@ -181,6 +195,12 @@
         </a>
         <a href="pages/library.html" class="page-link">
           <span class="page-number">3</span>
+        </a>
+        <a href="pages/community.html" class="page-link">
+          <span class="page-number">4</span>
+        </a>
+        <a href="pages/myspace.html" class="page-link">
+          <span class="page-number">5</span>
         </a>
       </nav>
 
@@ -191,8 +211,39 @@
        하단 푸터
   ============================================= -->
   <footer class="site-footer">
-    <small>© 2025 ExchangeBook</small>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="pages/about.html">About</a>
+        <span class="footer-divider">·</span>
+        <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="footer-divider">·</span>
+        <a href="mailto:your-email@example.com">Contact</a>
+      </div>
+      <small>© 2024 교환독서. All rights reserved.</small>
+    </div>
   </footer>
+  <script>
+    // 배경 이미지 로딩 후 인트로 표시
+    (() => {
+      const intro = document.getElementById('intro');
+      if(!intro) return;
+      
+      const params = new URLSearchParams(window.location.search);
+      const fromInternal = params.get('from') === 'internal';
+      
+      if(fromInternal) {
+        intro.style.display = 'none';
+        window.history.replaceState({}, '', window.location.pathname);
+      } else {
+        // 배경 이미지 preload
+        const img = new Image();
+        img.onload = () => {
+          intro.classList.add('loaded');
+        };
+        img.src = 'images/five.jpg';
+      }
+    })();
+  </script>
   <script>
     // 헤더 색상 전환: 히어로가 보일 때는 투명/흰 글자, 지나가면 솔리드/어두운 글자
     (() => {

@@ -138,7 +138,7 @@ function renderBookCard(b, status){
   return `
     <article class="card book-card" data-book-id="${b.id}" tabindex="0">
       <div class="book-status ${statusClass}">${statusLabel}</div>
-      <button class="fav-btn" data-id="${b.id}" style="position:absolute;top:.8rem;left:.8rem;background:none;border:none;font-size:1.3rem;cursor:pointer;padding:0;line-height:1" aria-label="즐겨찾기 토글">${heart}</button>
+      <button class="fav-btn" data-id="${b.id}" style="position:absolute;top:.8rem;left:.8rem;background:none;border:none;font-size:1.3rem;cursor:pointer;padding:0;line-height:1;z-index:2" aria-label="즐겨찾기 토글">${heart}</button>
       <h3 class="book-title">${b.title}</h3>
       <p class="book-author">${b.author}</p>
       <div style="margin-top:.4rem;font-size:.85rem;color:var(--spine)">★ ${avg||'0.0'}</div>

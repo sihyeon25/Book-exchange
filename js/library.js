@@ -3,16 +3,32 @@
 // 즐겨찾기 로컬 저장소
 function getFavorites(){
   try{
+    if(!window.localStorage) {
+      console.warn('localStorage를 사용할 수 없습니다.');
+      return [];
+    }
     return JSON.parse(localStorage.getItem('favorites')||'[]');
-  }catch{return []}
+  }catch(e){
+    console.error('즐겨찾기 데이터 읽기 실패:', e);
+    return [];
+  }
 }
 function toggleFavorite(id){
-  const favs = getFavorites();
-  const idx = favs.indexOf(id);
-  if(idx>=0) favs.splice(idx,1);
-  else favs.push(id);
-  localStorage.setItem('favorites',JSON.stringify(favs));
-  renderLibrary();
+  try{
+    if(!window.localStorage) {
+      alert('브라우저 설정에서 로컬 저장소가 비활성화되어 있습니다.\n즐겨찾기 기능을 사용하려면 브라우저 설정을 확인해주세요.');
+      return;
+    }
+    const favs = getFavorites();
+    const idx = favs.indexOf(id);
+    if(idx>=0) favs.splice(idx,1);
+    else favs.push(id);
+    localStorage.setItem('favorites',JSON.stringify(favs));
+    renderLibrary();
+  }catch(e){
+    console.error('즐겨찾기 저장 실패:', e);
+    alert('즐겨찾기 저장에 실패했습니다. 브라우저의 저장 공간을 확인해주세요.');
+  }
 }
 function isFavorite(id){
   return getFavorites().includes(id);
@@ -135,8 +151,14 @@ function renderBookCard(b, status){
   const selectedHeart = b.selectedBy ? memberHearts[b.selectedBy] || '📚' : '📚';
   const selectedBy = b.selectedBy ? `<div style="margin-top:.3rem;font-size:.75rem;color:var(--spine);opacity:.8">${selectedHeart} ${b.selectedBy} 추천</div>` : '';
   
+  // 책 표지 이미지 (에러 처리 포함)
+  const coverImg = b.cover ? 
+    `<img src="${b.cover}" alt="${b.title} 표지" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22300%22%3E%3Crect fill=%22%23f0e6d2%22 width=%22200%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2240%22%3E📚%3C/text%3E%3C/svg%3E'; this.style.objectFit='contain';" style="width:100%;height:150px;object-fit:cover;border-radius:.6rem .6rem 0 0">` 
+    : '';
+  
   return `
     <article class="card book-card" data-book-id="${b.id}" tabindex="0">
+      ${coverImg}
       <div class="book-status ${statusClass}">${statusLabel}</div>
       <button class="fav-btn" data-id="${b.id}" style="position:absolute;top:.8rem;left:.8rem;background:none;border:none;font-size:1.3rem;cursor:pointer;padding:0;line-height:1;z-index:2" aria-label="즐겨찾기 토글">${heart}</button>
       <h3 class="book-title">${b.title}</h3>

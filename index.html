@@ -79,7 +79,7 @@
     </section>
 
     <!-- About Section: 교환독서 소개 -->
-    <section aria-labelledby="about" class="about-section">
+    <section aria-labelledby="about" class="about-section fade-in-on-scroll">
       <h2 id="about">교환독서란?</h2>
       <div class="about-content">
         <!-- 소개 문구: 캐주얼하고 친근한 톤 -->
@@ -93,7 +93,7 @@
     </section>
 
     <!-- How Section: 진행 방법 5단계 -->
-    <section aria-labelledby="how" class="how-section">
+    <section aria-labelledby="how" class="how-section fade-in-on-scroll">
       <h2 id="how">진행 방법</h2>
       <div class="how-content">
         <div class="how-step">
@@ -120,7 +120,7 @@
     </section>
 
     <!-- Team Section: 진행 인원 소개 -->
-    <section aria-labelledby="team" class="team-section">
+    <section aria-labelledby="team" class="team-section fade-in-on-scroll">
       <h2 id="team">진행 인원</h2>
       <div class="team-grid">
         <!-- 시현 카드 -->
@@ -175,7 +175,7 @@
     </section>
 
     <!-- About Site Section: 웹사이트 제작 배경 -->
-    <section aria-labelledby="about-site" class="about-site-section">
+    <section aria-labelledby="about-site" class="about-site-section fade-in-on-scroll">
       <h2 id="about-site">이 사이트를 만든 이유</h2>
       <div class="about-content">
         <p>교환독서를 하면서 누가 어떤 책을 읽고 있는지, 언제 교환해야 하는지 헷갈릴 때가 많았어요.</p>
@@ -314,5 +314,8 @@
       cards.forEach(card => observer.observe(card));
     })();
   </script>
+  
+  <!-- 스크롤 애니메이션 -->
+  <script src="js/scroll-animations.js"></script>
 </body>
 </html>

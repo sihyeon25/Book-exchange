@@ -129,19 +129,44 @@
       };
     }
 
+    // 숫자 카운트업 애니메이션
+    function animateCount(element, target, duration = 1000) {
+      const start = 0;
+      const startTime = performance.now();
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // easeOutQuad 이징 함수
+        const easeProgress = progress * (2 - progress);
+        const current = Math.floor(start + (target - start) * easeProgress);
+        
+        element.textContent = current;
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          element.textContent = target;
+        }
+      }
+      
+      requestAnimationFrame(update);
+    }
+
     function renderStats() {
       const stats = getStats();
       document.getElementById('statsGrid').innerHTML = `
         <div class="stat-card">
-          <div class="stat-value">${stats.totalBooks}</div>
+          <div class="stat-value counting" data-target="${stats.totalBooks}">0</div>
           <div class="stat-label">읽은 책</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value">${stats.totalReviews}</div>
+          <div class="stat-value counting" data-target="${stats.totalReviews}">0</div>
           <div class="stat-label">작성한 리뷰</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value">${stats.avgRating.toFixed(1)}</div>
+          <div class="stat-value counting" data-target="${stats.avgRating.toFixed(1)}">${stats.avgRating.toFixed(1)}</div>
           <div class="stat-label">평균 별점</div>
         </div>
         <div class="stat-card">
@@ -149,6 +174,16 @@
           <div class="stat-label">선호 장르</div>
         </div>
       `;
+      
+      // 카운트업 애니메이션 실행
+      setTimeout(() => {
+        document.querySelectorAll('.stat-value.counting').forEach(el => {
+          const target = parseInt(el.dataset.target);
+          if (!isNaN(target)) {
+            animateCount(el, target);
+          }
+        });
+      }, 300);
     }
 
     // 독서 목표

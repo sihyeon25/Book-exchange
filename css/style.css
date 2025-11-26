@@ -475,19 +475,12 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 /* About와 How 섹션: 중앙 정렬 */
 .about-section, .how-section{
   text-align:center;
-  padding:4rem 2rem;
   max-width:1100px;
 }
 
 .about-section{
   margin:3rem auto 6rem;
-}
-
-.how-section{
-  margin:6rem auto 10rem;
-}
-
-.about-section{
+  padding:8rem 2rem 7rem 2rem;
   background:
     linear-gradient(135deg, rgba(250,240,217,0) 0%, rgba(250,240,217,.4) 50%, rgba(250,240,217,0) 100%),
     linear-gradient(to bottom, rgba(252,243,224,.3), rgba(250,240,217,.5));
@@ -495,6 +488,11 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   border-bottom:2px solid rgba(212,163,115,.15);
   position:relative;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.8), inset 0 -1px 0 rgba(255,255,255,.8);
+}
+
+.how-section{
+  margin:3rem auto 10rem;
+  padding:3rem 2rem 5rem 2rem;
 }
 
 .about-section::before{
@@ -668,7 +666,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .team-section{
   text-align:center;
   padding:5rem 2rem;
-  margin:5rem auto;
+  margin:7rem auto 10rem;
   max-width:1200px;
   background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(250,240,217,.2) 50%, rgba(255,255,255,0) 100%);
   position:relative;

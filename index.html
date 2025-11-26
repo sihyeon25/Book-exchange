@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Grandiflora+One&display=swap" rel="stylesheet">
 
   <!-- 외부 스타일시트 (루트에서 참조) -->
-  <link rel="stylesheet" href="css/style.css?v=33">
+  <link rel="stylesheet" href="css/style.css?v=54">
   
   <!-- 인트로 배경 이미지 preload -->
   <link rel="preload" as="image" href="images/five.jpg">
@@ -124,7 +124,7 @@
       <h2 id="team">진행 인원</h2>
       <div class="team-grid">
         <!-- 시현 카드 -->
-        <a href="pages/members.html" class="card team-card flip-card" data-person="시현" style="cursor:pointer">
+        <div class="card team-card flip-card" data-person="시현">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/sh.jpg" alt="시현 사진" class="team-photo" loading="lazy" />
@@ -134,9 +134,9 @@
               <p class="team-bio">SF와 판타지, 인문학, 인문서 등 가리지 않고 흥미가 있다면 다 좋아해요.</p>
             </div>
           </div>
-        </a>
+        </div>
         <!-- 태이 카드 -->
-        <a href="pages/members.html" class="card team-card flip-card" data-person="태이" style="cursor:pointer">
+        <div class="card team-card flip-card" data-person="태이">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/te.jpg" alt="태이 사진" class="team-photo" loading="lazy" />
@@ -146,9 +146,9 @@
               <p class="team-bio">미스터리하고 박진감 넘치는 전개를 좋아해요.</p>
             </div>
           </div>
-        </a>
+        </div>
         <!-- 희수 카드 -->
-        <a href="pages/members.html" class="card team-card flip-card" data-person="희수" style="cursor:pointer">
+        <div class="card team-card flip-card" data-person="희수">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/hs.jpg" alt="희수 사진" class="team-photo" loading="lazy" />
@@ -158,9 +158,9 @@
               <p class="team-bio">아름답게 엔딩을 맞이하는 것을 좋아해요. 아름다운 죽음만 있다면 장르는 상관 없답니다.</p>
             </div>
           </div>
-        </a>
+        </div>
         <!-- 지원 카드 -->
-        <a href="pages/members.html" class="card team-card flip-card" data-person="지원" style="cursor:pointer">
+        <div class="card team-card flip-card" data-person="지원">
           <div class="flip-card-inner">
             <div class="flip-card-front">
               <img src="images/jw.jpg" alt="지원 사진" class="team-photo" loading="lazy" />
@@ -170,7 +170,7 @@
               <p class="team-bio">에세이를 좋아해요. 일상의 소소한 이야기와 따뜻한 감성이 담긴 글을 읽는 것을 즐깁니다.</p>
             </div>
           </div>
-        </a>
+        </div>
       </div>
     </section>
 
@@ -317,5 +317,7 @@
   
   <!-- 스크롤 애니메이션 -->
   <script src="js/scroll-animations.js"></script>
+  <!-- 페이지 전환 효과 -->
+  <script src="js/page-transitions.js"></script>
 </body>
 </html>

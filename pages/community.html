@@ -26,7 +26,7 @@
     .game-btn{font-size:1.1rem;padding:.8rem 1.5rem}
   </style>
 </head>
-<body class="subpage">
+<body class="subpage" data-page="community">
   <a href="#main" class="sr-only">본문으로 건너뛰기</a>
   <header class="site-header is-solid">
     <a class="logo" href="../index.html">교환독서</a>
@@ -54,15 +54,130 @@
     <!-- 1. 공지 게시판 -->
     <section class="panel">
       <h2>📢 공지사항</h2>
-      <div class="board-list" id="noticeBoard"></div>
+      <div class="board-notes">
+        <div class="note-item notice">
+          <div class="note-header">
+            <span class="note-emoji">📌</span>
+            <span class="note-title">12월 교환독서 일정 안내</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">관리자</span>
+            <span class="divider">·</span>
+            <span class="date">2일 전</span>
+          </div>
+          <div class="note-preview">12월 교환독서 모임 일정을 안내드립니다. 많은 참여 부탁드려요!</div>
+        </div>
+        <div class="note-item notice">
+          <div class="note-header">
+            <span class="note-emoji">🎄</span>
+            <span class="note-title">크리스마스 특별 이벤트 예고</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">관리자</span>
+            <span class="divider">·</span>
+            <span class="date">5일 전</span>
+          </div>
+          <div class="note-preview">올해의 특별한 이벤트를 준비했습니다. 기대해주세요!</div>
+        </div>
+        <div class="note-item notice">
+          <div class="note-header">
+            <span class="note-emoji">📚</span>
+            <span class="note-title">도서관 이용 안내사항</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">관리자</span>
+            <span class="divider">·</span>
+            <span class="date">1주 전</span>
+          </div>
+          <div class="note-preview">도서관을 이용하실 때 지켜야 할 규칙을 안내드립니다.</div>
+        </div>
+      </div>
     </section>
 
-    <!-- 2. 자유 게시판 (백엔드 시 활성화) -->
+    <!-- 2. 자유 게시판 -->
     <section class="panel">
       <h2>💬 자유 게시판</h2>
-      <div class="coming-soon">
-        <p>🚧 백엔드 연동 후 활성화 예정입니다</p>
-        <p class="muted" style="font-size:.9rem;margin-top:.5rem">곧 여러분의 이야기를 들을 수 있어요!</p>
+      <div class="board-notes">
+        <div class="note-item free popular">
+          <div class="note-header">
+            <span class="note-emoji">🔥</span>
+            <span class="note-title">요즘 읽고 있는 책 추천해주세요!</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">책벌레123</span>
+            <span class="divider">·</span>
+            <span class="stats">💬 28</span>
+            <span class="divider">·</span>
+            <span class="stats">👁️ 156</span>
+            <span class="divider">·</span>
+            <span class="date">3시간 전</span>
+          </div>
+          <div class="note-preview">최근에 재밌게 읽은 책 있으신가요? 다음에 읽을 책을 찾고 있어요...</div>
+        </div>
+        <div class="note-item free">
+          <div class="note-header">
+            <span class="note-emoji">📖</span>
+            <span class="note-title">독서 모임 후기 공유합니다</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">독서왕</span>
+            <span class="divider">·</span>
+            <span class="stats">💬 12</span>
+            <span class="divider">·</span>
+            <span class="stats">👁️ 89</span>
+            <span class="divider">·</span>
+            <span class="date">5시간 전</span>
+          </div>
+          <div class="note-preview">지난 주말에 있었던 독서 모임이 정말 알찼어요. 다들 오셔서...</div>
+        </div>
+        <div class="note-item free">
+          <div class="note-header">
+            <span class="note-emoji">💭</span>
+            <span class="note-title">책을 읽다가 든 생각들...</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">사색가</span>
+            <span class="divider">·</span>
+            <span class="stats">💬 7</span>
+            <span class="divider">·</span>
+            <span class="stats">👁️ 45</span>
+            <span class="divider">·</span>
+            <span class="date">1일 전</span>
+          </div>
+          <div class="note-preview">독서를 하면서 문득 떠오른 생각들을 정리해봤어요...</div>
+        </div>
+        <div class="note-item free">
+          <div class="note-header">
+            <span class="note-emoji">📚</span>
+            <span class="note-title">올해의 책 BEST 10은?</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">북리뷰어</span>
+            <span class="divider">·</span>
+            <span class="stats">💬 34</span>
+            <span class="divider">·</span>
+            <span class="stats">👁️ 201</span>
+            <span class="divider">·</span>
+            <span class="date">2일 전</span>
+          </div>
+          <div class="note-preview">올해 읽은 책 중에서 가장 인상 깊었던 책을 공유해주세요!</div>
+        </div>
+        <div class="note-item free">
+          <div class="note-header">
+            <span class="note-emoji">☕</span>
+            <span class="note-title">독서하기 좋은 카페 추천</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">카페러버</span>
+            <span class="divider">·</span>
+            <span class="stats">💬 15</span>
+            <span class="divider">·</span>
+            <span class="stats">👁️ 67</span>
+            <span class="divider">·</span>
+            <span class="date">3일 전</span>
+          </div>
+          <div class="note-preview">조용하고 분위기 좋은 카페 찾고 계신가요? 제가 자주 가는...</div>
+        </div>
       </div>
     </section>
 
@@ -111,6 +226,21 @@
 
   <script src="../js/bookData.js"></script>
   <script>
+    // 쪽지 클릭 시 상세보기
+    document.addEventListener('DOMContentLoaded', () => {
+      const noteItems = document.querySelectorAll('.note-item');
+      
+      noteItems.forEach(note => {
+        note.addEventListener('click', function() {
+          const title = this.querySelector('.note-title').textContent;
+          const author = this.querySelector('.author').textContent;
+          const preview = this.querySelector('.note-preview').textContent;
+          
+          alert(`📝 ${title}\n\n작성자: ${author}\n\n${preview}\n\n※ 백엔드 연동 시 상세 페이지로 이동합니다`);
+        });
+      });
+    });
+    
     // 오늘의 가십 랜덤 표시
     const gossips = [
       '"책을 읽는 사람은 두 번 산다" - 독서는 우리에게 무한한 경험을 선사합니다 ✨',

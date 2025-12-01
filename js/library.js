@@ -101,28 +101,22 @@ function renderLibrary(){
   
   let html = '';
   if(reading.length){
-    html += '<section class="library-section"><h2 class="section-title">읽는 중</h2><div class="card-grid">';
-    reading.forEach(b => { html += renderBookCard(b,'reading') });
+    html += '<section class="library-section"><h2 class="section-title">읽는 중</h2><div class="library-shelf">';
+    reading.forEach(b => { html += renderBookSpine(b,'reading') });
     html += '</div></section>';
   }
   if(completed.length){
-    html += '<section class="library-section"><h2 class="section-title">완독</h2><div class="card-grid">';
-    completed.forEach(b => { html += renderBookCard(b,'completed') });
+    html += '<section class="library-section"><h2 class="section-title">완독</h2><div class="library-shelf">';
+    completed.forEach(b => { html += renderBookSpine(b,'completed') });
     html += '</div></section>';
   }
   
   listEl.innerHTML = html;
   
-  // 카드 클릭 이벤트
-  document.querySelectorAll('.book-card').forEach(card => {
-    const id = card.dataset.bookId;
-    card.addEventListener('click', () => location.href = `book-detail.html?id=${id}`);
-    card.addEventListener('keydown', e => {
-      if(e.key==='Enter'||e.key===' '){
-        e.preventDefault();
-        location.href = `book-detail.html?id=${id}`;
-      }
-    });
+  // 책등 클릭 이벤트
+  document.querySelectorAll('.library-book-spine').forEach(spine => {
+    const id = spine.dataset.bookId;
+    spine.addEventListener('click', () => location.href = `book-detail.html?id=${id}`);
   });
   
   // 즐겨찾기 버튼
@@ -132,6 +126,26 @@ function renderLibrary(){
       toggleFavorite(btn.dataset.id);
     });
   });
+}
+
+function renderBookSpine(b, status){
+  const backgroundStyle = b.cover 
+    ? `background-image: url('${b.cover}'); background-size: cover; background-position: center;`
+    : 'background: linear-gradient(135deg, #8B7355 0%, #6B5845 100%);';
+  
+  const textColor = b.textColor || '#FFFFFF';
+  
+  return `
+    <div class="library-book-spine" data-book-id="${b.id}" style="${backgroundStyle}">
+      <div class="spine-face">
+        <span class="spine-title" style="color: ${textColor}; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">${b.title}</span>
+        <span class="spine-author" style="color: ${textColor}; opacity: 0.9; text-shadow: 0 1px 6px rgba(0,0,0,0.5);">${b.author}</span>
+      </div>
+      <div class="book-cover-preview">
+        ${b.cover ? `<img src="${b.cover}" alt="${b.title}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22180%22%3E%3Crect fill=%22%23f0e6d2%22 width=%22120%22 height=%22180%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 font-size=%2240%22%3E📚%3C/text%3E%3C/svg%3E';">` : '<div class="no-cover">📚</div>'}
+      </div>
+    </div>
+  `;
 }
 
 function renderBookCard(b, status){

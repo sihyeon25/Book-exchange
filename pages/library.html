@@ -14,7 +14,7 @@
   <!-- 외부 스타일시트 (상위 폴더에서 참조) -->
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="subpage">
+<body class="subpage" data-page="library">
   <!-- Skip link for accessibility -->
   <a href="#main" class="sr-only">본문으로 건너뛰기</a>
   
@@ -70,8 +70,10 @@
       </div>
     </div>
 
-    <!-- 동적 렌더링 영역 -->
-    <div id="bookList"></div>
+    <!-- 도서관 책장 -->
+    <div class="library-bookshelf">
+      <div id="bookList"></div>
+    </div>
 
     <!-- Page Navigation: 책 페이지 스타일 네비게이션 -->
     <nav class="page-nav" aria-label="페이지 네비게이션">

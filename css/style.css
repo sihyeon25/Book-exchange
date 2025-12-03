@@ -23,82 +23,110 @@ body{
 
 /* 페이지별 배경색 - 홈 */
 body[data-page="home"]{
-  background:#5C1A1A;
-  color:#F5F0E8;
+  background:#FAF0D9;
+  color:#2B1713;
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   height: 100vh;
+  /* 스크롤바 숨기기 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Chrome, Safari, Opera 스크롤바 숨기기 */
+body[data-page="home"]::-webkit-scrollbar {
+  display: none;
 }
 
 /* 홈 페이지 섹션 스크롤 스냅 */
 body[data-page="home"] .intro-hero{
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  height: 100vh;
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 5rem 2rem;
+  box-sizing: border-box;
 }
 
 body[data-page="home"] .about-section{
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  height: 100vh;
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 6rem 2rem;
+  box-sizing: border-box;
 }
 
 body[data-page="home"] .how-section{
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  height: 100vh;
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 6rem 2rem;
+  box-sizing: border-box;
 }
 
 body[data-page="home"] .team-section{
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  height: 100vh;
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 6rem 2rem;
+  box-sizing: border-box;
 }
 
 body[data-page="home"] .about-site-section{
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  height: 100vh;
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 6rem 2rem;
+  box-sizing: border-box;
 }
 
 /* 페이지별 배경색 - 일정 */
 body[data-page="schedule"]{
-  background:#2C3E50;
-  color:#F5F0E8;
+  background:#FAF0D9;
+  color:#2B1713;
 }
 
 /* 페이지별 배경색 - 도서관 */
 body[data-page="library"]{
-  background:#3B4E3F;
-  color:#F5F0E8;
+  background:#FAF0D9;
+  color:#2B1713;
 }
 
 /* 페이지별 배경색 - 커뮤니티 */
 body[data-page="community"]{
-  background:#4A3B5C;
-  color:#F5F0E8;
+  background:#FAF0D9;
+  color:#2B1713;
 }
 
 /* 페이지별 배경색 - 내 공간 */
 body[data-page="myspace"]{
-  background:#3D5A80;
-  color:#F5F0E8;
+  background:#FAF0D9;
+  color:#2B1713;
 }
 
 /* 인트로 페이지는 페이드 효과 없음 */
@@ -193,6 +221,11 @@ html[data-theme="heritage"]{
   background:transparent;
   border-bottom:none;
   transition:background .25s ease, backdrop-filter .25s ease, color .25s ease;
+  pointer-events:auto;
+}
+
+.site-header > *{
+  pointer-events:auto;
 }
 
 /* 페이지별 헤더 초기 배경색 - 서브페이지만 (히어로 없는 페이지) */
@@ -218,11 +251,27 @@ body[data-page="myspace"] .site-header{
 
 /* 푸터: 배경색 유지 */
 .site-footer{
-  background:var(--bg-secondary);
-  padding: 2rem 1rem;
+  background:transparent;
+  padding: 6rem 1rem;
   text-align: center;
-  border-top:1px solid var(--line-strong);
+  border-top:1px solid rgba(212,163,115,0.2);
   border-bottom:0;
+  width:100%;
+}
+
+/* 홈 페이지 푸터 스크롤 스냅 */
+body[data-page="home"] .site-footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 2rem;
+  box-sizing: border-box;
 }
 
 .footer-content {
@@ -651,66 +700,39 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 }
 
 .about-section{
-  margin:3rem auto 6rem;
-  padding:8rem 2rem 7rem 2rem;
+  margin:0 auto;
+  padding:4rem 2rem;
   background:transparent;
   border:none;
   position:relative;
   box-shadow:none;
+  width:100%;
 }
 
 .about-section h2{
-  color:#FAF0D9;
+  color:var(--brand);
   font-weight:700;
-  text-shadow:0 2px 4px rgba(0,0,0,.3);
 }
 
-/* About 섹션 모서리 장식 */
-.about-section::before{
-  content:'✦';
-  position:absolute;
-  top:1.5rem;
-  left:2rem;
-  color:var(--accent);
-  opacity:.3;
-  font-size:1.5rem;
-}
 
-.about-section::after{
-  content:'✦';
-  position:absolute;
-  bottom:1.5rem;
-  right:2rem;
-  color:var(--accent);
-  opacity:.3;
-  font-size:1.5rem;
-}
 
 .how-section{
-  margin:3rem auto 10rem;
-  padding:3rem 2rem 5rem 2rem;
+  margin:0 auto;
+  padding:4rem 2rem;
+  background:transparent;
+  width:100%;
 }
+
+
 
 
 
 .about-section h2{
   font-size:2rem;
-  margin-bottom:3rem;
+  margin-bottom:2rem;
   letter-spacing:.03em;
   color:var(--brand);
   position:relative;
-  display:inline-block;
-}
-
-.about-section h2::after{
-  content:'';
-  position:absolute;
-  bottom:-1rem;
-  left:50%;
-  transform:translateX(-50%);
-  width:60px;
-  height:2px;
-  background:linear-gradient(to right, transparent, var(--accent), transparent);
 }
 
 /* About 콘텐츠: 최대 너비 제한, 줄간격 넓게 */
@@ -725,8 +747,8 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   word-break:keep-all;
   overflow-wrap:break-word;
   font-size:1.05rem;
-  color:#FAF0D9 !important;
-  opacity:.95;
+  color:var(--ink);
+  opacity:.9;
   transition:all .4s ease;
   padding:0 1rem;
 }
@@ -734,52 +756,14 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 
 .about-content p:hover{
   opacity:1;
-  color:#FFFFFF;
   transform:translateX(8px);
-  text-shadow:0 2px 4px rgba(0,0,0,.4);
 }
 
 .how-section{
-  background: transparent;
-  position:relative;
-  padding: 4rem 2rem;
-  margin: 0;
-  max-width: 100%;
-  box-shadow: none;
-}
-
-/* How 섹션 상단/하단 장식선 */
-.how-section::before{
-  content:'';
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:60%;
-  height:2px;
-  background:linear-gradient(to right, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
-  opacity:.3;
-}
-
-.how-section::after{
-  content:'';
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:60%;
-  height:2px;
-  background:linear-gradient(to right, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
-  opacity:.3;
-}
-
-.how-section h2{
-  font-size:2rem;
-  margin-bottom:3.5rem;
-  letter-spacing:.03em;
-  color:#FAF0D9;
-  position:relative;
-  display:inline-block;
+  margin:0 auto;
+  padding:4rem 2rem;
+  background:transparent;
+  width:100%;
 }
 
 .how-section h2::before{
@@ -801,6 +785,16 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   opacity:.5;
   font-size:1.2rem;
 }
+
+.how-section h2{
+  font-size:2rem;
+  margin-bottom:2rem;
+  color:var(--brand);
+  letter-spacing:.02em;
+  position:relative;
+}
+
+
 
 /* How 콘텐츠: 세로 정렬, 단계별로 간격 */
 .how-content{
@@ -827,10 +821,10 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 }
 
 .how-step p{
-  color:#FAF0D9 !important;
+  color:var(--ink);
   font-weight:400;
-  font-size:1.1rem;
-  opacity:.95;
+  font-size:1.05rem;
+  opacity:.9;
 }
 
 .how-step:hover{
@@ -845,7 +839,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 /* 단계 번호: 동그라미 없이 숫자만 표시 */
 .step-number{
   flex-shrink:0;
-  color:#FAF0D9;
+  color:var(--brand);
   font-weight:600;
   font-size:1.2rem;
   margin-right:1rem;
@@ -866,26 +860,12 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 
 .team-section{
   text-align:center;
-  padding:5rem 2rem;
+  padding:4rem 2rem;
   margin:0;
   max-width:100%;
   background:transparent;
   position:relative;
-}
-
-.team-section h2{
-  color:#FAF0D9;
-}
-
-/* Team 섹션 상단 장식 */
-.team-section::before{
-  content:'📚';
-  position:absolute;
-  top:1rem;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:2rem;
-  opacity:.2;
+  width:100%;
 }
 
 .team-section h2{
@@ -1252,7 +1232,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 .flip-card .flip-card-back .team-bio {
   margin-bottom: 0;
   font-family: 'Grandiflora One', serif;
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.75;
   position: relative;
   z-index: 2;
@@ -1260,8 +1240,8 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   overflow-wrap: break-word;
   padding: 0 0.8rem;
   text-align: center;
-  color: var(--ink);
-  opacity: 0.9;
+  color: #2B1713 !important;
+  font-weight: 500;
 }
 
 /* 카드 뒷면 아바타에 멤버별 색상 적용 - 사진에서 추출한 색상 */
@@ -1295,32 +1275,26 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   text-align:center;
   position:relative;
   background:transparent;
-  padding:3rem 2.5rem;
+  padding:4rem 2rem;
   margin:0;
   max-width:100%;
   border-radius:0;
   border:none;
   box-shadow:none;
   transition:all .3s ease;
+  width:100%;
 }
 
 .about-site-section h2{
-  color:#FAF0D9;
+  color:var(--brand);
 }
 
 .about-site-section .about-content p{
-  color:#F5F0E8;
-  opacity:.95;
+  color:var(--ink);
+  opacity:.9;
 }
 
-.about-site-section::before{
-  content:'💡';
-  position:absolute;
-  top:1.5rem;
-  right:2rem;
-  font-size:2rem;
-  opacity:.25;
-}
+
 
 .about-site-section h2{
   margin-bottom:1.5rem;

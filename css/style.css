@@ -25,9 +25,7 @@ body{
 body[data-page="home"]{
   background:#FAF0D9;
   color:#2B1713;
-  scroll-snap-type: y mandatory;
   overflow-y: scroll;
-  height: 100vh;
   /* 스크롤바 숨기기 */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -40,11 +38,7 @@ body[data-page="home"]::-webkit-scrollbar {
 
 /* 홈 페이지 섹션 스크롤 스냅 */
 body[data-page="home"] .intro-hero{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
   min-height: 100vh;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,11 +48,7 @@ body[data-page="home"] .intro-hero{
 }
 
 body[data-page="home"] .about-section{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
   min-height: 100vh;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,11 +57,7 @@ body[data-page="home"] .about-section{
 }
 
 body[data-page="home"] .how-section{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
   min-height: 100vh;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,11 +66,7 @@ body[data-page="home"] .how-section{
 }
 
 body[data-page="home"] .team-section{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
   min-height: 100vh;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,11 +75,7 @@ body[data-page="home"] .team-section{
 }
 
 body[data-page="home"] .about-site-section{
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
   min-height: 100vh;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -261,16 +239,11 @@ body[data-page="myspace"] .site-header{
 
 /* 홈 페이지 푸터 스크롤 스냅 */
 body[data-page="home"] .site-footer {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
-  min-height: 100vh;
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6rem 2rem;
+  padding: 4rem 2rem;
   box-sizing: border-box;
 }
 
@@ -876,6 +849,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   letter-spacing:.03em;
   color:var(--brand);
   margin-bottom:1rem;
+  font-family:"Grandiflora One","Nanum Myeongjo",serif;
 }
 
 .team-section h2::after{
@@ -2451,6 +2425,7 @@ html{scroll-behavior:smooth}
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

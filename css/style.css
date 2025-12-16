@@ -19,21 +19,21 @@ body{
   color:var(--ink);
   opacity:0;
   transition:opacity .4s ease-in-out;
+  overflow-y: scroll;
+  /* 모든 페이지 스크롤바 숨기기 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Chrome, Safari, Opera 스크롤바 숨기기 */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 /* 페이지별 배경색 - 홈 */
 body[data-page="home"]{
   background:#FAF0D9;
   color:#2B1713;
-  overflow-y: scroll;
-  /* 스크롤바 숨기기 */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-/* Chrome, Safari, Opera 스크롤바 숨기기 */
-body[data-page="home"]::-webkit-scrollbar {
-  display: none;
 }
 
 /* 홈 페이지 섹션 스크롤 스냅 */
@@ -223,7 +223,7 @@ body[data-page="community"] .site-header{
 }
 
 body[data-page="myspace"] .site-header{
-  background:rgba(61, 90, 128, 0.95);
+  background:rgba(139, 74, 111, 0.95);
   backdrop-filter:blur(10px);
 }
 
@@ -350,7 +350,7 @@ body[data-page="community"] .site-header.is-solid{
 }
 
 body[data-page="myspace"] .site-header.is-solid{
-  background:#3D5A80;
+  background:#8B4A6F;
   border-bottom:none;
 }
 
@@ -1619,15 +1619,16 @@ html{scroll-behavior:smooth}
 
 /* 책 제목: 큰 글씨, 굵게, 우측 패딩 (배지 공간 확보) */
 .book-title{
-  font-size:1.2rem;
-  font-weight:700;
-  color:var(--ink);
+  font-size:1.35rem;
+  font-weight:800;
+  color:#1A1410;
   margin:.5rem 0;
   line-height:1.4;
   word-break:keep-all; /* 한글 단어 단위 줄바꿈 */
   overflow-wrap:break-word;
   padding-right:4rem; /* 배지와 겹치지 않도록 */
   font-family:'Nanum Myeongjo', serif;
+  text-shadow: 0 0.5px 0.5px rgba(0,0,0,0.1);
 }
 
 /* 책 저자: 작은 글씨, 이탤릭 */
@@ -2470,4 +2471,198 @@ html{scroll-behavior:smooth}
 
 .stat-value.counting {
   animation: countUp 0.6s ease-out;
+}
+
+/* ========================================
+   PAGE-SPECIFIC COLOR THEMING
+   각 페이지별 네비게이션 색상 기반 정체성 컬러
+======================================== */
+
+/* 일정 페이지 - 딥 블루 (#2C3E50) */
+body[data-page="schedule"] .btn{
+  background:#2C3E50;
+  border-color:#2C3E50;
+}
+body[data-page="schedule"] .btn:hover{
+  background:#1a252f;
+}
+body[data-page="schedule"] .tab-btn:hover{
+  background:#2C3E50;
+  border-color:#2C3E50;
+  color:#fff;
+}
+body[data-page="schedule"] .tab-btn.active{
+  background:#2C3E50;
+  border-color:#2C3E50;
+  color:#fff;
+}
+body[data-page="schedule"] h1,
+body[data-page="schedule"] h2{
+  color:#2C3E50;
+}
+body[data-page="schedule"] .date-btn{
+  border-color:#2C3E50;
+}
+body[data-page="schedule"] .date-btn.selected{
+  background:#2C3E50;
+  color:#fff;
+}
+
+/* 도서관 페이지 - 딥 그린 (#3B4E3F) */
+body[data-page="library"] .btn{
+  background:#3B4E3F;
+  border-color:#3B4E3F;
+}
+body[data-page="library"] .btn:hover{
+  background:#2a3729;
+}
+body[data-page="library"] h1,
+body[data-page="library"] h2{
+  color:#3B4E3F;
+}
+body[data-page="library"] .tag-filter.active{
+  background:#3B4E3F !important;
+  border-color:#3B4E3F !important;
+  color:#fff !important;
+}
+body[data-page="library"] .book-status.reading{
+  background:color-mix(in oklab, #3B4E3F 20%, var(--paper));
+  color:#3B4E3F;
+}
+body[data-page="library"] .fav-btn{
+  filter: hue-rotate(30deg);
+}
+body[data-page="library"] #sortSelect,
+body[data-page="library"] #searchInput{
+  border-color:#3B4E3F;
+}
+body[data-page="library"] #sortSelect:focus,
+body[data-page="library"] #searchInput:focus{
+  outline-color:#3B4E3F;
+  border-color:#3B4E3F;
+}
+
+/* 커뮤니티 페이지 - 딥 퍼플 (#4A3B5C) */
+body[data-page="community"] .btn{
+  background:#4A3B5C;
+  border-color:#4A3B5C;
+}
+body[data-page="community"] .btn:hover{
+  background:#362b43;
+}
+body[data-page="community"] h1,
+body[data-page="community"] h2{
+  color:#4A3B5C;
+}
+body[data-page="community"] .gossip-banner{
+  background:linear-gradient(135deg, #f0e8f5, #e8daf0);
+  border-color:#4A3B5C;
+}
+body[data-page="community"] .board-item:hover{
+  background:color-mix(in oklab, #4A3B5C 10%, var(--paper));
+  border-color:#4A3B5C;
+}
+body[data-page="community"] .note-item.popular{
+  border-left-color:#4A3B5C;
+}
+body[data-page="community"] .vote-btn:hover{
+  background:#4A3B5C;
+  border-color:#4A3B5C;
+  color:#fff;
+}
+body[data-page="community"] input:focus{
+  outline-color:#4A3B5C;
+  border-color:#4A3B5C;
+}
+
+/* 내 프로필 페이지 - 딥 핑크 (#8B4A6F) */
+body[data-page="myspace"] .btn{
+  background:#8B4A6F;
+  border-color:#8B4A6F;
+}
+body[data-page="myspace"] .btn:hover{
+  background:#6d3957;
+}
+body[data-page="myspace"] h1,
+body[data-page="myspace"] h2{
+  color:#8B4A6F;
+}
+body[data-page="myspace"] .progress-bar{
+  background:#8B4A6F;
+}
+body[data-page="myspace"] .badge-item.unlocked{
+  border-color:#8B4A6F;
+  background:color-mix(in oklab, #8B4A6F 5%, var(--paper));
+}
+body[data-page="myspace"] .stat-label{
+  color:#8B4A6F;
+}
+body[data-page="myspace"] input:focus{
+  outline-color:#8B4A6F;
+  border-color:#8B4A6F;
+}
+
+/* 책 상세 페이지 - 도서관 색상 계승 (#3B4E3F) */
+body[data-page="book-detail"] .btn{
+  background:#3B4E3F;
+  border-color:#3B4E3F;
+}
+body[data-page="book-detail"] .btn:hover{
+  background:#2a3729;
+}
+body[data-page="book-detail"] h1{
+  color:#3B4E3F;
+}
+body[data-page="book-detail"] .rating-stars button:hover,
+body[data-page="book-detail"] .rating-stars button.selected{
+  color:#3B4E3F;
+}
+body[data-page="book-detail"] input:focus,
+body[data-page="book-detail"] textarea:focus,
+body[data-page="book-detail"] select:focus{
+  outline-color:#3B4E3F;
+  border-color:#3B4E3F;
+}
+
+/* ========================================
+   PAGE-SPECIFIC TABLE & ELEMENT THEMING
+   각 페이지별 테이블 및 요소 색상 테마
+======================================== */
+
+/* 일정 페이지 - 테이블 헤더를 딥 블루로 */
+body[data-page="schedule"] .table thead th{
+  background:color-mix(in oklab, #2C3E50 20%, var(--paper));
+  color:#2C3E50;
+}
+body[data-page="schedule"] .table tbody tr:nth-child(4n){
+  border-bottom:2px solid color-mix(in oklab, #2C3E50 15%, var(--paper));
+}
+body[data-page="schedule"] .table-3books tbody tr:nth-child(3n){
+  border-bottom:2px solid color-mix(in oklab, #2C3E50 15%, var(--paper));
+}
+
+/* 도서관 페이지 - 검색/필터 강조 */
+body[data-page="library"] .library-section .section-title{
+  color:#3B4E3F;
+  border-bottom-color:#3B4E3F;
+}
+
+/* 커뮤니티 페이지 - 노트 아이템 강조 */
+body[data-page="community"] .note-item:hover{
+  border-left-color:#4A3B5C;
+  background:color-mix(in oklab, #4A3B5C 3%, var(--paper));
+}
+body[data-page="community"] .note-emoji{
+  color:#4A3B5C;
+}
+
+/* 내 프로필 페이지 - 통계 카드 강조 */
+body[data-page="myspace"] .stat-card{
+  border-top:3px solid #8B4A6F;
+}
+body[data-page="myspace"] .stat-value{
+  color:#8B4A6F;
+}
+body[data-page="myspace"] .goal-progress{
+  background:color-mix(in oklab, #8B4A6F 15%, var(--paper));
 }

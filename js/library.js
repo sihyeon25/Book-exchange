@@ -93,10 +93,7 @@ function renderLibrary(){
   }
   
   // 읽는중/완독 분류
-  const reading = list.filter(b => {
-    // 임시: id에 따라 나눔 (실제로는 status 필드 추가 권장)
-    return ['glico','summer-100m','summer-outside','kind-wins'].includes(b.id);
-  });
+  const reading = list.filter(b => b.status === 'reading');
   const completed = list.filter(b => !reading.includes(b));
   
   let html = '';

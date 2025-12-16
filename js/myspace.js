@@ -201,13 +201,7 @@ function renderMyReviews(){
       const idx = Number(btn.dataset.idx);
       if(confirm('이 리뷰를 삭제할까요?')){
         const locals = getLocalReviews(bookId);
-        // 실제로는 idx 기반 삭제는 정확하지 않을 수 있으니, 전체 재구성 필요
-        // 간단하게 전체 삭제 후 다시 저장
-        const filtered = locals.filter((r,i) => {
-          // 현재 표시된 리뷰들과 매칭하여 삭제
-          // 여기서는 단순화: 첫 번째 항목 삭제
-          return i !== 0; // 임시: 첫 리뷰만 삭제 (실제로는 더 정교한 로직 필요)
-        });
+        const filtered = locals.filter((r,i) => i !== idx);
         localStorage.setItem(`reviews_${bookId}`, JSON.stringify(filtered));
         renderAll();
       }

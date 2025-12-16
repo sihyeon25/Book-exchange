@@ -16,6 +16,7 @@ const books = [
     description: "고등학생들이 치밀한 논리전으로 펼치는 게임식 미스터리. 두뇌전과 반전이 돋보이는 청춘 추리소설.",
     tags: ["미스터리", "청춘", "게임"],
     selectedBy: "태이",
+    status: "reading",
     reviews: [
       { user: "시현", rating: 5, comment: "손에서 놓을 수 없었어요!" },
       { user: "태이", rating: 4, comment: "트릭 구성이 신선했어요." }
@@ -34,6 +35,7 @@ const books = [
     description: "일억 번째 여름이 오면 한 종족이 멸망한다는 예언에서 출발해 사랑과 구원의 서사를 그린 청소년 판타지.",
     tags: ["청소년소설", "한국소설", "사랑"],
     selectedBy: "희수",
+    status: "reading",
     reviews: [
       { user: "희수", rating: 4, comment: "문장이 예뻐요." }
     ]
@@ -51,6 +53,7 @@ const books = [
     description: "상실을 경험한 인물들이 관계와 시간 속에서 애도의 의미를 찾아가는 일곱 편의 단편 모음집.",
     tags: ["한국소설", "단편집", "상실"],
     selectedBy: "시현",
+    status: "reading",
     reviews: [
       { user: "시현", rating: 5, comment: "여운이 오랫동안 남아요." }
     ]
@@ -127,6 +130,7 @@ const books = [
     description: '"다정함"이 관계와 사회를 변화시키는 힘임을 이야기하는 심리 에세이. 인간관계의 본질과 회복을 다룸.',
     tags: ["에세이", "관계", "자기계발"],
     selectedBy: "지원",
+    status: "reading",
     reviews: []
   }
 ];

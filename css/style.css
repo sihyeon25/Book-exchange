@@ -173,10 +173,10 @@ html[data-theme="heritage"]{
   --bg:#F5F0E8;        /* 배경: 양피지 크림 */
   --paper:#FFFEF9;     /* 카드/표 배경: 아이보리 화이트 */
   --ink:#2A1F3D;       /* 본문 텍스트: 딥 블루-브라운 */
-  --spine-dark:#5C1A1A;/* 헤더/타이틀: 딥 머룬 (그리핀도르) */
+  --spine-dark:#E0DCD7;/* 헤더/타이틀: 라이트 그레이 */
   --spine:#3D5A80;     /* 보조 텍스트: 레이븐클로 블루 */
-  --brand:#5C1A1A;     /* 버튼/링크: 딥 머룬 */
-  --brand-700:#3D1111; /* 버튼 호버: 더 어두운 머룬 */
+  --brand:#E0DCD7;     /* 버튼/링크: 라이트 그레이 */
+  --brand-700:#C5C0BA; /* 버튼 호버: 미디엄 그레이 */
   --accent:#7A8C9E;    /* 배지/하이라이트: 딥 실버 블루 */
   --line:#E8E0D5;      /* 구분선: 연한 크림 */
   --line-strong:#D4C5B0;/* 강조 구분선: 미디엄 크림 */
@@ -1421,7 +1421,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 
 /* 기본 테이블: 전체 너비, 종이색 배경 */
 .table{width:100%;border-collapse:collapse;background:var(--paper);font-family:'Nanum Myeongjo', serif}
-.table th,.table td{padding:.65rem;border-bottom:1px solid var(--line);transition:all .2s ease}
+.table th,.table td{padding:.65rem;transition:all .2s ease}
 
 /* 테이블 헤더: 밝은 브랜드 색상 배경 */
 .table thead th{
@@ -1429,19 +1429,26 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   color:var(--spine-dark);
   font-family:'Nanum Myeongjo', serif;
   font-weight:700;
+  border-bottom:1px solid var(--line);
 }
 
-/* 1차 일정: 3권 기준 스타일 */
-.table-3books tbody tr:nth-child(3n){
-  border-bottom:2px solid color-mix(in oklab,var(--brand) 15%, var(--paper));
+/* 1차 일정: 3권 기준 스타일 - period-end로만 구분선 */
+.table.table-3books tbody tr{
+  border-bottom:none !important;
+}
+.table.table-3books tbody tr td{
+  border-bottom:none !important;
 }
 .table-3books tbody tr:nth-child(3n+1){background:color-mix(in oklab,var(--paper) 96%, var(--accent))}
 .table-3books tbody tr:nth-child(3n+2){background:color-mix(in oklab,var(--paper) 92%, var(--accent))}
 .table-3books tbody tr:nth-child(3n+3){background:color-mix(in oklab,var(--paper) 88%, var(--accent))}
+body[data-page="schedule"] .table.table-3books tbody tr.period-end{
+  border-bottom:3px solid color-mix(in oklab, #2C3E50 25%, var(--paper)) !important;
+}
 
 /* 2차 일정: 4권 기준 스타일 */
 .table:not(.table-3books) tbody tr:nth-child(4n){
-  border-bottom:2px solid color-mix(in oklab,var(--brand) 15%, var(--paper));
+  border-bottom:3px solid color-mix(in oklab, #2C3E50 25%, var(--paper));
 }
 .table:not(.table-3books) tbody tr:nth-child(4n+1){background:color-mix(in oklab,var(--paper) 96%, var(--accent))}
 .table:not(.table-3books) tbody tr:nth-child(4n+2){background:color-mix(in oklab,var(--paper) 92%, var(--accent))}
@@ -1547,11 +1554,12 @@ html{scroll-behavior:smooth}
   scroll-margin-top:5rem;
 }
 
-/* 스케줄 구분선: 1차/2차 사이 */
+/* 스케줄 구분선: 1차/2차 사이 - 일정 페이지 색상 적용 */
 .schedule-divider{
   border:none;
-  border-top:2px solid var(--line-strong);
+  border-top:3px solid #2C3E50;
   margin:2rem 0;
+  opacity:0.6;
 }
 
 /* ========================================
@@ -2635,10 +2643,13 @@ body[data-page="schedule"] .table thead th{
   color:#2C3E50;
 }
 body[data-page="schedule"] .table tbody tr:nth-child(4n){
-  border-bottom:2px solid color-mix(in oklab, #2C3E50 15%, var(--paper));
+  border-bottom:3px solid color-mix(in oklab, #2C3E50 25%, var(--paper));
 }
 body[data-page="schedule"] .table-3books tbody tr:nth-child(3n){
-  border-bottom:2px solid color-mix(in oklab, #2C3E50 15%, var(--paper));
+  border-bottom:3px solid color-mix(in oklab, #2C3E50 25%, var(--paper));
+}
+body[data-page="schedule"] .panel{
+  margin-bottom:3rem;
 }
 
 /* 도서관 페이지 - 검색/필터 강조 */

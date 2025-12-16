@@ -50,56 +50,113 @@
 
     <!-- ============================================
          ONGOING SECTION
-         현재 진행중인 2차 회차 일정
+         현재 진행중인 2차 회차 일정 - 월별 슬라이드
     ============================================= -->
     <section id="ongoing" class="panel">
       <h2>2차 (10–4월)</h2>
       
-      <!-- 일정 테이블: 기간 / 제목 / 담당자 -->
-      <table class="table" aria-label="2차 회차 진행중">
-        <thead>
-          <tr>
-            <th scope="col" style="width:8rem">기간</th>
-            <th scope="col">제목</th>
-            <th scope="col" style="width:8rem">담당</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- 10-11월: 첫 번째 기간 (4권) -->
-          <tr><td>10–11월</td><td>지뢰 글리코</td><td data-person="태이">태이</td></tr>
-          <tr><td>10–11월</td><td>일억 번째 여름</td><td data-person="희수">희수</td></tr>
-          <tr><td>10–11월</td><td>바깥은 여름</td><td data-person="시현">시현</td></tr>
-          <tr><td>10–11월</td><td>다정한 사람이 이긴다</td><td data-person="지원">지원</td></tr>
-
-          <!-- 12-1월: 두 번째 기간 (4권 교환) -->
-          <tr><td>12–1월</td><td>지뢰 글리코</td><td data-person="희수">희수</td></tr>
-          <tr><td>12–1월</td><td>일억 번째 여름</td><td data-person="시현">시현</td></tr>
-          <tr><td>12–1월</td><td>바깥은 여름</td><td data-person="지원">지원</td></tr>
-          <tr><td>12–1월</td><td>다정한 사람이 이긴다</td><td data-person="태이">태이</td></tr>
-
-          <!-- 2월: 세 번째 기간 (4권 교환) -->
-          <tr><td>2월</td><td>지뢰 글리코</td><td data-person="시현">시현</td></tr>
-          <tr><td>2월</td><td>일억 번째 여름</td><td data-person="지원">지원</td></tr>
-          <tr><td>2월</td><td>바깥은 여름</td><td data-person="태이">태이</td></tr>
-          <tr><td>2월</td><td>다정한 사람이 이긴다</td><td data-person="희수">희수</td></tr>
-
-          <!-- 3-4월: 네 번째 기간 (4권 교환) -->
-          <tr><td>3–4월</td><td>지뢰 글리코</td><td data-person="지원">지원</td></tr>
-          <tr><td>3–4월</td><td>일억 번째 여름</td><td data-person="태이">태이</td></tr>
-          <tr><td>3–4월</td><td>바깥은 여름</td><td data-person="희수">희수</td></tr>
-          <tr><td>3–4월</td><td>다정한 사람이 이긴다</td><td data-person="시현">시현</td></tr>
-        </tbody>
-      </table>
-      <p class="muted">진행중 일정은 변동될 수 있어요.</p>
+      <!-- 월별 네비게이션 -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.5rem 0">
+        <button id="prevMonth" class="btn ghost" style="padding:.5rem 1rem">← 이전 달</button>
+        <h3 id="currentMonth" style="margin:0;min-width:120px;text-align:center;color:#2C3E50">12–1월</h3>
+        <button id="nextMonth" class="btn ghost" style="padding:.5rem 1rem">다음 달 →</button>
+      </div>
+      
+      <!-- 월별 테이블 컨테이너 -->
+      <div style="overflow:hidden;position:relative">
+        <div id="scheduleSlider" style="display:flex;transition:transform 0.3s ease">
+          
+          <!-- 10-11월 슬라이드 -->
+          <div class="schedule-slide" style="min-width:100%;flex-shrink:0">
+            <table class="table" aria-label="10-11월 일정">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:8rem">기간</th>
+                  <th scope="col">제목</th>
+                  <th scope="col" style="width:8rem">담당</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>10–11월</td><td>지뢰 글리코</td><td data-person="태이">태이</td></tr>
+                <tr><td>10–11월</td><td>일억 번째 여름</td><td data-person="희수">희수</td></tr>
+                <tr><td>10–11월</td><td>바깥은 여름</td><td data-person="시현">시현</td></tr>
+                <tr><td>10–11월</td><td>다정한 사람이 이긴다</td><td data-person="지원">지원</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- 12-1월 슬라이드 -->
+          <div class="schedule-slide" style="min-width:100%;flex-shrink:0">
+            <table class="table" aria-label="12-1월 일정">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:8rem">기간</th>
+                  <th scope="col">제목</th>
+                  <th scope="col" style="width:8rem">담당</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>12–1월</td><td>지뢰 글리코</td><td data-person="희수">희수</td></tr>
+                <tr><td>12–1월</td><td>일억 번째 여름</td><td data-person="시현">시현</td></tr>
+                <tr><td>12–1월</td><td>바깥은 여름</td><td data-person="지원">지원</td></tr>
+                <tr><td>12–1월</td><td>다정한 사람이 이긴다</td><td data-person="태이">태이</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- 2월 슬라이드 -->
+          <div class="schedule-slide" style="min-width:100%;flex-shrink:0">
+            <table class="table" aria-label="2월 일정">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:8rem">기간</th>
+                  <th scope="col">제목</th>
+                  <th scope="col" style="width:8rem">담당</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>2월</td><td>지뢰 글리코</td><td data-person="시현">시현</td></tr>
+                <tr><td>2월</td><td>일억 번째 여름</td><td data-person="지원">지원</td></tr>
+                <tr><td>2월</td><td>바깥은 여름</td><td data-person="태이">태이</td></tr>
+                <tr><td>2월</td><td>다정한 사람이 이긴다</td><td data-person="희수">희수</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- 3-4월 슬라이드 -->
+          <div class="schedule-slide" style="min-width:100%;flex-shrink:0">
+            <table class="table" aria-label="3-4월 일정">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:8rem">기간</th>
+                  <th scope="col">제목</th>
+                  <th scope="col" style="width:8rem">담당</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>3–4월</td><td>지뢰 글리코</td><td data-person="지원">지원</td></tr>
+                <tr><td>3–4월</td><td>일억 번째 여름</td><td data-person="태이">태이</td></tr>
+                <tr><td>3–4월</td><td>바깥은 여름</td><td data-person="희수">희수</td></tr>
+                <tr><td>3–4월</td><td>다정한 사람이 이긴다</td><td data-person="시현">시현</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+      
+      <p class="muted" style="margin-top:1rem">진행중 일정은 변동될 수 있어요.</p>
     </section>
-
-    <!-- 구분선 -->
-    <hr class="schedule-divider">
 
     <!-- ============================================
          PAST SECTION
          완료된 1차 회차 일정
     ============================================= -->
+    <div class="schedule-tabs">
+      <a href="#ongoing" class="tab-btn">진행중</a>
+      <a href="#past" class="tab-btn active">지난 회차</a>
+    </div>
+    
     <section id="past" class="panel">
       <h2>1차 (4–8월)</h2>
       
@@ -116,23 +173,23 @@
           <!-- 4-5월: 첫 번째 기간 (3권) -->
           <tr><td>4–5월</td><td>궤도의 밖에서, 나의 룸메이트에게</td><td data-person="희수">희수</td></tr>
           <tr><td>4–5월</td><td>지구끝의 온실</td><td data-person="태이">태이</td></tr>
-          <tr><td>4–5월</td><td>여름</td><td data-person="시현">시현</td></tr>
+          <tr class="period-end"><td>4–5월</td><td>여름</td><td data-person="시현">시현</td></tr>
 
           <!-- 6월: 두 번째 기간 (3권 교환) -->
           <tr><td>6월</td><td>궤도의 밖에서, 나의 룸메이트에게</td><td data-person="시현">시현</td></tr>
           <tr><td>6월</td><td>지구끝의 온실</td><td data-person="희수">희수</td></tr>
-          <tr><td>6월</td><td>여름</td><td data-person="태이">태이</td></tr>
+          <tr class="period-end"><td>6월</td><td>여름</td><td data-person="태이">태이</td></tr>
 
           <!-- 7-8월: 세 번째 기간 (3권 교환) -->
           <tr><td>7–8월</td><td>궤도의 밖에서, 나의 룸메이트에게</td><td data-person="태이">태이</td></tr>
           <tr><td>7–8월</td><td>지구끝의 온실</td><td data-person="시현">시현</td></tr>
-          <tr><td>7–8월</td><td>여름</td><td data-person="희수">희수</td></tr>
+          <tr class="period-end"><td>7–8월</td><td>여름</td><td data-person="희수">희수</td></tr>
         </tbody>
       </table>
     </section>
     
     <!-- 일정 조율 도구 -->
-    <section class="panel" style="margin-top:2rem">
+    <section class="panel" style="margin-top:4rem">
       <h2>일정 조율 도구</h2>
       <p class="muted">모일 수 있는 날짜를 선택하고 친구와 공유해서 교집합을 찾아보세요.</p>
       
@@ -169,6 +226,42 @@
   </footer>
   
   <script src="../js/schedule-tool.js"></script>
+  <script>
+    // 월별 슬라이드 기능
+    (() => {
+      const slider = document.getElementById('scheduleSlider');
+      const monthLabel = document.getElementById('currentMonth');
+      const prevBtn = document.getElementById('prevMonth');
+      const nextBtn = document.getElementById('nextMonth');
+      
+      const months = ['10–11월', '12–1월', '2월', '3–4월'];
+      let currentIndex = 1; // 12-1월부터 시작 (현재 달)
+      
+      function updateSlider() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        monthLabel.textContent = months[currentIndex];
+      }
+      
+      prevBtn.addEventListener('click', () => {
+        currentIndex--;
+        if (currentIndex < 0) {
+          currentIndex = months.length - 1;
+        }
+        updateSlider();
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        currentIndex++;
+        if (currentIndex >= months.length) {
+          currentIndex = 0;
+        }
+        updateSlider();
+      });
+      
+      // 초기 상태 설정
+      updateSlider();
+    })();
+  </script>
   <script src="../js/page-transitions.js"></script>
 </body>
 </html>

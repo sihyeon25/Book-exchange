@@ -36,14 +36,6 @@
 
   // 페이지 로드 시 fade-in
   window.addEventListener('DOMContentLoaded', () => {
-    // 인트로 페이지는 페이드 효과 없음
-    const isIntroPage = document.querySelector('#intro.page-intro--overlay');
-    if (isIntroPage) {
-      document.body.style.opacity = '1';
-      document.body.style.transition = 'none';
-      return;
-    }
-    
     setTimeout(() => {
       document.body.classList.add('page-ready');
     }, 50);
@@ -58,12 +50,6 @@
     if (link.target === '_blank' || 
         link.hostname !== window.location.hostname ||
         (link.href.includes('#') && link.href.split('#')[0] === window.location.href.split('#')[0])) {
-      return;
-    }
-
-    // 인트로 페이지에서는 페이드 효과 없이 바로 이동
-    const isIntroPage = document.querySelector('#intro.page-intro--overlay');
-    if (isIntroPage) {
       return;
     }
 

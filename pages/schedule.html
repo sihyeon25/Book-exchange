@@ -48,6 +48,15 @@
       <a href="#past" class="tab-btn">지난 회차</a>
     </div>
 
+    <!-- 사람별 필터 -->
+    <div class="person-filter">
+      <button class="filter-btn active" data-person="all">전체</button>
+      <button class="filter-btn" data-person="시현">시현</button>
+      <button class="filter-btn" data-person="태이">태이</button>
+      <button class="filter-btn" data-person="희수">희수</button>
+      <button class="filter-btn" data-person="지원">지원</button>
+    </div>
+
     <!-- ============================================
          ONGOING SECTION
          현재 진행중인 2차 회차 일정 - 월별 슬라이드
@@ -262,6 +271,38 @@
       updateSlider();
     })();
   </script>
+
+  <!-- 사람별 필터 기능 -->
+  <script>
+    (() => {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const allRows = document.querySelectorAll('.table tbody tr');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // 활성 버튼 변경
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          const selectedPerson = btn.dataset.person;
+          
+          allRows.forEach(row => {
+            const personCell = row.querySelector('td[data-person]');
+            if (!personCell) return;
+            
+            const rowPerson = personCell.dataset.person;
+            
+            if (selectedPerson === 'all' || rowPerson === selectedPerson) {
+              row.classList.remove('filtered-out');
+            } else {
+              row.classList.add('filtered-out');
+            }
+          });
+        });
+      });
+    })();
+  </script>
+  
   <script src="../js/page-transitions.js"></script>
 </body>
 </html>

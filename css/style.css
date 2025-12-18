@@ -34,6 +34,8 @@ body::-webkit-scrollbar {
 body[data-page="home"]{
   background:#FAF0D9;
   color:#2B1713;
+  --brand:#5C1A1A;
+  --brand-700:#3D1111;
 }
 
 /* 홈 페이지 섹션 스크롤 스냅 */
@@ -81,6 +83,49 @@ body[data-page="home"] .about-site-section{
   justify-content: center;
   padding: 6rem 2rem;
   box-sizing: border-box;
+}
+
+.site-reason{
+  position:relative;
+  max-width:700px;
+  margin:0 auto;
+  padding:2rem 2rem 1rem 2rem;
+  background:transparent;
+  font-style:italic;
+}
+
+.site-reason .quote-mark{
+  position:absolute;
+  top:-0.5rem;
+  left:0;
+  font-size:5rem;
+  line-height:1;
+  color:color-mix(in oklab, var(--brand) 15%, transparent);
+  font-family:Georgia,serif;
+  font-style:normal;
+}
+
+.site-reason p{
+  margin:0 0 1.5rem 0;
+  font-size:1.15rem;
+  line-height:1.9;
+  color:var(--ink);
+  position:relative;
+  text-align:center;
+}
+
+.site-reason p:last-of-type{
+  margin-bottom:2rem;
+}
+
+.site-reason cite{
+  display:block;
+  text-align:center;
+  font-size:1rem;
+  color:var(--brand);
+  font-style:normal;
+  font-weight:600;
+  letter-spacing:.02em;
 }
 
 /* 페이지별 배경색 - 일정 */
@@ -152,6 +197,20 @@ a:hover{color:var(--brand-700)}
 
 /* 스크린 리더 전용 요소 (화면에는 숨김) */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* 페이지 전환 효과 */
+body{
+  opacity:0;
+  transition:opacity 0.3s ease-in;
+}
+
+body.page-loaded{
+  opacity:1;
+}
+
+body.page-transitioning{
+  opacity:0;
+}
 
 /* Skip link: 키보드 포커스 시에만 표시 */
 .sr-only:focus{
@@ -739,26 +798,6 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   width:100%;
 }
 
-.how-section h2::before{
-  content:'🖋';
-  position:absolute;
-  left:-2.5rem;
-  top:50%;
-  transform:translateY(-50%);
-  opacity:.5;
-  font-size:1.2rem;
-}
-
-.how-section h2::after{
-  content:'🖋';
-  position:absolute;
-  right:-2.5rem;
-  top:50%;
-  transform:translateY(-50%) scaleX(-1);
-  opacity:.5;
-  font-size:1.2rem;
-}
-
 .how-section h2{
   font-size:2rem;
   margin-bottom:2rem;
@@ -779,16 +818,13 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   padding:1rem 0;
 }
 
-/* 각 단계: 가로 정렬, 번호 + 설명 */
+/* 각 단계: 심플한 가로 정렬 */
 .how-step{
   display:flex;
   align-items:center;
   gap:1.5rem;
-  text-align:left;
   padding:1.5rem 0;
   background:transparent;
-  border:none;
-  box-shadow:none;
   transition:all .3s ease;
   position:relative;
 }
@@ -806,10 +842,10 @@ body:has(h1:first-of-type:not(.intro-title)) main{
 
 .how-step:hover p{
   opacity:1;
-  color:#FFFFFF;
+  color:var(--brand);
 }
 
-/* 단계 번호: 동그라미 없이 숫자만 표시 */
+/* 단계 번호 */
 .step-number{
   flex-shrink:0;
   color:var(--brand);
@@ -849,7 +885,6 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   letter-spacing:.03em;
   color:var(--brand);
   margin-bottom:1rem;
-  font-family:"Grandiflora One","Nanum Myeongjo",serif;
 }
 
 .team-section h2::after{
@@ -860,7 +895,7 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   transform:translateX(-50%);
   width:100px;
   height:3px;
-  background:linear-gradient(to right, transparent, var(--accent), var(--brand), var(--accent), transparent);
+  background:linear-gradient(to right, transparent, var(--brand), transparent);
   box-shadow:0 1px 3px rgba(212,163,115,.3);
 }
 
@@ -1255,7 +1290,6 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   border-radius:0;
   border:none;
   box-shadow:none;
-  transition:all .3s ease;
   width:100%;
 }
 
@@ -1291,12 +1325,6 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   line-height:1.8;
   margin:1rem 0;
   opacity:.9;
-}
-
-.about-site-section:hover{
-  transform:translateY(-3px);
-  box-shadow:0 6px 20px rgba(0,0,0,.1);
-  border-color:var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -2486,6 +2514,25 @@ html{scroll-behavior:smooth}
    각 페이지별 네비게이션 색상 기반 정체성 컬러
 ======================================== */
 
+/* 홈 페이지 - 버건디 (#5C1A1A) */
+body[data-page="home"] .btn{
+  background:#5C1A1A;
+  border-color:#5C1A1A;
+}
+body[data-page="home"] .btn:hover{
+  background:#3D1111;
+}
+body[data-page="home"] .btn.ghost{
+  background:#FAF0D9;
+  color:#5C1A1A;
+  border:1px solid #5C1A1A;
+}
+body[data-page="home"] .btn.ghost:hover{
+  background:#5C1A1A;
+  color:#fff;
+  border-color:#5C1A1A;
+}
+
 /* 일정 페이지 - 딥 블루 (#2C3E50) */
 body[data-page="schedule"] .btn{
   background:#2C3E50;
@@ -2630,6 +2677,51 @@ body[data-page="book-detail"] textarea:focus,
 body[data-page="book-detail"] select:focus{
   outline-color:#3B4E3F;
   border-color:#3B4E3F;
+}
+
+/* ========================================
+   PERSON FILTER (일정 페이지 사람별 필터)
+======================================== */
+.person-filter{
+  display:flex;
+  justify-content:center;
+  gap:.5rem;
+  margin:1rem 0 2rem 0;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  padding:.5rem 1.2rem;
+  border:2px solid color-mix(in oklab, #2C3E50 30%, transparent);
+  background:transparent;
+  color:#2C3E50;
+  border-radius:2rem;
+  font-size:.9rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s ease;
+  font-family:inherit;
+}
+
+.filter-btn:hover{
+  background:color-mix(in oklab, #2C3E50 10%, transparent);
+  border-color:#2C3E50;
+}
+
+.filter-btn.active{
+  background:#2C3E50;
+  color:white;
+  border-color:#2C3E50;
+}
+
+/* 필터링된 행 스타일 */
+.table tbody tr{
+  transition:opacity .3s ease, transform .2s ease;
+}
+
+.table tbody tr.filtered-out{
+  opacity:.2;
+  pointer-events:none;
 }
 
 /* ========================================

@@ -53,6 +53,13 @@
       return;
     }
 
+    // 현재 페이지로의 링크는 로딩 없이
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const targetPage = link.href.split('/').pop().split('?')[0] || 'index.html';
+    if (currentPage === targetPage) {
+      return;
+    }
+
     e.preventDefault();
     const href = link.href;
     

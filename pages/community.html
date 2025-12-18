@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>교환독서 – 커뮤니티</title>
+  <title>교환독서 – 게시판</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
@@ -12,6 +12,16 @@
     .gossip-banner{background:linear-gradient(135deg, #f6e1c3, #e8d4b8);border:2px solid #d4a574;border-radius:.8rem;padding:1rem 1.5rem;margin-bottom:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     .gossip-banner h2{margin:0 0 .5rem 0;font-size:1.3rem;color:#8B4513}
     .gossip-content{font-size:1rem;line-height:1.6;color:#333}
+    .notice-list{margin-top:.8rem}
+    .notice-list-item{margin-bottom:.7rem;padding-left:1.2rem;position:relative}
+    .notice-list-item:before{content:'•';position:absolute;left:0;color:#8B4513;font-weight:bold}
+    .fixed-notice-item{background:rgba(255,255,255,.5);border-radius:.5rem;padding:.8rem;margin-bottom:.6rem;cursor:pointer;transition:all .2s}
+    .fixed-notice-item:hover{background:rgba(255,255,255,.8)}
+    .fixed-notice-title{display:flex;align-items:center;justify-content:space-between;font-weight:600;color:#8B4513}
+    .fixed-notice-content{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-top:0}
+    .fixed-notice-content.open{max-height:200px;padding-top:.5rem}
+    .toggle-icon{transition:transform .3s ease}
+    .toggle-icon.open{transform:rotate(180deg)}
     .board-list{display:grid;gap:.6rem}
     .board-item{padding:.8rem;border:1px solid var(--line);border-radius:.6rem;cursor:pointer;transition:all .2s}
     .board-item:hover{background:color-mix(in oklab,var(--accent) 8%, var(--paper));border-color:var(--accent)}
@@ -35,67 +45,97 @@
         <li><a href="../index.html?from=internal">홈</a></li>
         <li><a href="schedule.html">일정</a></li>
         <li><a href="library.html">도서관</a></li>
-        <li><a aria-current="page" href="community.html">커뮤니티</a></li>
+        <li><a aria-current="page" href="community.html">게시판</a></li>
         <li><a href="myspace.html">내 프로필</a></li>
       </ul>
     </nav>
   </header>
   <main id="main">
-    <h1>커뮤니티</h1>
+    <h1>게시판</h1>
     
-    <!-- 오늘의 독서 가십 -->
+    <!-- 고정 공지사항 -->
     <div class="gossip-banner">
-      <h2>💬 오늘의 독서 가십</h2>
-      <div class="gossip-content" id="gossipContent">
-        "책을 읽는 사람은 두 번 산다" - 독서는 우리에게 무한한 경험을 선사합니다 ✨
+      <h2>📢 고정 공지사항</h2>
+      <div class="gossip-content">
+        <div class="fixed-notice-item" onclick="toggleNotice(this)">
+          <div class="fixed-notice-title">
+            <span>❓ Q&A 페이지를 확인해보세요!</span>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="fixed-notice-content">
+            궁금한 점이 있으신가요? 하단 푸터의 <strong>Q&A</strong> 링크를 통해 자주 묻는 질문들을 확인하실 수 있습니다.
+          </div>
+        </div>
+        
+        <div class="fixed-notice-item" onclick="toggleNotice(this)">
+          <div class="fixed-notice-title">
+            <span>📚 도서관 및 게시판 이용 안내</span>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="fixed-notice-content">
+            • 도서관에서는 모든 책의 상세 정보와 리뷰를 확인할 수 있습니다.<br>
+            • 게시판에서는 자유롭게 의견을 나누고 독서 명언도 뽑아볼 수 있어요.<br>
+            • 모든 회원이 함께 만들어가는 공간이니 서로 배려하며 사용해주세요!
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 1. 공지 게시판 -->
-    <section class="panel">
+    <!-- 오늘의 독서 명언 -->
+    <section class="panel" style="margin-top:3rem">
+      <h2>💭 오늘의 독서 명언</h2>
+      <div class="game-container" style="padding:1rem">
+        <p id="quoteDescription" style="margin-bottom:.8rem;font-size:.9rem">오늘의 명언을 랜덤으로 뽑아보세요!</p>
+        <button class="btn game-btn" id="randomBookBtn" style="font-size:.9rem;padding:.6rem 1.2rem">🎲 랜덤 명언 뽑기</button>
+        <div id="randomResult" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <!-- 공지사항 -->
+    <section class="panel" style="margin-top:3rem">
       <h2>📢 공지사항</h2>
       <div class="board-notes">
         <div class="note-item notice">
           <div class="note-header">
-            <span class="note-emoji">📌</span>
-            <span class="note-title">12월 교환독서 일정 안내</span>
+            <span class="note-emoji">🎓</span>
+            <span class="note-title">종강 수고하셨습니다!</span>
           </div>
           <div class="note-meta">
             <span class="author">관리자</span>
             <span class="divider">·</span>
-            <span class="date">12월 14일</span>
+            <span class="date">12월 19일</span>
           </div>
-          <div class="note-preview">12월 교환독서 모임 일정을 안내드립니다. 많은 참여 부탁드려요!</div>
+          <div class="note-preview">한 학기 동안 열심히 공부하느라 정말 수고 많으셨어요. 이제 잠시 쉬어가면서 책과 함께 여유로운 시간 보내시길 바랍니다!</div>
+        </div>
+        <div class="note-item notice">
+          <div class="note-header">
+            <span class="note-emoji">📌</span>
+            <span class="note-title">2차 교환독서 진행 안내</span>
+          </div>
+          <div class="note-meta">
+            <span class="author">관리자</span>
+            <span class="divider">·</span>
+            <span class="date">11월 29일</span>
+          </div>
+          <div class="note-preview">2차 교환독서 첫 교환이 11월 28일에 성공적으로 진행되었습니다! 다음 교환 일정도 기대해주세요.</div>
         </div>
         <div class="note-item notice">
           <div class="note-header">
             <span class="note-emoji">🎄</span>
-            <span class="note-title">크리스마스 특별 이벤트 예고</span>
+            <span class="note-title">크리스마스가 얼마 남지 않았어요!</span>
           </div>
           <div class="note-meta">
             <span class="author">관리자</span>
             <span class="divider">·</span>
             <span class="date">5일 전</span>
           </div>
-          <div class="note-preview">올해의 특별한 이벤트를 준비했습니다. 기대해주세요!</div>
-        </div>
-        <div class="note-item notice">
-          <div class="note-header">
-            <span class="note-emoji">📚</span>
-            <span class="note-title">도서관 이용 안내사항</span>
-          </div>
-          <div class="note-meta">
-            <span class="author">관리자</span>
-            <span class="divider">·</span>
-            <span class="date">1주 전</span>
-          </div>
-          <div class="note-preview">도서관을 이용하실 때 지켜야 할 규칙을 안내드립니다.</div>
+          <div class="note-preview">따뜻한 연말 보내시고, 소중한 사람들과 행복한 시간 되시길 바랍니다. 메리 크리스마스!</div>
         </div>
       </div>
     </section>
 
-    <!-- 2. 자유 게시판 -->
-    <section class="panel">
+    <!-- 자유 게시판 -->
+    <section class="panel" style="margin-top:3rem">
       <h2>💬 자유 게시판</h2>
       <div class="board-notes">
         <div class="note-item free popular">
@@ -181,33 +221,12 @@
       </div>
     </section>
 
-    <!-- 3. 읽고 싶은 책 위시리스트 -->
-    <section class="panel">
-      <h2>📚 읽고 싶은 책 위시리스트</h2>
-      <p class="muted" style="margin-bottom:1rem">다음에 읽고 싶은 책에 투표해주세요!</p>
-      <div id="wishlist"></div>
-      <div style="margin-top:1rem">
-        <input type="text" id="newWishBook" placeholder="책 제목 입력" style="padding:.5rem;border:1px solid var(--line);border-radius:.5rem;width:100%;max-width:300px">
-        <button class="btn" id="addWishBtn" style="margin-left:.5rem">추가</button>
-      </div>
-    </section>
-
-    <!-- 4. 간단한 게임 -->
-    <section class="panel">
-      <h2>🎮 독서 게임</h2>
-      <div class="game-container">
-        <p style="margin-bottom:1rem">오늘 읽을 책을 랜덤으로 뽑아보세요!</p>
-        <button class="btn game-btn" id="randomBookBtn">🎲 랜덤 책 뽑기</button>
-        <div id="randomResult" style="margin-top:1.5rem"></div>
-      </div>
-    </section>
-
   </main>
   
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="about.html">About</a>
+        <a href="faq.html">Q&A</a>
         <span class="footer-divider">·</span>
         <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-divider">·</span>
@@ -219,6 +238,14 @@
 
   <script src="../js/bookData.js"></script>
   <script>
+    // 고정 공지 접기/펼치기
+    function toggleNotice(element) {
+      const content = element.querySelector('.fixed-notice-content');
+      const icon = element.querySelector('.toggle-icon');
+      content.classList.toggle('open');
+      icon.classList.toggle('open');
+    }
+    
     // 쪽지 클릭 시 상세보기
     document.addEventListener('DOMContentLoaded', () => {
       const noteItems = document.querySelectorAll('.note-item');
@@ -232,109 +259,49 @@
           alert(`📝 ${title}\n\n작성자: ${author}\n\n${preview}\n\n※ 백엔드 연동 시 상세 페이지로 이동합니다`);
         });
       });
-    });
-    
-    // 오늘의 가십 랜덤 표시
-    const gossips = [
-      '"책을 읽는 사람은 두 번 산다" - 독서는 우리에게 무한한 경험을 선사합니다 ✨',
-      '📚 오늘 하루 30분만 책을 읽어보세요. 작은 습관이 큰 변화를 만듭니다!',
-      '🌟 책장을 넘길 때마다 새로운 세계가 펼쳐집니다',
-      '☕ 커피 한 잔과 함께하는 독서 시간, 최고의 힐링이죠!',
-      '💡 독서는 마음의 양식이자 영혼의 창문입니다'
-    ];
-    document.getElementById('gossipContent').textContent = gossips[Math.floor(Math.random() * gossips.length)];
-
-    // 공지사항 데이터
-    const notices = [
-      { id: 1, title: '🎉 12월 독서 모임 일정 공지', date: '2025-11-10', content: '12월 15일 오후 7시, 강남 카페에서 만나요!' },
-      { id: 2, title: '🎂 희수님 생일 축하합니다!', date: '2025-11-08', content: '11월 20일은 희수님의 생일! 축하 메시지를 남겨주세요 🎈' },
-      { id: 3, title: '📖 신규 도서 추가 안내', date: '2025-11-05', content: '도서관에 새로운 책들이 추가되었어요. 확인해보세요!' }
-    ];
-
-    function renderNotices() {
-      const el = document.getElementById('noticeBoard');
-      el.innerHTML = notices.map(n => `
-        <div class="board-item">
-          <div class="title">${n.title}</div>
-          <div class="meta">${n.date} · ${n.content}</div>
-        </div>
-      `).join('');
-    }
-
-    // 위시리스트
-    function getWishlist() {
-      try {
-        return JSON.parse(localStorage.getItem('wishlist') || '[]');
-      } catch {
-        return [];
-      }
-    }
-
-    function saveWishlist(list) {
-      localStorage.setItem('wishlist', JSON.stringify(list));
-    }
-
-    function renderWishlist() {
-      const list = getWishlist();
-      const el = document.getElementById('wishlist');
       
-      if (list.length === 0) {
-        el.innerHTML = '<p class="muted">아직 추가된 책이 없어요. 첫 번째 책을 추가해보세요!</p>';
-        return;
-      }
-
-      el.innerHTML = list.map((item, idx) => `
-        <div class="wishlist-item">
-          <div>
-            <strong>${item.title}</strong>
-            <span class="muted" style="margin-left:.5rem">${item.votes || 0}표</span>
+      // 랜덤 명언 뽑기
+      const quotes = [
+        { text: "우리는 사랑했던 사람들로 이루어져 있다.", book: "백년의 고독", author: "가브리엘 가르시아 마르케스" },
+        { text: "가장 중요한 것은 눈에 보이지 않아.", book: "어린 왕자", author: "앙투안 드 생텍쥐페리" },
+        { text: "삶은 계속되어야 한다.", book: "노인과 바다", author: "어니스트 헤밍웨이" },
+        { text: "인간은 어떤 상황에서도 선택할 자유가 있다.", book: "죽음의 수용소에서", author: "빅터 프랭클" },
+        { text: "우리는 모두 조금씩 부서진 채로 살아간다.", book: "위대한 개츠비", author: "F. 스콧 피츠제럴드" },
+        { text: "길을 잃는다는 것은 어쩌면 길을 찾고 있다는 뜻일지도 모른다.", book: "연금술사", author: "파울로 코엘료" },
+        { text: "시간이 모든 것을 해결해 주지는 않지만, 모든 것을 데려간다.", book: "변신", author: "프란츠 카프카" },
+        { text: "사람은 혼자 태어나지만, 혼자 살도록 만들어지지는 않았다.", book: "모비 딕", author: "허먼 멜빌" },
+        { text: "기억은 사라지지 않는다. 다만 다른 모습으로 남아 있을 뿐이다.", book: "잃어버린 시간을 찾아서", author: "마르셀 프루스트" },
+        { text: "삶이란 이해하는 것이 아니라 살아내는 것이다.", book: "철학적 단상", author: "쇠렌 키르케고르" },
+        { text: "우리는 모두 상처 입은 채로 성장한다.", book: "호밀밭의 파수꾼", author: "J. D. 샐린저" },
+        { text: "희망은 가장 어두운 순간에도 조용히 남아 있다.", book: "레 미제라블", author: "빅토르 위고" },
+        { text: "사람은 자신이 견뎌낸 것만큼 깊어진다.", book: "죄와 벌", author: "표도르 도스토예프스키" },
+        { text: "진짜 용기는 두려움 속에서도 앞으로 나아가는 것이다.", book: "서부전선 이상 없다", author: "에리히 마리아 레마르크" },
+        { text: "우리는 결국 서로에게 남는다.", book: "사랑의 기술", author: "에리히 프롬" },
+        { text: "삶은 언제나 예상 밖의 방향으로 흐른다.", book: "이방인", author: "알베르 카뮈" },
+        { text: "성장은 언제나 불편함을 동반한다.", book: "데미안", author: "헤르만 헤세" },
+        { text: "사람은 기억 속에서 계속 살아간다.", book: "나는 고양이로소이다", author: "나쓰메 소세키" },
+        { text: "누군가를 이해한다는 것은 그 사람의 시간을 이해하는 일이다.", book: "참을 수 없는 존재의 가벼움", author: "밀란 쿤데라" },
+        { text: "끝이라고 느껴질 때, 이야기는 다시 시작된다.", book: "해리 포터와 죽음의 성물", author: "J. K. 롤링" }
+      ];
+      
+      document.getElementById('randomBookBtn').addEventListener('click', function() {
+        const rnd = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById('randomResult').innerHTML = `
+          <div style="max-width:95%;margin:-1.5rem auto 0;padding:0 1.5rem;text-align:center">
+            <div style="font-size:1.3rem;line-height:1.6;margin-bottom:.8rem;font-style:italic;color:#333">
+              "${rnd.text}"
+            </div>
+            <div style="color:#444;font-size:.85rem;margin-bottom:2.5rem">
+              <strong>&lt;${rnd.book}&gt;</strong>
+              <span style="margin-left:.5rem">${rnd.author}</span>
+            </div>
+            <button class="btn" style="font-size:.8rem;padding:.4rem .9rem" onclick="document.getElementById('randomBookBtn').click()">🔄 다시 뽑기</button>
           </div>
-          <button class="vote-btn" onclick="voteBook(${idx})">👍 투표</button>
-        </div>
-      `).join('');
-    }
-
-    window.voteBook = function(index) {
-      const list = getWishlist();
-      if (!list[index].votes) list[index].votes = 0;
-      list[index].votes++;
-      saveWishlist(list);
-      renderWishlist();
-    }
-
-    document.getElementById('addWishBtn').addEventListener('click', () => {
-      const input = document.getElementById('newWishBook');
-      const title = input.value.trim();
-      
-      if (!title) {
-        alert('책 제목을 입력해주세요!');
-        return;
-      }
-
-      const list = getWishlist();
-      list.push({ title, votes: 0 });
-      saveWishlist(list);
-      input.value = '';
-      renderWishlist();
+        `;
+        this.style.display = 'none';
+        document.getElementById('quoteDescription').style.display = 'none';
+      });
     });
-
-    // 랜덤 책 뽑기
-    document.getElementById('randomBookBtn').addEventListener('click', () => {
-      const rnd = books[Math.floor(Math.random() * books.length)];
-      const avg = computeAverageRating(rnd);
-      document.getElementById('randomResult').innerHTML = `
-        <div class="card" style="cursor:pointer;max-width:400px;margin:0 auto" onclick="location.href='book-detail.html?id=${rnd.id}'">
-          <h3 style="margin:.3rem 0">${rnd.title}</h3>
-          <p class="muted">${rnd.author}</p>
-          <div style="margin-top:.5rem">⭐ ${avg || '0.0'} / 5</div>
-          <button class="btn" style="margin-top:.8rem">상세 보기</button>
-        </div>
-      `;
-    });
-
-    // 초기 렌더링
-    renderNotices();
-    renderWishlist();
   </script>
   <script src="../js/page-transitions.js"></script>
 </body>

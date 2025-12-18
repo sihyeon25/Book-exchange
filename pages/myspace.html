@@ -41,7 +41,7 @@
         <li><a href="../index.html?from=internal">홈</a></li>
         <li><a href="schedule.html">일정</a></li>
         <li><a href="library.html">도서관</a></li>
-        <li><a href="community.html">커뮤니티</a></li>
+        <li><a href="community.html">게시판</a></li>
         <li><a href="myspace.html" aria-current="page">내 프로필</a></li>
       </ul>
     </nav>
@@ -96,7 +96,7 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="about.html">About</a>
+        <a href="faq.html">Q&A</a>
         <span class="footer-divider">·</span>
         <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-divider">·</span>
@@ -108,7 +108,7 @@
   
   <script src="../js/bookData.js"></script>
   <script>
-    // 업적 뱃지 데이터 (직접 정의하세요!)
+    // 업적 뱃지 데이터
     const badges = [
       { id: 'first_review', icon: '✍️', name: '첫 리뷰', desc: '첫 번째 리뷰 작성', unlocked: false },
       { id: 'book_lover', icon: '📚', name: '책벌레', desc: '5권 이상 읽기', unlocked: false },
@@ -116,8 +116,7 @@
       { id: 'social', icon: '💬', name: '수다쟁이', desc: '답글 10개 달기', unlocked: false },
       { id: 'explorer', icon: '🔍', name: '탐험가', desc: '모든 장르 읽기', unlocked: false },
       { id: 'speed', icon: '⚡', name: '스피드 리더', desc: '한 달에 3권 읽기', unlocked: false },
-      { id: 'reviewer', icon: '📝', name: '리뷰어', desc: '리뷰 10개 작성', unlocked: false },
-      { id: 'collector', icon: '🎯', name: '컬렉터', desc: '위시리스트 10권 추가', unlocked: false }
+      { id: 'reviewer', icon: '📝', name: '리뷰어', desc: '리뷰 10개 작성', unlocked: false }
     ];
 
     // 통계 데이터 (localStorage)
@@ -207,18 +206,6 @@
     renderBadges();
   </script>
   
-  <footer class="site-footer">
-    <div class="footer-content">
-      <div class="footer-links">
-        <a href="about.html">About</a>
-        <span class="footer-divider">·</span>
-        <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span class="footer-divider">·</span>
-        <a href="mailto:your-email@example.com">Contact</a>
-      </div>
-      <small>© 2024 교환독서. All rights reserved.</small>
-    </div>
-  </footer>
   <script src="../js/page-transitions.js"></script>
 </body>
 </html>

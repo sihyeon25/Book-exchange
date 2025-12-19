@@ -1,3 +1,38 @@
+/**
+ * ====================================
+ * BOOK EXCHANGE PROJECT STYLES
+ * 교환독서 프로젝트 메인 스타일시트
+ * ====================================
+ * 
+ * 이 파일은 전체 프로젝트의 스타일을 관리합니다:
+ * 
+ * 1. BASE RESET & TYPOGRAPHY
+ *    - 기본 리셋, 폰트, 색상 시스템
+ *    - 페이지별 테마 색상 정의
+ * 
+ * 2. LAYOUT & NAVIGATION
+ *    - 헤더, 푸터, 네비게이션
+ *    - 반응형 레이아웃 그리드
+ * 
+ * 3. COMPONENTS
+ *    - 버튼, 카드, 패널 등 재사용 컴포넌트
+ *    - 폼 요소, 테이블 스타일
+ * 
+ * 4. ANIMATIONS & TRANSITIONS
+ *    - 페이지 전환, 호버 효과
+ *    - 스크롤 애니메이션, 패럴랙스
+ * 
+ * 5. PAGE-SPECIFIC STYLES
+ *    - 각 페이지별 고유 스타일
+ *    - 모바일 최적화
+ * 
+ * 사용 기술:
+ * - CSS Custom Properties (CSS Variables)
+ * - Flexbox & CSS Grid
+ * - Media Queries (반응형)
+ * - CSS Animations & Transitions
+ */
+
 /* ========================================
    BASE RESET & TYPOGRAPHY
    전체 페이지의 기본 스타일 설정

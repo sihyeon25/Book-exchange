@@ -76,3 +76,8 @@
     window.removeEventListener('scroll', requestParallaxUpdate);
   }
 })();
+
+// ============================================
+// 파일 끝
+// scroll-animations.js 로드 완료
+// ============================================

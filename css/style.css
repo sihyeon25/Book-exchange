@@ -959,6 +959,17 @@ body[data-page="home"] .about-section h2::after{
   white-space:pre;
 }
 
+/* 모바일에서는 브래킷 간소화 */
+@media (max-width: 768px) {
+  body[data-page="home"] .about-section h2::before{
+    content:'【 ';
+  }
+  
+  body[data-page="home"] .about-section h2::after{
+    content:' 】';
+  }
+}
+
 /* 팀 섹션 제목은 꺾쇠 장식 */
 .team-section h2::before{
   content:'《 ';

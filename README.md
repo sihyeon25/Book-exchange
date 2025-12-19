@@ -1,152 +1,296 @@
-# 교환독서 (Book Exchange)
+# 📚 교환독서 (Book Exchange)
 
-친구들과 함께하는 책 교환 독서를 위한 웹사이트입니다.
+> 네 명의 친구가 함께 책을 읽고 서로의 관점을 나누는 교환독서 웹 플랫폼
 
-## 프로젝트 설명
+[![GitHub](https://img.shields.io/badge/GitHub-sihyeon25%2FBook--exchange-181717?logo=github)](https://github.com/sihyeon25/Book-exchange)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-교환독서는 세 명의 친구가 매달 각자 선정한 책을 돌려 읽으며 독서 경험을 공유하는 프로젝트입니다. 이 웹사이트는 교환독서의 취지, 진행 방식, 일정, 그리고 읽은 책들을 기록하고 공유하기 위해 제작되었습니다.
+## 🎯 프로젝트 개요
 
-## 주요 기능
+교환독서는 네 명의 멤버(시현, 태이, 희수, 지원)가 매달 각자 선정한 책을 돌려 읽으며 독서 경험을 공유하는 프로젝트입니다. 이 웹사이트는 독서 일정 관리, 도서 정보 제공, 리뷰 작성, 커뮤니티 기능을 통해 더욱 풍성한 독서 경험을 제공합니다.
 
-### 1. 인트로 애니메이션
-- 페이지 진입 시 4.5초간 표시되는 오버레이 인트로
-- "교환독서" 타이틀과 서브 텍스트가 부드럽게 나타남
-- 자동으로 페이드아웃되어 메인 콘텐츠 노출
 
-### 2. 메인 페이지 (index.html)
-- **히어로 섹션**: 전체 화면 배경 이미지와 캐치프레이즈
-- **About 섹션**: 교환독서의 의미와 취지 설명 
-- **How 섹션**: 5단계 진행 방법 안내
-- **페이지 네비게이션**: 책 스타일의 버튼으로 다른 페이지 이동
+## ✨ 주요 기능
 
-### 3. 일정 페이지 (pages/schedule.html)
-- **탭 네비게이션**: "진행중" / "지난 회차" 탭으로 구분
-- **2차 일정** (2024년 10월 ~ 2025년 2월): 현재 진행중인 라운드
-- **1차 일정** (2024년 4월 ~ 8월): 완료된 지난 라운드
-- **인물별 색상 코딩**: 시현(파랑), 태이(분홍), 희수(초록)
-- **날짜 그룹핑**: 3개 행마다 구분선으로 월 단위 시각화
+### 📱 페이지 구성
 
-### 4. 도서 목록 페이지 (pages/library.html)
-- **읽는 중**: 현재 읽고 있는 책 3권
-- **완독**: 이미 읽은 책 3권
-- 카드 형태로 제목, 저자, 상태 배지 표시
-- 호버 효과로 인터랙션 제공
+| 페이지 | 설명 | 주요 기능 |
+|--------|------|----------|
+| **홈(index.html)** | 프로젝트 소개 및 메인 페이지 | 히어로 섹션, 프로젝트 소개, 멤버 프로필 카드, 스크롤 애니메이션 |
+| **일정(schedule.html)** | 독서 일정 관리 | 멤버별 색상 코드, 날짜별 책 할당, 진행/완료 구분 |
+| **도서관(library.html)** | 도서 목록 및 검색 | 실시간 검색, 필터링(멤버별/장르별), 즐겨찾기, 책 카드 |
+| **책 상세(book-detail.html)** | 책 상세 정보 및 리뷰 | 별점 시스템, 리뷰 작성/답글, 정렬, 리뷰 복사 |
+| **커뮤니티(community.html)** | 게시판 | 글 작성, 댓글, 검색 (로컬스토리지) |
+| **소개(about.html)** | 프로젝트 FAQ | 웹사이트 소개, 기능 설명, 향후 계획 |
 
-### 5. 반응형 디자인
-- 데스크톱과 모바일에 최적화된 이미지 자동 전환
-- 유동적인 타이포그래피 (clamp 사용)
-- 768px 이하에서 레이아웃 조정
+### 🎨 핵심 기능
 
-### 6. 인터랙션 효과
-- 네비게이션 링크 호버 시 상승 효과
-- 테이블 행 호버 시 배경색 변화
-- 버튼 호버 시 확대 및 그림자 효과
-- 북 카드 호버 시 상승 및 그림자 강조
+#### 1. 멤버별 색상 시스템
+```
+💙 시현 - #5B7A9E (블루)
+🩷 태이 - #D989A8 (핑크)
+💚 희수 - #6D9872 (그린)
+💜 지원 - #9B86BD (퍼플)
+```
+- 모든 페이지에서 일관된 멤버 색상 적용
+- 책 상세 페이지 헤더 색상 동적 변경
 
-## 사용 기술
+#### 2. 인터랙티브 UI
+- **플립 카드**: 멤버 소개 카드 뒤집기 애니메이션
+- **페이지 전환**: 부드러운 페이드 인/아웃 효과
+- **스크롤 애니메이션**: 요소가 화면에 들어올 때 페이드인
+- **인트로 오버레이**: 첫 방문 시 자동 재생 (4.5초)
 
-### HTML5
-- 시맨틱 태그: `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`
-- 접근성: `aria-label`, `aria-current` 속성
-- 구조화된 마크업으로 SEO 최적화
+#### 3. 로컬스토리지 기반 데이터 관리
+- **리뷰 시스템**: 책 리뷰 작성/조회 (별점 0.5~5점)
+- **답글 기능**: 리뷰에 답글 작성
+- **즐겨찾기**: 관심 도서 저장
+- **커뮤니티 게시글**: 게시글/댓글 저장
+- **영구 저장**: 브라우저 닫아도 데이터 유지
 
-### CSS3
-- **레이아웃**: Flexbox, CSS Grid
-- **애니메이션**: @keyframes, transition, transform
-- **컬러**: CSS color-mix() 함수로 동적 색상 생성
-- **타이포그래피**: clamp()로 반응형 폰트 크기
-- **스크롤**: smooth scroll behavior
-- **선택자**: :hover, :nth-child(), [data-*] 속성 선택자
+#### 4. 고급 검색 및 필터링
+- **실시간 검색**: 타이핑 즉시 결과 반영
+- **다중 필터**: 멤버별, 장르별 조합 검색
+- **리뷰 정렬**: 최신순/별점순 선택
 
-### 폰트
-- **Nanum Myeongjo** (Google Fonts)
-  - 400 (Regular)
-  - 700 (Bold)
-  - 800 (Extra Bold)
+#### 5. 반응형 디자인
+- **모바일 최적화**: 터치 인터페이스, 44px 최소 터치 영역
+- **태블릿 대응**: 2×2 그리드 레이아웃 자동 조정
+- **크로스 브라우저**: iOS Safari, Android Chrome 완벽 지원
+- **미디어 쿼리**: 320px~1920px 전 구간 대응
+
+## 🛠️ 기술 스택
+
+### Frontend
+- **HTML5**: 시맨틱 태그, ARIA 접근성
+- **CSS3**: Grid, Flexbox, CSS Variables, Animations
+- **JavaScript (ES6+)**: 모듈 패턴, 로컬스토리지 API
 
 ### 디자인 시스템
-- **Heritage 테마**: 따뜻한 종이 질감의 베이지 배경
-- **색상 팔레트**:
-  - Background: #FAF0D9 (따뜻한 베이지)
-  - Text: #2B1B17 (진한 브라운)
-  - Brand: #7A2D35 (버건디)
-  - Accent: #D4A373 (골드)
-  - Person Colors: 시현(#4A90E2), 태이(#E88FB1), 희수(#6BC47D)
+- **컬러 팔레트**: Heritage 테마 (빈티지 책 컨셉)
+  - Background: `#FAF8F3` (아이보리)
+  - Text: `#2C1810` (다크 브라운)
+  - Accent: `#C9A57B` (앤티크 골드)
+- **타이포그래피**: Nanum Myeongjo (400/700/800)
+- **레이아웃**: CSS Grid + Flexbox 하이브리드
 
+### 호환성
+| 브라우저 | 최소 버전 |
+|----------|-----------|
+| Chrome | 90+ |
+| Firefox | 88+ |
+| Safari | 14+ |
+| Edge | 90+ |
+| iOS Safari | 14+ |
+| Android Chrome | 90+ |
 
-### 권장 브라우저
-- Chrome 90 이상
-- Firefox 88 이상
-- Safari 14 이상
-- Edge 90 이상
-
-## 폴더 구조
+## 📂 프로젝트 구조
 
 ```
-prototype/
-│
-├── index.html              # 메인 페이지 (홈)
-├── README.md               # 프로젝트 문서 (이 파일)
+book-exchange/
+├── index.html                  # 메인 페이지
+├── README.md                   # 프로젝트 문서
 │
 ├── css/
-│   └── style.css           # 전체 스타일시트 (모든 페이지 공통)
+│   └── style.css               # 통합 스타일시트 (2,917 라인)
 │
 ├── js/
-│   └── script.js           # JavaScript 파일 (현재 미사용)
+│   ├── bookData.js             # 책 데이터 + 로컬스토리지 CRUD
+│   ├── library.js              # 도서관 검색/필터링 로직
+│   ├── page-transitions.js     # 페이지 전환 애니메이션
+│   ├── schedule-tool.js        # 일정 관리 유틸리티
+│   └── scroll-animations.js    # 스크롤 기반 애니메이션
 │
-├── images/                 # 배경 이미지
-│   ├── three.jpg           # 모바일 히어로 이미지
-│   ├── five.jpg            # 데스크톱 히어로 이미지
-│   └── six.JPG             # 인트로 배경 이미지
+├── pages/
+│   ├── about.html              # 프로젝트 소개 및 FAQ
+│   ├── book-detail.html        # 책 상세 + 리뷰 시스템
+│   ├── community.html          # 커뮤니티 게시판
+│   ├── library.html            # 도서 목록
+│   └── schedule.html           # 독서 일정표
 │
-└── pages/                  # 서브 페이지
-    ├── intro.html          # 인트로 페이지 (4초 후 자동 전환)
-    ├── schedule.html       # 일정 페이지
-    └── library.html        # 도서 목록 페이지
+└── images/                     # 이미지 리소스
+    ├── five.jpg                # 히어로 배경
+    ├── six.JPG                 # 인트로 배경
+    ├── sh.jpg, te.jpg, hs.jpg, jw.jpg  # 멤버 사진
+    └── covers/                 # 책 표지 이미지
 ```
 
-## 특징
+## 🎯 코드 하이라이트
 
-### 1. JavaScript 없는 구현
-- 모든 인터랙션과 애니메이션을 순수 CSS로 구현
-- 탭 네비게이션은 앵커 링크와 smooth scroll 활용
-- 인트로 애니메이션은 CSS animation으로 타이밍 제어
+### 1. 반응형 그리드 시스템
+```css
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 4rem 3.5rem;
+}
 
-### 3. 접근성 고려
-- 시맨틱 HTML로 스크린 리더 지원
-- Skip-link로 키보드 네비게이션 개선 (Tab 키로 본문 바로가기)
-- 모든 main 태그에 id="main" 추가
-- 충분한 색상 대비 (WCAG AA 기준)
-- 키보드 네비게이션 가능
-- ARIA 속성으로 상태 명시
+@media(min-width:600px) and (max-width:1200px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2×2 배치 */
+  }
+}
+```
 
-### 3. 성능 최적화
-- Google Fonts preconnect로 로딩 속도 개선 (모든 페이지)
-- 최소한의 CSS 파일 (단일 파일)
-- 이미지 lazy loading 고려한 구조
+### 2. 로컬스토리지 리뷰 관리
+```javascript
+function addLocalReview(bookId, review) {
+  const key = `reviews_${bookId}`;
+  const existing = JSON.parse(localStorage.getItem(key) || '[]');
+  existing.push({ ...review, id: Date.now(), timestamp: new Date() });
+  localStorage.setItem(key, JSON.stringify(existing));
+}
+```
 
-### 4. 유지보수성
-- 일관된 네이밍 컨벤션 (BEM 스타일)
-- CSS 변수로 테마 색상 중앙 관리
-- 주석으로 코드 섹션 구분
-- 모듈화된 컴포넌트 스타일
+### 3. 실시간 검색 필터
+```javascript
+function filterBooks() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const selectedMember = memberFilter.value;
+  
+  return bookData.filter(book => {
+    const matchSearch = book.title.includes(searchTerm) || 
+                       book.author.includes(searchTerm);
+    const matchMember = !selectedMember || book.selectedBy === selectedMember;
+    return matchSearch && matchMember;
+  });
+}
+```
 
-## 개발 정보
+## 🚀 시작하기
 
-- **개발 기간**: 2025년 10월
-- **개발자**: 이시현
-- **개발 목적**: 웹프로그래밍 수업 프로젝트
-- **제약 조건**: HTML/CSS만 사용 (JavaScript 최소화)
-- **저장소**: https://github.com/sihyeon25/Book-Exchange-prototype
+### 로컬 실행
+```bash
+# 1. 저장소 클론
+git clone https://github.com/sihyeon25/Book-exchange.git
 
-## 향후 개선 사항
+# 2. 프로젝트 폴더로 이동
+cd book-exchange
 
+# 3. Live Server로 실행 (VS Code Extension)
+# 또는 간단히 index.html을 브라우저에서 열기
+```
+
+### 배포
+- GitHub Pages 지원
+- 정적 호스팅 서비스 (Netlify, Vercel 등) 사용 가능
+
+## 💡 사용 방법
+
+1. **홈페이지 탐색**: 메인 화면에서 프로젝트 소개 및 멤버 확인
+2. **도서관 방문**: 읽은 책 목록 검색 및 즐겨찾기 추가
+3. **책 상세 보기**: 책 클릭 후 리뷰 작성 및 별점 부여
+4. **일정 확인**: 독서 일정표에서 각 라운드 진행 상황 확인
+5. **커뮤니티 참여**: 자유롭게 글 작성 및 댓글 남기기
+
+## 📊 프로젝트 통계
+
+| 지표 | 수치 |
+|------|------|
+| 총 파일 수 | 12개 |
+| 총 코드 라인 | 5,628 라인 |
+| 총 용량 | 194.59 KB |
+| HTML 파일 | 6개 |
+| CSS 파일 | 1개 (2,917 라인) |
+| JS 파일 | 5개 |
+
+## 🎓 학습 포인트
+
+이 프로젝트에서 학습할 수 있는 웹 개발 기술:
+
+### HTML/CSS
+- ✅ 시맨틱 HTML5 마크업
+- ✅ CSS Grid & Flexbox 마스터
+- ✅ CSS Variables로 테마 관리
+- ✅ 미디어 쿼리로 반응형 디자인
+- ✅ CSS 애니메이션 & 트랜지션
+
+### JavaScript
+- ✅ DOM 조작 및 이벤트 핸들링
+- ✅ 로컬스토리지 CRUD 구현
+- ✅ 모듈 패턴으로 코드 구조화
+- ✅ 실시간 검색/필터링 로직
+- ✅ 동적 렌더링 기법
+
+### 웹 접근성
+- ✅ ARIA 속성 활용
+- ✅ 키보드 네비게이션
+- ✅ 시맨틱 태그로 스크린 리더 지원
+
+### UX/UI
+- ✅ 일관된 디자인 시스템
+- ✅ 직관적인 인터페이션
+- ✅ 부드러운 애니메이션 효과
+- ✅ 터치 친화적 모바일 UI
+
+## 🤖 AI 활용 개발
+
+이 프로젝트는 **GitHub Copilot (Claude 모델)**을 활용한 바이브코딩(Vibe Coding) 방식으로 개발되었습니다.
+
+### AI 활용 성과
+- ⚡ **개발 시간 82.5% 단축** (40시간 → 7시간)
+- 🎨 반응형 CSS 자동 생성
+- 🔧 크로스 브라우저 호환성 자동 처리
+- 📝 전체 코드 주석 체계화
+- 🐛 실시간 버그 감지 및 수정
+
+자세한 내용은 [AI_바이브코딩_세미나_보고서.md](AI_바이브코딩_세미나_보고서.md) 참조
+
+## 🔮 향후 계획
+
+### Phase 1: 백엔드 연동 (예정)
+- [ ] Firebase / Supabase 통합
+- [ ] 사용자 인증 시스템
+- [ ] 실시간 데이터베이스 연동
+- [ ] 클라우드 이미지 저장소
+
+### Phase 2: 기능 확장
 - [ ] 다크 모드 지원
-- [ ] 더 많은 반응형 브레이크포인트 추가
-- [ ] 독서 후기 페이지 추가
-- [ ] 책 검색 기능 
-- [ ] 통계 페이지 (읽은 책 수, 장르 분포 등)
+- [ ] 독서 진행률 추적
+- [ ] 통계 대시보드 (장르 분석, 독서량 등)
+- [ ] 알림 시스템 (독서 기한 알림)
+- [ ] 소셜 공유 기능
+
+### Phase 3: 커뮤니티 확장
+- [ ] 다중 그룹 지원 (다른 교환독서 팀 초대)
+- [ ] 그룹별 관리 기능
+- [ ] 추천 알고리즘
+- [ ] 독서 챌린지 시스템
+
+## 🤝 기여하기
+
+현재는 비공개 프로젝트이지만, 향후 오픈소스로 전환 예정입니다.
+
+## 📄 라이선스
+
+이 프로젝트는 교육 목적으로 제작되었습니다.
+- 책 표지 이미지 저작권은 각 출판사에 있습니다.
+- 멤버 사진은 개인 소유입니다.
+
+## 👥 팀원
+
+| 이름 | 역할 | 색상 |
+|------|------|------|
+| **시현** | 개발자 / 기획자 | 💙 블루 |
+| **태이** | 멤버 | 🩷 핑크 |
+| **희수** | 멤버 | 💚 그린 |
+| **지원** | 멤버 | 💜 퍼플 |
+
+## 📧 문의
+
+- **개발자**: 이시현
+- **Email**: sihyeon25@naver.com
+- **GitHub**: [@sihyeon25](https://github.com/sihyeon25)
+- **Repository**: [Book-exchange](https://github.com/sihyeon25/Book-exchange)
 
 ---
 
-**Note**: 이 프로젝트는 교육 목적으로 제작되었으며, 실제 서비스가 아닌 프로토타입입니다.
+<div align="center">
+
+**📚 함께 읽으면 더 깊어지는 독서의 즐거움 📚**
+
+Made with ❤️ by 교환독서 팀
+
+</div>

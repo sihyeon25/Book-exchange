@@ -146,9 +146,6 @@
       height:var(--size);
       fill:gold;
       filter:drop-shadow(0 1px 0 rgba(0,0,0,.12));
-      /* 액세시블리티 개선 */
-      role:"img";
-      aria-label:"별점";
     }
     
     .star.empty{fill:#ccc;}
@@ -199,6 +196,7 @@
       line-height:1.5;
       /* iOS Safari 줄이기 방지 */
       -webkit-appearance:none;
+      appearance:none;
       /* 모바일 키보드 최적화 */
       touch-action:manipulation;
     }
@@ -283,6 +281,7 @@
       font-size:.9rem;
       /* iOS 줄이기 방지 */
       -webkit-appearance:none;
+      appearance:none;
     }
     
     @media(max-width:767px){
@@ -508,23 +507,6 @@
         }
       }
       return '<div class="stars" aria-hidden="true">' + s.join('') + '</div>';
-    }
-      const s = [];
-      const fullStars = Math.floor(avg);
-      const decimal = avg - fullStars;
-      const hasHalf = decimal >= 0.25 && decimal < 0.75;
-      const roundUp = decimal >= 0.75;
-      
-      for(let i=1; i<=5; i++){
-        if(i <= fullStars || (i === fullStars + 1 && roundUp)) {
-          s.push(`<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
-        } else if(i === fullStars + 1 && hasHalf) {
-          s.push(`<svg class="star half" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="half"><stop offset="50%" stop-color="gold"/><stop offset="50%" stop-color="#ccc"/></linearGradient></defs><path fill="url(#half)" d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
-        } else {
-          s.push(`<svg class="star empty" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>`);
-        }
-      }
-      return `<div class="stars" aria-hidden="true">${s.join('')}</div>`
     }
 
     // 현재 페이지의 책 ID 가져오기

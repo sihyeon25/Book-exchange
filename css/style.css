@@ -1016,6 +1016,7 @@ main section.about-site-section::after,
   content:none;
 }
 
+/* 팀 카드 그리드: 반응형 2+2 레이아웃 */
 /* 팀 카드 그리드: 3개 가로 정렬 */
 .team-grid{
   display:flex;
@@ -1037,6 +1038,58 @@ main section.about-site-section::after,
   border:1px solid rgba(0,0,0,0.06);
   position:relative;
   overflow:hidden;
+}
+
+/* 화면을 반으로 줄였을 때부터 2+2 배치 (768px~1200px) */
+@media(min-width:768px) and (max-width:1200px){
+  .team-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 300px);
+    gap:3rem 2.5rem;
+    justify-content:center;
+  }
+  
+  .team-card{
+    width:300px !important;
+    height:380px !important;
+    min-width:300px !important;
+    max-width:300px !important;
+  }
+  
+  .flip-card{
+    width:300px !important;
+    height:380px !important;
+  }
+  
+  .flip-card .flip-card-inner{
+    width:300px !important;
+    height:380px !important;
+  }
+  
+  .flip-card-front, .flip-card-back{
+    width:260px !important;
+    height:340px !important;
+    padding:0 !important;
+  }
+  
+  .team-photo{
+    object-fit:cover !important;
+    width:100% !important;
+    height:100% !important;
+    border-radius:1rem !important;
+  }
+}
+
+/* 모바일에서는 1열 */
+@media(max-width:767px){
+  .team-grid{
+    flex-direction:column;
+    align-items:center;
+  }
+  
+  .team-card{
+    max-width:400px;
+  }
 }
 
 /* 팀 카드 모서리 장식 - 빈티지 프레임 */
@@ -1073,7 +1126,7 @@ main section.about-site-section::after,
   height:35px;
 }
 
-/* 플립카드만 페이드인 애니메이션 적용 */
+/* 플립카드 기본 스타일 및 애니메이션 */
 .flip-card {
   width: 260px;
   height: 340px;
@@ -1087,6 +1140,10 @@ main section.about-site-section::after,
   opacity: 0;
   transform: translateY(30px);
   transition: opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+  perspective: 1200px;
+  background: none !important;
+  border: none;
+  box-shadow: none;
 }
 .flip-card.fade-in {
   opacity: 1;
@@ -1214,12 +1271,6 @@ main section.about-site-section::after,
 /* =============================
    TEAM FLIP CARD EFFECT
    ============================= */
-.flip-card {
-  perspective: 1200px;
-  background: none !important;
-  border: none;
-  box-shadow: none;
-}
 .flip-card .flip-card-inner {
   position: relative;
   width: 100%;
@@ -1881,17 +1932,6 @@ html{scroll-behavior:smooth}
   
   .how-step p {
     font-size: 0.95rem;
-  }
-  
-  /* 팀 그리드 1열로 */
-  .team-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .team-card {
-    max-width: 100%;
-    width: 100%;
   }
   
   /* About Site 섹션 여백 축소 */

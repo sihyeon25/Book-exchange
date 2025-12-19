@@ -416,6 +416,16 @@ body[data-page="myspace"] .site-header.is-solid{
   border-bottom:none;
 }
 
+body[data-page="about"] .site-header{
+  background:rgba(42, 42, 42, 0.95);
+  backdrop-filter:blur(10px);
+}
+
+body[data-page="about"] .site-header.is-solid{
+  background:#2A2A2A;
+  border-bottom:none;
+}
+
 /* 테마 선택 드롭다운 */
 .theme select{
   background:var(--paper);color:var(--ink);
@@ -447,7 +457,7 @@ main h2{
 .hero{display:grid;gap:.75rem;margin-bottom:1rem}
 
 /* muted: 흐린 텍스트 */
-.muted{color:#0008}
+.muted{color:#666}
 
 /* ========================================
    INTRO HERO SECTION
@@ -556,7 +566,7 @@ main .intro-hero.vintage-shelves{
 
 /* 히어로 다음에 공간 추가 */
 body[data-page="home"] main .intro-hero.vintage-shelves + section{
-  margin-top:15rem;
+  margin-top:8rem;
 }
 
 /* 모바일: 모든 히어로에 three.jpg 사용 */
@@ -887,7 +897,8 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   width:100%;
 }
 
-.team-section h2{
+/* 모든 섹션 제목 기본 스타일 */
+main section h2{
   position:relative;
   display:inline-block;
   padding-bottom:1.5rem;
@@ -895,18 +906,84 @@ body:has(h1:first-of-type:not(.intro-title)) main{
   letter-spacing:.03em;
   color:var(--brand);
   margin-bottom:1rem;
+  border-bottom:3px solid transparent;
+}
+
+/* 홈 페이지에만 그라데이션 바 추가 */
+body[data-page="home"] main section h2{
+  border-image:linear-gradient(to right, transparent 45%, var(--brand) 50%, transparent 55%) 1;
+}
+
+/* 교환독서란 섹션 제목은 브래킷 장식 */
+body[data-page="home"] .about-section h2::before{
+  content:'【          ';
+  color:var(--brand);
+  opacity:0.5;
+  white-space:pre;
+}
+
+body[data-page="home"] .about-section h2::after{
+  content:'          】';
+  color:var(--brand);
+  opacity:0.5;
+  white-space:pre;
+}
+
+/* 팀 섹션 제목은 꺾쇠 장식 */
+.team-section h2::before{
+  content:'《 ';
+  color:var(--brand);
+  opacity:0.5;
 }
 
 .team-section h2::after{
-  content:'';
+  content:' 》';
+  color:var(--brand);
+  opacity:0.5;
+}
+
+/* 섹션 전체에 이중 코너 브래킷 장식 (좌상-우하) */
+main section{
+  position:relative;
+  padding:4rem 2rem;
+}
+
+main section::before{
+  content:'⌜';
   position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100px;
-  height:3px;
-  background:linear-gradient(to right, transparent, var(--brand), transparent);
-  box-shadow:0 1px 3px rgba(212,163,115,.3);
+  top:3.5rem;
+  left:3.5rem;
+  color:var(--brand);
+  opacity:0.3;
+  font-size:3.5rem;
+  line-height:1;
+  pointer-events:none;
+}
+
+main section::after{
+  content:'⌟';
+  position:absolute;
+  bottom:3.5rem;
+  right:3.5rem;
+  color:var(--brand);
+  opacity:0.3;
+  font-size:3.5rem;
+  line-height:1;
+  pointer-events:none;
+}
+
+/* 히어로 섹션, 교환독서란, 팀 섹션, 홈페이지 만든 이유 섹션은 브래킷 제외 */
+main section.intro-hero::before,
+main section.intro-hero::after,
+main section.about-section::before,
+main section.about-section::after,
+main section.team-section::before,
+main section.team-section::after,
+main section.about-site-section::before,
+main section.about-site-section::after,
+.subpage section::before,
+.subpage section::after{
+  content:none;
 }
 
 /* 팀 카드 그리드: 3개 가로 정렬 */
@@ -1592,6 +1669,11 @@ html{scroll-behavior:smooth}
   scroll-margin-top:5rem;
 }
 
+/* 사람 필터로 스크롤 시 탭 버튼도 함께 보이도록 충분한 여유 공간 */
+#person-filter{
+  scroll-margin-top:5.5rem;
+}
+
 /* 스케줄 구분선: 1차/2차 사이 - 일정 페이지 색상 적용 */
 .schedule-divider{
   border:none;
@@ -1961,6 +2043,10 @@ html{scroll-behavior:smooth}
    About 페이지 스타일
 ======================================== */
 
+.about-page {
+  word-break: keep-all;
+}
+
 .about-page .panel {
   margin-bottom: 2rem;
 }
@@ -1984,6 +2070,20 @@ html{scroll-behavior:smooth}
 
 .faq-item h3 {
   margin-top: 0;
+}
+
+/* 연락하기 섹션 버튼 스타일 */
+.contact-email-btn:hover {
+  background: #6a6a6a !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.contact-github-btn:hover {
+  background: #4a4a4a !important;
+  border-color: #6a6a6a !important;
+  color: #fff !important;
+  transform: translateY(-2px);
 }
 
 /* 반응형: 멤버 그리드 */
@@ -2103,7 +2203,7 @@ html{scroll-behavior:smooth}
   font-weight: 700;
   color: #721C2F;
   margin-bottom: 1.2rem;
-  padding: 0.7rem 1.2rem;
+  padding: 0.7rem 1.5rem;
   background: linear-gradient(135deg, #D2B48C 0%, #E5D4B5 100%);
   border-left: 5px solid #721C2F;
   border-radius: 6px;
@@ -2111,6 +2211,8 @@ html{scroll-behavior:smooth}
   position: relative;
   z-index: 2;
   letter-spacing: 0.02em;
+  width: 100%;
+  display: block;
 }
 
 /* 책 선반 - 심플한 스타일 */
@@ -2677,6 +2779,9 @@ body[data-page="book-detail"] .btn:hover{
 }
 body[data-page="book-detail"] h1{
   color:#3B4E3F;
+}
+body[data-page="book-detail"] h2{
+  color:#000;
 }
 body[data-page="book-detail"] .rating-stars button:hover,
 body[data-page="book-detail"] .rating-stars button.selected{

@@ -16,8 +16,8 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('fade-in-visible');
-        // 한 번 나타난 후에는 관찰 중지 (선택사항)
-        // observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('fade-in-visible');
       }
     });
   };

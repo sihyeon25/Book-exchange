@@ -20,17 +20,17 @@
     .star{width:var(--size);height:var(--size);fill:gold;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
     .star.empty{fill:#ccc}
     .star.half{fill:gold}
-    .pill{display:inline-flex;align-items:center;gap:.25rem;margin-right:.35rem}
+    .pill{display:inline-flex;align-items:center;gap:.25rem;margin-right:.35rem;padding:.25rem .6rem;background:color-mix(in oklab,var(--accent) 15%, var(--paper));border-radius:.5rem;font-size:.9rem;color:#333;font-weight:500}
     .review-form{display:grid;gap:.5rem;margin-top:1rem}
     .review-form textarea{min-height:88px;resize:vertical;padding:.6rem;border-radius:.6rem;border:1px solid var(--line)}
     .review{border-top:1px solid var(--line);padding:.75rem 0}
     .review .who{font-weight:700;margin-right:.4rem}
     
     /* 답글 스타일 */
-    .replies{margin-left:1.5rem;margin-top:.8rem;margin-bottom:.6rem;padding:.6rem .8rem;background:color-mix(in oklab,#8B4513 8%, var(--paper));border-radius:.5rem;border-left:3px solid #8B4513}
+    .replies{margin-left:1.5rem;margin-top:.8rem;margin-bottom:.6rem;padding:.6rem .8rem;background:color-mix(in oklab,var(--book-color) 8%, var(--paper));border-radius:.5rem;border-left:3px solid var(--book-color)}
     .reply{padding:.5rem 0;font-size:.9rem;position:relative;line-height:1.5}
-    .reply:not(:last-child){border-bottom:1px solid color-mix(in oklab,#8B4513 15%, var(--paper))}
-    .reply .who{font-weight:600;margin-right:.5rem;color:#8B4513;opacity:.9}
+    .reply:not(:last-child){border-bottom:1px solid color-mix(in oklab,var(--book-color) 15%, var(--paper))}
+    .reply .who{font-weight:600;margin-right:.5rem;color:var(--book-color);opacity:.9}
     .reply .who::before{content:'↳';margin-right:.3rem;opacity:.6}
     .reply-form{display:grid;gap:.3rem;margin-top:.6rem;padding:.5rem;background:color-mix(in oklab,var(--accent) 5%, var(--paper));border-radius:.5rem}
     .reply-form input{padding:.4rem;border:1px solid var(--line);border-radius:.4rem;font-size:.85rem}
@@ -57,7 +57,6 @@
         <li><a href="schedule.html">일정</a></li>
         <li><a href="library.html">도서관</a></li>
         <li><a href="community.html">게시판</a></li>
-        <li><a href="myspace.html">내 프로필</a></li>
       </ul>
     </nav>
   </header>
@@ -67,14 +66,14 @@
       <div class="cover" id="cover"></div>
       <div class="meta">
         <h2 id="title" style="margin:0"></h2>
-        <p id="author" class="muted" style="margin:.2rem 0 0 0"></p>
-        <p id="bookInfo" class="muted" style="margin:.2rem 0 0 0"></p>
+        <p id="author" style="margin:.2rem 0 0 0;color:#333"></p>
+        <p id="bookInfo" style="margin:.2rem 0 0 0;color:#333"></p>
         <div class="rating" id="rating"></div>
         <div id="tags" style="margin-top:.3rem"></div>
         <p id="desc" style="margin-top:.6rem"></p>
         
         <!-- 링크 복사 버튼 -->
-        <button id="copyLinkBtn" class="btn ghost" style="margin-top:.6rem;width:fit-content">🔗 링크 복사</button>
+        <button id="copyReviewBtn" class="btn ghost" style="margin-top:.6rem;width:fit-content">📝 내 리뷰 복사</button>
 
         <div class="panel">
           <h3 style="margin:.2rem 0">후기 남기기</h3>
@@ -117,7 +116,7 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="faq.html">Q&A</a>
+        <a href="about.html">About</a>
         <span class="footer-divider">·</span>
         <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-divider">·</span>
@@ -150,7 +149,7 @@
     }
 
     const id = qs('id');
-    const book = getBookById?.(id);
+    const book = getBookById(id);
     const coverEl = document.getElementById('cover');
     const titleEl = document.getElementById('title');
     const authorEl = document.getElementById('author');
@@ -341,13 +340,38 @@
       render();
     });
     
-    // 링크 복사
-    document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
-      const url = location.href;
-      navigator.clipboard.writeText(url).then(() => {
-        alert('링크가 클립보드에 복사되었습니다!');
+    // 내 리뷰 복사
+    document.getElementById('copyReviewBtn')?.addEventListener('click', () => {
+      const form = document.getElementById('reviewForm');
+      if(!form) return;
+      
+      const ratingInput = form.querySelector('input[name="rating"]:checked');
+      const commentInput = form.querySelector('textarea[name="comment"]');
+      const userInput = form.querySelector('input[name="user"]');
+      
+      const rating = ratingInput ? ratingInput.value : '';
+      const comment = commentInput ? commentInput.value.trim() : '';
+      const user = userInput ? userInput.value.trim() : '';
+      
+      if(!comment) {
+        alert('리뷰를 먼저 작성해주세요.');
+        return;
+      }
+      
+      const reviewData = {
+        book: book ? book.title : '',
+        user: user || '익명',
+        rating: rating,
+        comment: comment
+      };
+      
+      const reviewText = `책: ${reviewData.book}\n이름: ${reviewData.user}\n별점: ${reviewData.rating}\n리뷰: ${reviewData.comment}`;
+      
+      navigator.clipboard.writeText(reviewText).then(() => {
+        alert('리뷰가 클립보드에 복사되었습니다!\n개발자에게 전달해주세요.');
       }).catch(() => {
-        alert('복사 실패. 브라우저가 지원하지 않을 수 있습니다.');
+        // 클립보드 실패 시 alert로 텍스트 표시
+        alert(`복사 실패. 아래 내용을 직접 복사해주세요:\n\n${reviewText}`);
       });
     });
 

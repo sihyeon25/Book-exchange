@@ -37,7 +37,7 @@
   <section id="intro" class="page-intro page-intro--overlay splash-hero intro-hero vintage-shelves" aria-label="페이지 인트로">
     <h1 class="intro-title draw-title">교환독서</h1>
     <p class="intro-subtitle">내 책 줄게, 네 책 다오</p>
-    <p class="intro-sub">Share books, exchange stories, connect hearts</p>
+    <p class="intro-sub">Share your shelf, expand your world</p>
   </section>
 
   <!-- ============================================
@@ -52,7 +52,7 @@
         <li><a href="pages/schedule.html">일정</a></li>
         <li><a href="pages/library.html">도서관</a></li>
         <li><a href="pages/community.html">게시판</a></li>
-          <li><a href="pages/myspace.html">내 프로필</a></li>
+
       </ul>
     </nav>
   </header>
@@ -181,7 +181,7 @@
         <p>교환독서를 하면서 누가 어떤 책을 읽고 있는지,<br>언제 교환해야 하는지 헷갈릴 때가 많았어요.</p>
         <p>단톡방에 흩어진 일정과 책 정보를 한곳에 모아두면 편하겠다는 생각에<br>이 웹사이트를 만들었습니다.</p>
         <p>우리만의 작은 도서관처럼, 기록하고 공유하는 공간이 되었으면 좋겠어요.</p>
-        <cite>— &lt;홈페이지를 만든 이유&gt;</cite>
+        <cite>&lt;홈페이지를 만든 이유&gt;</cite>
       </blockquote>
     </section>
 
@@ -194,7 +194,7 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="pages/faq.html">Q&A</a>
+        <a href="pages/about.html">About</a>
         <span class="footer-divider">·</span>
         <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-divider">·</span>
@@ -283,7 +283,8 @@
             setTimeout(() => {
               entry.target.classList.add('fade-in');
             }, delay);
-            observer.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove('fade-in');
           }
         });
       }, {

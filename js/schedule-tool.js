@@ -32,7 +32,17 @@ function saveMyDates(arr){
   localStorage.setItem('my_dates', JSON.stringify(arr));
 }
 
+function getFriendCodes(){
+  try{
+    return JSON.parse(localStorage.getItem('friend_codes')||'[]');
+  }catch{return []}
+}
+function saveFriendCodes(arr){
+  localStorage.setItem('friend_codes', JSON.stringify(arr));
+}
+
 let myDates = getMyDates();
+let friendCodes = getFriendCodes();
 
 // 날짜 그리드 렌더
 function renderDateGrid(){
@@ -64,6 +74,37 @@ function renderDateGrid(){
   });
 }
 
+// 코드 리스트 렌더링
+function renderCodeList(){
+  const codeListArea = document.getElementById('codeListArea');
+  if(!friendCodes.length){
+    codeListArea.innerHTML = '';
+    return;
+  }
+  
+  const list = friendCodes.map((code, idx) => {
+    const dates = code.map(k => {
+      const d = new Date(k);
+      return `${d.getMonth()+1}/${d.getDate()}`;
+    }).join(', ');
+    return `
+      <div style="padding:.6rem;background:var(--paper);border:1px solid var(--line);border-radius:.5rem;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.85rem"><strong>친구 ${idx+1}:</strong> ${dates}</span>
+        <button class="btn ghost" onclick="removeFriendCode(${idx})" style="font-size:.8rem;padding:.2rem .5rem">삭제</button>
+      </div>
+    `;
+  }).join('');
+  
+  codeListArea.innerHTML = `<div style="margin-top:.5rem"><strong style="font-size:.9rem">추가된 친구 코드</strong>${list}</div>`;
+}
+
+// 친구 코드 삭제
+window.removeFriendCode = function(idx){
+  friendCodes.splice(idx, 1);
+  saveFriendCodes(friendCodes);
+  renderCodeList();
+}
+
 // 내 코드 복사
 document.getElementById('exportBtn').addEventListener('click', () => {
   if(!myDates.length){
@@ -78,7 +119,7 @@ document.getElementById('exportBtn').addEventListener('click', () => {
   });
 });
 
-// 친구 코드 붙여넣기
+// 친구 코드 추가
 document.getElementById('importBtn').addEventListener('click', () => {
   const code = prompt('친구의 코드를 붙여넣으세요:');
   if(!code) return;
@@ -88,22 +129,48 @@ document.getElementById('importBtn').addEventListener('click', () => {
       alert('잘못된 코드입니다.');
       return;
     }
-    // 교집합 계산
-    const common = myDates.filter(d => friendDates.includes(d));
-    const resultArea = document.getElementById('resultArea');
-    if(!common.length){
-      resultArea.innerHTML = '<div class="panel" style="background:color-mix(in oklab,var(--brand) 5%, var(--paper))"><strong>교집합 결과</strong><p class="muted">공통으로 가능한 날이 없어요. 😢</p></div>';
-    }else{
-      const list = common.map(k => {
-        const d = new Date(k);
-        return `${d.getMonth()+1}월 ${d.getDate()}일`;
-      }).join(', ');
-      resultArea.innerHTML = `<div class="panel" style="background:color-mix(in oklab,var(--accent) 15%, var(--paper))"><strong>교집합 결과 🎉</strong><p>공통 가능 날짜: <strong>${list}</strong></p></div>`;
-    }
+    friendCodes.push(friendDates);
+    saveFriendCodes(friendCodes);
+    renderCodeList();
+    alert('친구 코드가 추가되었습니다!');
   }catch(e){
     alert('코드 파싱 실패. 형식을 확인하세요.');
   }
 });
 
+// 교집합 찾기
+document.getElementById('findCommonBtn').addEventListener('click', () => {
+  const resultArea = document.getElementById('resultArea');
+  
+  if(!myDates.length){
+    alert('내 날짜를 먼저 선택하세요.');
+    return;
+  }
+  
+  if(!friendCodes.length){
+    alert('친구 코드를 먼저 추가하세요.');
+    return;
+  }
+  
+  // 모든 코드(내 것 + 친구들)의 교집합 계산
+  let common = [...myDates];
+  
+  friendCodes.forEach(friendDates => {
+    common = common.filter(d => friendDates.includes(d));
+  });
+  
+  if(!common.length){
+    resultArea.innerHTML = '<div class="panel" style="background:color-mix(in oklab,var(--brand) 5%, var(--paper))"><strong>교집합 결과</strong><p class="muted">공통으로 가능한 날이 없어요. 😢</p></div>';
+  }else{
+    const list = common.map(k => {
+      const d = new Date(k);
+      return `${d.getMonth()+1}월 ${d.getDate()}일`;
+    }).join(', ');
+    resultArea.innerHTML = `<div class="panel" style="background:color-mix(in oklab,var(--accent) 15%, var(--paper))"><strong>교집합 결과 🎉</strong><p>공통 가능 날짜: <strong>${list}</strong></p></div>`;
+  }
+});
+
 // 초기 렌더
 renderDateGrid();
+renderCodeList();
+

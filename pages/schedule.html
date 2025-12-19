@@ -30,7 +30,6 @@
         <li><a aria-current="page" href="schedule.html">일정</a></li>
         <li><a href="library.html">도서관</a></li>
         <li><a href="community.html">게시판</a></li>
-        <li><a href="myspace.html">내 프로필</a></li>
       </ul>
     </nav>
   </header>
@@ -44,12 +43,12 @@
 
     <!-- 탭 네비게이션: 진행중 / 지난 회차 -->
     <div class="schedule-tabs">
-      <a href="#ongoing" class="tab-btn active">진행중</a>
+      <a href="#person-filter" class="tab-btn active">진행중</a>
       <a href="#past" class="tab-btn">지난 회차</a>
     </div>
 
     <!-- 사람별 필터 -->
-    <div class="person-filter">
+    <div class="person-filter" id="person-filter" style="margin-top:4rem">
       <button class="filter-btn active" data-person="all">전체</button>
       <button class="filter-btn" data-person="시현">시현</button>
       <button class="filter-btn" data-person="태이">태이</button>
@@ -161,8 +160,8 @@
          PAST SECTION
          완료된 1차 회차 일정
     ============================================= -->
-    <div class="schedule-tabs">
-      <a href="#ongoing" class="tab-btn">진행중</a>
+    <div class="schedule-tabs" style="margin-top:4rem">
+      <a href="#person-filter" class="tab-btn">진행중</a>
       <a href="#past" class="tab-btn active">지난 회차</a>
     </div>
     
@@ -197,22 +196,52 @@
       </table>
     </section>
     
-    <!-- 일정 조율 도구 -->
+    <!-- 달력 -->
     <section class="panel" style="margin-top:4rem">
-      <h2>일정 조율 도구</h2>
-      <p class="muted">모일 수 있는 날짜를 선택하고 친구와 공유해서 교집합을 찾아보세요.</p>
+      <h2>📅 달력</h2>
       
-      <div style="margin-top:1rem">
-        <label style="display:block;margin-bottom:.4rem;font-weight:700">내가 가능한 날짜 선택</label>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.4rem" id="dateGrid"></div>
+      <!-- 월 선택 -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.5rem 0">
+        <button id="prevCalMonth" class="btn ghost" style="padding:.5rem 1rem">← 이전 달</button>
+        <h3 id="currentCalMonth" style="margin:0;min-width:120px;text-align:center;color:#2C3E50">2025년 12월</h3>
+        <button id="nextCalMonth" class="btn ghost" style="padding:.5rem 1rem">다음 달 →</button>
       </div>
       
-      <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-        <button class="btn" id="exportBtn">내 코드 복사</button>
-        <button class="btn ghost" id="importBtn">친구 코드 붙여넣기</button>
+      <!-- 달력 그리드 -->
+      <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;margin-top:1rem">
+        <!-- 요일 헤더 -->
+        <div style="text-align:center;font-weight:700;padding:.5rem;color:#e74c3c">일</div>
+        <div style="text-align:center;font-weight:700;padding:.5rem">월</div>
+        <div style="text-align:center;font-weight:700;padding:.5rem">화</div>
+        <div style="text-align:center;font-weight:700;padding:.5rem">수</div>
+        <div style="text-align:center;font-weight:700;padding:.5rem">목</div>
+        <div style="text-align:center;font-weight:700;padding:.5rem">금</div>
+        <div style="text-align:center;font-weight:700;padding:.5rem;color:#3498db">토</div>
       </div>
-      
-      <div id="resultArea" style="margin-top:1rem"></div>
+    </section>
+    
+    <!-- 일정 조율 도구 (축소 버전) -->
+    <section class="panel" style="margin-top:2rem;padding:1.5rem;background:var(--bg-secondary)">
+      <details>
+        <summary style="cursor:pointer;font-weight:700;font-size:1rem;color:var(--primary)">📋 일정 조율 도구</summary>
+        <div style="margin-top:1rem">
+          <p class="muted" style="font-size:.9rem">모일 수 있는 날짜를 선택하고 친구와 공유해서 교집합을 찾아보세요.</p>
+          
+          <div style="margin-top:1rem">
+            <label style="display:block;margin-bottom:.4rem;font-weight:700;font-size:.9rem">내가 가능한 날짜 선택</label>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.4rem" id="dateGrid"></div>
+          </div>
+          
+          <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+            <button class="btn" id="exportBtn" style="font-size:.9rem;padding:.4rem .8rem">내 코드 복사</button>
+            <button class="btn ghost" id="importBtn" style="font-size:.9rem;padding:.4rem .8rem">친구 코드 추가</button>
+            <button class="btn" id="findCommonBtn" style="font-size:.9rem;padding:.4rem .8rem;background:#27ae60">교집합 찾기</button>
+          </div>
+          
+          <div id="codeListArea" style="margin-top:1rem;font-size:.9rem"></div>
+          <div id="resultArea" style="margin-top:1rem;font-size:.9rem"></div>
+        </div>
+      </details>
     </section>
 
   </main>
@@ -224,7 +253,7 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="faq.html">Q&A</a>
+        <a href="about.html">About</a>
         <span class="footer-divider">·</span>
         <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-divider">·</span>
@@ -235,6 +264,115 @@
   </footer>
   
   <script src="../js/schedule-tool.js"></script>
+  
+  <!-- 달력 기능 -->
+  <script>
+    (() => {
+      const calendarGrid = document.getElementById('calendarGrid');
+      const monthLabel = document.getElementById('currentCalMonth');
+      const prevBtn = document.getElementById('prevCalMonth');
+      const nextBtn = document.getElementById('nextCalMonth');
+      
+      const today = new Date();
+      let currentYear = today.getFullYear();
+      let currentMonth = today.getMonth();
+      
+      function renderCalendar() {
+        // 요일 헤더 이후의 모든 날짜 셀 제거
+        while (calendarGrid.children.length > 7) {
+          calendarGrid.removeChild(calendarGrid.lastChild);
+        }
+        
+        // 월 표시 업데이트
+        monthLabel.textContent = `${currentYear}년 ${currentMonth + 1}월`;
+        
+        // 해당 월의 첫날과 마지막 날
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startDayOfWeek = firstDay.getDay(); // 0 = Sunday
+        
+        // 빈 칸 추가 (첫 주의 빈 날짜들)
+        for (let i = 0; i < startDayOfWeek; i++) {
+          const emptyCell = document.createElement('div');
+          calendarGrid.appendChild(emptyCell);
+        }
+        
+        // 날짜 셀 추가
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayCell = document.createElement('div');
+          dayCell.textContent = day;
+          dayCell.style.cssText = `
+            text-align:center;
+            padding:.8rem;
+            border:1px solid #ddd;
+            border-radius:.5rem;
+            cursor:pointer;
+            transition:all .2s ease;
+            background:#fff;
+          `;
+          
+          const dayOfWeek = (startDayOfWeek + day - 1) % 7;
+          if (dayOfWeek === 0) dayCell.style.color = '#e74c3c'; // 일요일
+          if (dayOfWeek === 6) dayCell.style.color = '#3498db'; // 토요일
+          
+          // 오늘 날짜 강조
+          const isToday = currentYear === today.getFullYear() && 
+              currentMonth === today.getMonth() && 
+              day === today.getDate();
+          
+          if (isToday) {
+            dayCell.style.background = '#2C3E50';
+            dayCell.style.color = '#fff';
+            dayCell.style.fontWeight = '700';
+            dayCell.style.border = '2px solid #2C3E50';
+          }
+          
+          dayCell.addEventListener('mouseenter', () => {
+            if (!isToday) {
+              dayCell.style.background = '#e3f2fd';
+            } else {
+              dayCell.style.background = '#455a64';
+              dayCell.style.color = '#fff';
+            }
+          });
+          
+          dayCell.addEventListener('mouseleave', () => {
+            if (!isToday) {
+              dayCell.style.background = '#fff';
+            } else {
+              dayCell.style.background = '#2C3E50';
+              dayCell.style.color = '#fff';
+            }
+          });
+          
+          calendarGrid.appendChild(dayCell);
+        }
+      }
+      
+      prevBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+      });
+      
+      // 초기 렌더링
+      renderCalendar();
+    })();
+  </script>
+  
   <script>
     // 월별 슬라이드 기능
     (() => {
@@ -304,5 +442,19 @@
   </script>
   
   <script src="../js/page-transitions.js"></script>
+  
+  <!-- 탭 버튼 스크롤 조정 - 제거됨 -->
+  <script>
+    // 페이지 로드 시 해시 제거하고 맨 위로 스크롤 (새로고침 시 처음부터 보이도록)
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        history.replaceState(null, null, window.location.pathname);
+      }
+      window.scrollTo(0, 0);
+    });
+  </script>
 </body>
 </html>

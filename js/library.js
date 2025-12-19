@@ -231,11 +231,6 @@ document.getElementById('sortSelect').addEventListener('change', e => {
   renderLibrary();
 });
 
-document.getElementById('favOnlyCheck').addEventListener('change', e => {
-  favOnly = e.target.checked;
-  renderLibrary();
-});
-
 // 초기 렌더
 renderTagFilters();
 renderLibrary();

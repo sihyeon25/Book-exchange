@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="subpage about-page">
+<body class="subpage about-page" data-page="about">
   <a href="#main" class="sr-only">본문으로 건너뛰기</a>
 
   <!-- ============================================
@@ -31,6 +31,7 @@
         <li><a href="library.html">도서관</a></li>
         <li><a href="community.html">게시판</a></li>
         <li><a href="myspace.html">내 프로필</a></li>
+        <li><a aria-current="page" href="about.html">About</a></li>
       </ul>
     </nav>
   </header>
@@ -40,33 +41,45 @@
        About 페이지
   ============================================= -->
   <main id="main">
-    <h1>About</h1>
-
-    <!-- 프로젝트 소개 -->
-    <section class="panel">
-      <h2>📚 교환독서란?</h2>
-      <p>교환독서는 서로의 책을 나누며 새로운 이야기를 만나는 독서 모임입니다.</p>
-      <p>한 달에 한 번, 각자가 읽은 책을 다른 사람의 책과 교환하며,<br>
-         평소 선택하지 않았을 책들을 만나고 다양한 관점을 경험합니다.</p>
-      <p>책을 교환하는 것은 단순히 책을 빌려주는 것이 아니라,<br>
-         나의 생각과 감상을 누군가에게 전하고 그들의 이야기를 받아오는 특별한 경험입니다.</p>
-    </section>
+    <h1>〈About〉</h1>
 
     <!-- 웹사이트 소개 -->
     <section class="panel">
       <h2>💻 이 웹사이트에 대하여</h2>
-      <p>교환독서를 하면서 누가 어떤 책을 읽고 있는지, 언제 교환해야 하는지 헷갈릴 때가 많았어요.</p>
-      <p>단톡방에 흩어진 일정과 책 정보를 한곳에 모아두면 편하겠다는 생각에 이 웹사이트를 만들었습니다.</p>
-      <p>우리만의 작은 도서관처럼, 기록하고 공유하는 공간이 되었으면 좋겠어요.</p>
+      <p>교환독서를 하다 보니 누가 어떤 책을 읽고 있는지, 언제 교환해야 하는지 매번 헷갈렸습니다.</p>
+      <p>단톡방에서 스크롤을 올려가며 일정을 확인하고, 누가 무슨 책 읽었는지 기억해내는 게 번거로워서 만든 웹사이트입니다.</p>
+      <p>일정 관리, 책 목록 정리, 리뷰 작성까지 한 곳에서 해결할 수 있도록 구성했습니다.</p>
       
-      <div style="margin-top:2rem;padding:1.5rem;background:var(--bg-secondary);border-radius:.8rem">
-        <h3 style="margin-top:0">주요 기능</h3>
-        <ul style="line-height:1.8">
-          <li><strong>도서관</strong> - 모임에서 읽은 모든 책 목록과 리뷰</li>
-          <li><strong>일정</strong> - 책 교환 일정과 모임 날짜 관리</li>
+      <div style="margin-top:2.5rem">
+        <h3 style="color:var(--primary);margin-bottom:1rem">📄 페이지 구성</h3>
+        <ul style="line-height:2;padding-left:1.5rem">
+          <li><strong>홈</strong> - 교환독서 소개 및 멤버 프로필</li>
+          <li><strong>일정</strong> - 책 교환 일정과 모임 날짜 캘린더</li>
+          <li><strong>도서관</strong> - 읽은 책 목록, 리뷰 작성 및 별점 관리</li>
           <li><strong>게시판</strong> - 공지사항, 독서 명언 뽑기</li>
-          <li><strong>내 프로필</strong> - 독서 목표 설정과 뱃지 획득</li>
-          <li><strong>멤버 소개</strong> - 네 명의 멤버 프로필과 독서 취향</li>
+          <li><strong>About</strong> - 프로젝트 소개 및 FAQ</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:2.5rem">
+        <h3 style="color:var(--primary);margin-bottom:1rem">⚙️ 주요 기능</h3>
+        <ul style="line-height:2;padding-left:1.5rem">
+          <li>책 교환 일정 관리 및 알림</li>
+          <li>읽은 책 리뷰 및 별점 작성</li>
+          <li>명언 뽑기 랜덤 생성기</li>
+          <li>멤버별 독서 취향 및 프로필 소개</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:2.5rem">
+        <h3 style="color:var(--primary);margin-bottom:1rem">✨ 주목할 포인트</h3>
+        <ul style="line-height:2;padding-left:1.5rem">
+          <li><strong>빈티지한 디자인</strong> - 책과 어울리는 고전적이고 따뜻한 감성</li>
+          <li><strong>반응형 레이아웃</strong> - 모바일, 태블릿, 데스크톱 모두 최적화</li>
+          <li><strong>부드러운 애니메이션</strong> - 스크롤 페이드인, 페이지 전환 효과</li>
+          <li><strong>새로고침할 때마다 바뀌는 인트로</strong> - 랜덤 배경 이미지로 매번 다른 느낌</li>
+          <li><strong>멤버별 소개 카드</strong> - 각 멤버의 독서 취향과 프로필 시각화</li>
+          <li><strong>로컬스토리지 활용</strong> - 별도 서버 없이 데이터 저장 (추후 Firebase 연동 예정)</li>
         </ul>
       </div>
     </section>
@@ -76,7 +89,7 @@
       <h2>👩‍💻 개발자 정보</h2>
       <div style="display:grid;gap:1rem">
         <div>
-          <strong>개발자:</strong> 시현 (sihyeon25)
+          <strong>개발자:</strong> 이시현
         </div>
         <div>
           <strong>GitHub:</strong> 
@@ -91,18 +104,16 @@
           </a>
         </div>
         <div>
-          <strong>제작 기간:</strong> 2024년 11월
-        </div>
-        <div>
-          <strong>기술 스택:</strong> HTML, CSS, JavaScript (Vanilla)
+          <strong>제작 기간:</strong> 2025년 10월 ~ 12월
         </div>
       </div>
     </section>
 
+    <!-- Q&A -->
+    <h1 style="margin-top:4rem">〈Q&A〉</h1>
+
     <!-- FAQ 섹션 -->
     <section class="panel">
-      <h2>❓ 자주 묻는 질문 (FAQ)</h2>
-      
       <div class="faq-item" style="margin-bottom:1.5rem">
         <h3 style="color:var(--primary);margin-bottom:.5rem">Q. 교환독서는 어떻게 진행되나요?</h3>
         <p style="padding-left:1.5rem">각자 읽고 싶은 책을 가져와서 1~2달 동안 읽은 후, 다음 사람에게 전달합니다. 모든 책을 돌려 읽으면 한 회차가 끝나고, 함께 모여 이야기를 나눕니다.</p>
@@ -110,22 +121,17 @@
 
       <div class="faq-item" style="margin-bottom:1.5rem">
         <h3 style="color:var(--primary);margin-bottom:.5rem">Q. 누구나 참여할 수 있나요?</h3>
-        <p style="padding-left:1.5rem">현재는 네 명의 멤버가 진행하는 비공개 모임입니다. 추후 확장 계획은 모임에서 논의 중입니다.</p>
+        <p style="padding-left:1.5rem">현재는 네 명의 멤버가 진행하는 비공개 모임입니다. 백엔드 연동 후에는 다른 교환독서 그룹도 이용할 수 있도록 그룹별 관리 기능을 추가하고, 리뷰 및 커뮤니티 기능도 활성화할 계획입니다.</p>
       </div>
 
       <div class="faq-item" style="margin-bottom:1.5rem">
-        <h3 style="color:var(--primary);margin-bottom:.5rem">Q. 리뷰는 어떻게 작성하나요?</h3>
-        <p style="padding-left:1.5rem">도서관에서 책을 클릭하고 별점과 함께 리뷰를 작성할 수 있습니다. 현재는 localStorage를 사용하며, 추후 백엔드 연동 예정입니다.</p>
-      </div>
-
-      <div class="faq-item" style="margin-bottom:1.5rem">
-        <h3 style="color:var(--primary);margin-bottom:.5rem">Q. 백엔드 연동은 언제 하나요?</h3>
-        <p style="padding-left:1.5rem">기말고사 이후 Firebase를 이용한 백엔드 연동을 진행할 예정입니다. 실시간 동기화와 다중 사용자 지원이 가능해집니다.</p>
+        <h3 style="color:var(--primary);margin-bottom:.5rem">Q. 모바일에서도 사용할 수 있나요?</h3>
+        <p style="padding-left:1.5rem">네, 반응형 디자인으로 제작되어 모바일, 태블릿, 데스크톱 모두에서 최적화되어 있습니다.</p>
       </div>
 
       <div class="faq-item">
         <h3 style="color:var(--primary);margin-bottom:.5rem">Q. 버그를 발견했어요!</h3>
-        <p style="padding-left:1.5rem">GitHub Issues나 이메일로 제보해주시면 감사하겠습니다. 😊</p>
+        <p style="padding-left:1.5rem">GitHub나 이메일로 제보해주시면 감사하겠습니다. 😊</p>
       </div>
     </section>
 
@@ -140,12 +146,12 @@
     </section>
 
     <!-- 연락하기 -->
-    <section class="panel" style="text-align:center;background:linear-gradient(135deg, var(--bg-secondary), var(--bg));">
-      <h2>📬 연락하기</h2>
-      <p>프로젝트에 대한 문의나 제안이 있으시면 언제든 연락해주세요!</p>
+    <section class="panel contact-section" style="margin-top:4rem;text-align:center;background:#3a3a3a;padding:3rem 2rem;border-radius:.8rem;">
+      <h2 style="color:#d4a373;">📬 연락하기</h2>
+      <p style="color:#e8e8e8;">프로젝트에 대한 문의나 제안이 있으시면 언제든 연락해주세요!</p>
       <div style="margin-top:1.5rem">
-        <a href="mailto:sihyeon25@naver.com" class="btn">이메일 보내기</a>
-        <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer" class="btn ghost" style="margin-left:1rem">GitHub 보기</a>
+        <a href="mailto:sihyeon25@naver.com" class="btn contact-email-btn" style="background:#5a5a5a;color:#fff;border:none;">이메일 보내기</a>
+        <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer" class="btn ghost contact-github-btn" style="margin-left:1rem;border-color:#5a5a5a;color:#e8e8e8;">GitHub 보기</a>
       </div>
     </section>
 
@@ -155,7 +161,7 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="about.html" aria-current="page">About</a>
+        <a href="about.html">About</a>
         <span class="footer-divider">·</span>
         <a href="https://github.com/sihyeon25/Book-exchange" target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-divider">·</span>

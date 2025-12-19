@@ -17,10 +17,7 @@ const books = [
     tags: ["미스터리", "청춘", "게임"],
     selectedBy: "태이",
     status: "reading",
-    reviews: [
-      { user: "시현", rating: 5, comment: "손에서 놓을 수 없었어요!" },
-      { user: "태이", rating: 4, comment: "트릭 구성이 신선했어요." }
-    ]
+    reviews: []
   },
   {
     id: "summer-100m",
@@ -36,9 +33,7 @@ const books = [
     tags: ["청소년소설", "한국소설", "사랑"],
     selectedBy: "희수",
     status: "reading",
-    reviews: [
-      { user: "희수", rating: 4, comment: "문장이 예뻐요." }
-    ]
+    reviews: []
   },
   {
     id: "summer-outside",
@@ -54,9 +49,7 @@ const books = [
     tags: ["한국소설", "단편집", "상실"],
     selectedBy: "시현",
     status: "reading",
-    reviews: [
-      { user: "시현", rating: 5, comment: "여운이 오랫동안 남아요." }
-    ]
+    reviews: []
   },
   {
     id: "orbit-roommate",

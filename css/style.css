@@ -52,10 +52,10 @@ body{
   line-height:1.6;
   background:var(--bg);
   color:var(--ink);
-  opacity:0;
+  opacity:0; /* 초기 로딩시 숨김 */
   transition:opacity .4s ease-in-out;
   overflow-y: scroll;
-  /* 모든 페이지 스크롤바 숨기기 */
+  /* 모든 페이지 스크롤바 숨기기 (매끄한 느냌) */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
@@ -73,13 +73,13 @@ body[data-page="home"]{
   --brand-700:#3D1111;
 }
 
-/* 홈 페이지 섹션 스크롤 스냅 */
+/* 홈페이지 섹션별 전체 화면 높이 레이아웃 */
 body[data-page="home"] .intro-hero{
-  min-height: 100vh;
+  min-height: 100vh; /* 전체 화면 높이 */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* 세로 가운데 정렬 */
+  align-items: center; /* 가로 가운데 정렬 */
   padding: 5rem 2rem;
   box-sizing: border-box;
 }
@@ -319,12 +319,7 @@ body[data-page="community"] .site-header{
   backdrop-filter:blur(10px);
 }
 
-body[data-page="myspace"] .site-header{
-  background:rgba(139, 74, 111, 0.95);
-  backdrop-filter:blur(10px);
-}
-
-/* 푸터: 배경색 유지 */
+/* 푸터 기본 스타일 */
 .site-footer{
   background:transparent;
   padding: 6rem 1rem;

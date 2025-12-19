@@ -20,7 +20,7 @@
 // 즐겨찾기 로컬스토리지 관리
 // ============================================
 
-// 즐겨찾기 로컬 저장소
+// 로컬스토리지에서 즐겨찾기 목록 가져오기
 function getFavorites(){
   try{
     if(!window.localStorage) {
@@ -33,6 +33,8 @@ function getFavorites(){
     return [];
   }
 }
+
+// 즐겨찾기 추가/제거 토글
 function toggleFavorite(id){
   try{
     if(!window.localStorage) {
@@ -41,24 +43,26 @@ function toggleFavorite(id){
     }
     const favs = getFavorites();
     const idx = favs.indexOf(id);
-    if(idx>=0) favs.splice(idx,1);
-    else favs.push(id);
+    if(idx>=0) favs.splice(idx,1); // 이미 있으면 제거
+    else favs.push(id); // 없으면 추가
     localStorage.setItem('favorites',JSON.stringify(favs));
-    renderLibrary();
+    renderLibrary(); // 화면 새로고침
   }catch(e){
     console.error('즐겨찾기 저장 실패:', e);
     alert('즐겨찾기 저장에 실패했습니다. 브라우저의 저장 공간을 확인해주세요.');
   }
 }
+
+// 해당 책이 즐겨찾기에 있는지 확인
 function isFavorite(id){
   return getFavorites().includes(id);
 }
 
-// 필터/정렬 상태
-let currentSearch = '';
-let currentTag = '';
-let currentSort = 'title';
-let favOnly = false;
+// 현재 선택된 필터/정렬 옵션 저장
+let currentSearch = ''; // 검색어
+let currentTag = ''; // 선택된 태그
+let currentSort = 'title'; // 정렬 방식
+let favOnly = false; // 즐겨찾기만 보기
 
 // 전체 태그 모음
 function getAllTags(){

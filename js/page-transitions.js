@@ -16,24 +16,25 @@
  * - setTimeout을 이용한 비동기 처리
  */
 
-// 페이지 전환 애니메이션
+// 페이지 전환 애니메이션 시스템
 (function() {
   'use strict';
 
-  // 전환 오버레이 생성
+  // 페이지별 이모지 설정
   const emojisByPage = {
     'library': ['🏛️', '📚'],
     'schedule': ['✒️', '📑'],
     'community': ['📰', '💡'],
-    'myspace': ['🎓', '🪶'],
     'home': ['📖', '☕'],
     'default': ['📖', '📕', '📗', '📘', '📙', '📚']
   };
   
+  // 전환 오버레이 엘리먼트 생성
   const overlay = document.createElement('div');
   overlay.id = 'page-transition-overlay';
   document.body.appendChild(overlay);
   
+  // 링크 URL에 따라 적절한 이모지 선택
   function getEmojiForLink(href) {
     let emojis = emojisByPage.default;
     
@@ -43,8 +44,6 @@
       emojis = emojisByPage.schedule;
     } else if (href.includes('community.html')) {
       emojis = emojisByPage.community;
-    } else if (href.includes('myspace.html')) {
-      emojis = emojisByPage.myspace;
     } else if (href.includes('index.html') || href.endsWith('/') || href.includes('?from=internal')) {
       emojis = emojisByPage.home;
     }

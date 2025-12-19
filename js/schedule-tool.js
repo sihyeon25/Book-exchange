@@ -20,7 +20,7 @@
 // 날짜 유틸리티 함수들
 // ============================================
 
-// 다음 30일 생성
+// 오늘부터 30일간의 날짜 배열 생성
 function getNext30Days(){
   const days = [];
   const today = new Date();
@@ -32,31 +32,38 @@ function getNext30Days(){
   return days;
 }
 
+// 날짜를 "MM/DD" 형식으로 표시
 function formatDate(d){
   const m = String(d.getMonth()+1).padStart(2,'0');
   const dd = String(d.getDate()).padStart(2,'0');
   return `${m}/${dd}`;
 }
 
+// 날짜를 문자열 키로 변환 ("YYYY-MM-DD")
 function toDateKey(d){
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-// 로컬 저장소
+// 내가 선택한 가능 날짜 목록 가져오기
 function getMyDates(){
   try{
     return JSON.parse(localStorage.getItem('my_dates')||'[]');
   }catch{return []}
 }
+
+// 내 가능 날짜 로컬스토리지에 저장
 function saveMyDates(arr){
   localStorage.setItem('my_dates', JSON.stringify(arr));
 }
 
+// 친구들의 코드 목록 가져오기
 function getFriendCodes(){
   try{
     return JSON.parse(localStorage.getItem('friend_codes')||'[]');
   }catch{return []}
 }
+
+// 친구 코드 목록 저장
 function saveFriendCodes(arr){
   localStorage.setItem('friend_codes', JSON.stringify(arr));
 }

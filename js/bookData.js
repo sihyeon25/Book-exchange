@@ -160,7 +160,7 @@ function computeAverageRating(book){
   return Math.round((sum / all.length) * 10) / 10; // 소수점 1자리
 }
 
-// 로컬스토리지에 저장된 리뷰 가져오기
+// 로컬스토리지에서 해당 책의 리뷰 가져오기
 function getLocalReviews(bookId){
   try{
     const raw = localStorage.getItem(`reviews_${bookId}`);
@@ -170,7 +170,7 @@ function getLocalReviews(bookId){
   }
 }
 
-// 로컬스토리지에 리뷰 저장하기 (추가)
+// 새 리뷰를 로컬스토리지에 저장
 function addLocalReview(bookId, review){
   const list = getLocalReviews(bookId);
   // 리뷰에 고유 ID 추가 (타임스탬프 기반)
@@ -180,7 +180,7 @@ function addLocalReview(bookId, review){
   localStorage.setItem(`reviews_${bookId}`, JSON.stringify(list));
 }
 
-// 답글 관련 함수
+// 리뷰의 답글 목록 가져오기
 function getReviewReplies(bookId, reviewId){
   try{
     const raw = localStorage.getItem(`replies_${bookId}_${reviewId}`);
@@ -190,6 +190,7 @@ function getReviewReplies(bookId, reviewId){
   }
 }
 
+// 리뷰에 답글 추가
 function addReviewReply(bookId, reviewId, reply){
   const list = getReviewReplies(bookId, reviewId);
   reply.timestamp = new Date().toISOString();

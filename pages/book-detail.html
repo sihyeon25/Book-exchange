@@ -6,9 +6,9 @@
   
   페이지 기능:
   1. 책 상세 정보 (표지, 제목, 저자 등)
-  2. 별점 표시 (반별 지원)
+  2. 별점 표시
   3. 리뷰 작성 및 보기
-  4. 리뷰에 답글 기능
+  4. 리뷰에 답글
   5. 리뷰 정렬 (최신순/별점순)
   6. 내 리뷰 복사 기능
   
@@ -151,7 +151,10 @@
 
   <script src="../js/bookData.js"></script>
   <script>
+    // URL에서 파라미터 가져오기 (?id=book1 식으로)
     function qs(k){return new URL(location.href).searchParams.get(k)}
+    
+    // 평점에 따라 별 그리기 (반별 지원)
     function renderStars(avg){
       const s = [];
       const fullStars = Math.floor(avg);
@@ -171,8 +174,11 @@
       return `<div class="stars" aria-hidden="true">${s.join('')}</div>`
     }
 
+    // 현재 페이지의 책 ID 가져오기
     const id = qs('id');
-    const book = getBookById(id);
+    const book = getBookById(id); // bookData.js에서 책 정보 찾기
+    
+    // DOM 엘리먼트들 참조 저장
     const coverEl = document.getElementById('cover');
     const titleEl = document.getElementById('title');
     const authorEl = document.getElementById('author');
@@ -182,8 +188,9 @@
     const tagsEl = document.getElementById('tags');
     const reviewsEl = document.getElementById('reviews');
     
-    let reviewSortOrder = 'recent';
+    let reviewSortOrder = 'recent'; // 리뷰 정렬 순서
 
+    // 책 정보와 리뷰를 화면에 표시하는 함수
     function render(){
       if(!book){
         titleEl.textContent = '책을 찾을 수 없습니다';

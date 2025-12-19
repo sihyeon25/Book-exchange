@@ -233,19 +233,22 @@
       const intro = document.getElementById('intro');
       if(!intro) return;
       
+      // URL에서 ?from=internal 파라미터 확인 (내부 링크인지 검사)
       const params = new URLSearchParams(window.location.search);
       const fromInternal = params.get('from') === 'internal';
       
       if(fromInternal) {
+        // 내부 링크로 온 경우 인트로 스킨
         intro.style.display = 'none';
-        window.history.replaceState({}, '', window.location.pathname);
+        window.history.replaceState({}, '', window.location.pathname); // URL 정리
       } else {
-        // 배경 이미지 preload
+        // 첫 방문인 경우 배경 이미지 로드 후 인트로 나타내기
         const img = new Image();
         img.onload = () => {
           intro.classList.add('loaded');
         };
         img.src = 'images/five.jpg';
+      }
       }
     })();
   </script>

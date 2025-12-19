@@ -434,16 +434,17 @@
   <!-- 사람별 필터 기능 -->
   <script>
     (() => {
+      // 필터 버튼들과 테이블 행들 참조
       const filterBtns = document.querySelectorAll('.filter-btn');
       const allRows = document.querySelectorAll('.table tbody tr');
       
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          // 활성 버튼 변경
+          // 활성 버튼 변경 (하나만 선택 가능)
           filterBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           
-          const selectedPerson = btn.dataset.person;
+          const selectedPerson = btn.dataset.person; // 선택된 사람 이름
           
           allRows.forEach(row => {
             const personCell = row.querySelector('td[data-person]');

@@ -2947,6 +2947,13 @@ body[data-page="schedule"] .panel{
   margin:1rem 0;
 }
 
+/* 모바일에서는 월 네비게이션 버튼 숨김 */
+@media (max-width: 768px) {
+  .month-nav-btn{
+    display:none;
+  }
+}
+
 /* 도서관 페이지 - 검색/필터 강조 */
 body[data-page="library"] .library-section .section-title{
   color:#3B4E3F;

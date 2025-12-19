@@ -149,7 +149,6 @@
     }
     
     .star.empty{fill:#ccc;}
-    .star.half{fill:gold;}
     
     /* 태그 - 모바일에서 줄바꿈 */
     .pill{
@@ -227,9 +226,9 @@
     .replies{
       margin:1rem 0 .6rem 1rem;
       padding:.6rem .8rem;
-      background:color-mix(in oklab,var(--book-color) 8%, var(--paper));
+      background:var(--paper);
       border-radius:.5rem;
-      border-left:3px solid var(--book-color);
+      border-left:3px solid var(--line);
     }
     
     /* 모바일에서 답글 여백 조정 */
@@ -249,14 +248,13 @@
     }
     
     .reply:not(:last-child){
-      border-bottom:1px solid color-mix(in oklab,var(--book-color) 15%, var(--paper));
+      border-bottom:1px solid var(--line);
     }
     
     .reply .who{
       font-weight:600;
       margin-right:.5rem;
-      color:var(--book-color);
-      opacity:.9;
+      color:var(--spine);
     }
     
     .reply .who::before{
@@ -354,12 +352,6 @@
       }
     }
     
-    .star-input label.half-star{
-      width:0.5em;
-      overflow:hidden;
-      margin-right:-0.5em;
-    }
-    
     .star-input input:checked ~ label,
     .star-input label:hover,
     .star-input label:hover ~ label{
@@ -412,15 +404,10 @@
           <form id="reviewForm" class="review-form">
             <div class="star-input" aria-label="별점 주기">
               <input type="radio" name="rating" id="r5" value="5"><label for="r5">★</label>
-              <input type="radio" name="rating" id="r4_5" value="4.5"><label for="r4_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r4" value="4"><label for="r4">★</label>
-              <input type="radio" name="rating" id="r3_5" value="3.5"><label for="r3_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r3" value="3" checked><label for="r3">★</label>
-              <input type="radio" name="rating" id="r2_5" value="2.5"><label for="r2_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r2" value="2"><label for="r2">★</label>
-              <input type="radio" name="rating" id="r1_5" value="1.5"><label for="r1_5" class="half-star">★</label>
               <input type="radio" name="rating" id="r1" value="1"><label for="r1">★</label>
-              <input type="radio" name="rating" id="r0_5" value="0.5"><label for="r0_5" class="half-star">★</label>
             </div>
             <textarea name="comment" placeholder="어땠는지 짧게 남겨 주세요" required></textarea>
             <div style="display:flex;gap:.5rem;align-items:center">
@@ -487,21 +474,16 @@
       }
     }
     
-    // 평점에 따라 별 그리기 (반별 지원, IE 호환)
+    // 평점에 따라 별 그리기 (정수 반올림)
     function renderStars(avg){
       if (typeof avg !== 'number' || isNaN(avg)) avg = 0;
       
       var s = [];
-      var fullStars = Math.floor(avg);
-      var decimal = avg - fullStars;
-      var hasHalf = decimal >= 0.25 && decimal < 0.75;
-      var roundUp = decimal >= 0.75;
+      var stars = Math.round(avg);
       
       for(var i=1; i<=5; i++){
-        if(i <= fullStars || (i === fullStars + 1 && roundUp)) {
+        if(i <= stars) {
           s.push('<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>');
-        } else if(i === fullStars + 1 && hasHalf) {
-          s.push('<svg class="star half" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="half"><stop offset="50%" stop-color="gold"/><stop offset="50%" stop-color="#ccc"/></linearGradient></defs><path fill="url(#half)" d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>');
         } else {
           s.push('<svg class="star empty" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>');
         }
@@ -636,15 +618,9 @@
               `).join('')}
             </div>` : '';
           
-          // 별점 표시 (반개 지원)
-          const fullStars = Math.floor(r.rating);
-          const decimal = r.rating - fullStars;
-          const hasHalf = decimal >= 0.25 && decimal < 0.75;
-          const roundUp = decimal >= 0.75;
-          
-          let starDisplay = '★'.repeat(fullStars + (roundUp ? 1 : 0));
-          if(hasHalf) starDisplay += '⯨';
-          starDisplay += '☆'.repeat(5 - fullStars - (hasHalf ? 1 : 0) - (roundUp ? 1 : 0));
+          // 별점 표시 (정수만)
+          const stars = Math.round(r.rating);
+          let starDisplay = '★'.repeat(stars) + '☆'.repeat(5 - stars);
           
           return `
             <div class="review" data-review-id="${r.id}">

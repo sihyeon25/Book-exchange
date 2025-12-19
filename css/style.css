@@ -2952,6 +2952,19 @@ body[data-page="schedule"] .panel{
   .month-nav-btn{
     display:none;
   }
+  
+  /* 진행중 일정은 모바일에서만 스크롤 가능 */
+  #ongoing .table-wrapper{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
+/* 데스크톱에서는 진행중 일정 스크롤 불가 (버튼으로만 제어) */
+@media (min-width: 769px) {
+  #ongoing .table-wrapper{
+    overflow:hidden;
+  }
 }
 
 /* 도서관 페이지 - 검색/필터 강조 */

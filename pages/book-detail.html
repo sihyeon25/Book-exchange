@@ -679,37 +679,6 @@
 
     render();
     
-    // 추천인 색상에 따라 헤더 스타일 변경
-    if(book && book.selectedBy) {
-      const memberColors = {
-        '시현': '#5B7A9E',
-        '태이': '#D989A8',
-        '희수': '#6D9872',
-        '지원': '#9B86BD'
-      };
-      const color = memberColors[book.selectedBy];
-      if(color) {
-        const header = document.querySelector('.site-header');
-        header.style.background = 'var(--paper)';
-        header.style.borderBottom = `2px solid ${color}`;
-        
-        // 로고와 네비게이션 링크 색상 변경
-        const logo = header.querySelector('.logo');
-        const navLinks = header.querySelectorAll('.gnb a');
-        
-        if(logo) {
-          logo.style.color = color;
-          logo.style.fontWeight = '800';
-          logo.style.textShadow = 'none';
-        }
-        navLinks.forEach(link => {
-          link.style.color = color;
-          link.style.textShadow = 'none';
-          link.style.fontWeight = '700';
-        });
-      }
-    }
-    
     // 리뷰 정렬
     document.getElementById('reviewSort')?.addEventListener('change', e => {
       reviewSortOrder = e.target.value;

@@ -23,11 +23,20 @@
 <html lang="ko" data-theme="heritage">
 <head>
   <!-- ====================================
-       META & BASIC SETUP
-       기본 메타 정보 및 설정
+       META & COMPATIBILITY SETUP
+       기본 메타 정보 및 호환성 설정
   ===================================== -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- 모바일 화면 최적화: 줄이기 방지, 초기 스케일 1.0 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+  <!-- iOS Safari 판댅 바 스타일링 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- Android Chrome 테마 색상 -->
+  <meta name="theme-color" content="#FAF0D9">
+  <meta name="msapplication-navbutton-color" content="#FAF0D9">
+  <!-- Windows Phone 타이틀 바 색상 -->
+  <meta name="msapplication-TileColor" content="#FAF0D9">
   <title>교환독서 – 홈</title>
   
   <!-- Google Fonts: Nanum Myeongjo (나눔명조) 로딩 최적화 -->

@@ -2,6 +2,7 @@
  * ====================================
  * LIBRARY PAGE CONTROLLER
  * 도서관 페이지 기능 구현
+ * (모든 브라우저 호환)
  * ====================================
  * 
  * 이 파일의 기능:
@@ -11,41 +12,47 @@
  * 4. 즐겨찾기 토글 (로컬스토리지)
  * 5. 반응형 그리드 레이아웃
  * 
- * 사용하는 전역 변수:
- * - books (bookData.js에서 가져옴)
- * - localStorage (즐겨찾기 저장용)
+ * 브라우저 지원:
+ * - Chrome, Firefox, Safari, Edge (최신버전)
+ * - IE 11+ (제한적 지원)
+ * - 모바일 브라우저 (iOS Safari, Android Chrome)
  */
 
 // ============================================
-// 즐겨찾기 로컬스토리지 관리
+// 로컬스토리지 안전 처리 (모든 브라우저 대응)
 // ============================================
 
-// 로컬스토리지에서 즐겨찾기 목록 가져오기
+// 로컬스토리지에서 즐겨찾기 목록 가져오기 (안전 처리)
 function getFavorites(){
   try{
-    if(!window.localStorage) {
-      console.warn('localStorage를 사용할 수 없습니다.');
+    // localStorage 지원 여부 검사 (구형 브라우저 대비)
+    if(typeof Storage === 'undefined' || !window.localStorage) {
+      console.warn('localStorage를 사용할 수 없습니다. 구형 브라우저이거나 개인정보 보호 모드일 수 있습니다.');
       return [];
     }
-    return JSON.parse(localStorage.getItem('favorites')||'[]');
+    var stored = localStorage.getItem('favorites');
+    return stored ? JSON.parse(stored) : [];
   }catch(e){
     console.error('즐겨찾기 데이터 읽기 실패:', e);
     return [];
   }
 }
 
-// 즐겨찾기 추가/제거 토글
+// 즐겨찾기 추가/제거 토글 (안전 처리)
 function toggleFavorite(id){
   try{
-    if(!window.localStorage) {
-      alert('브라우저 설정에서 로컬 저장소가 비활성화되어 있습니다.\n즐겨찾기 기능을 사용하려면 브라우저 설정을 확인해주세요.');
+    if(typeof Storage === 'undefined' || !window.localStorage) {
+      alert('브라우저가 로컬 저장소를 지원하지 않습니다.\n즐겨찾기 기능을 사용하려면 최신 브라우저를 사용해주세요.');
       return;
     }
-    const favs = getFavorites();
-    const idx = favs.indexOf(id);
-    if(idx>=0) favs.splice(idx,1); // 이미 있으면 제거
-    else favs.push(id); // 없으면 추가
-    localStorage.setItem('favorites',JSON.stringify(favs));
+    var favs = getFavorites();
+    var idx = favs.indexOf(id);
+    if(idx >= 0) {
+      favs.splice(idx, 1); // 이미 있으면 제거
+    } else {
+      favs.push(id); // 없으면 추가
+    }
+    localStorage.setItem('favorites', JSON.stringify(favs));
     renderLibrary(); // 화면 새로고침
   }catch(e){
     console.error('즐겨찾기 저장 실패:', e);
@@ -55,7 +62,8 @@ function toggleFavorite(id){
 
 // 해당 책이 즐겨찾기에 있는지 확인
 function isFavorite(id){
-  return getFavorites().includes(id);
+  var favs = getFavorites();
+  return favs.indexOf(id) !== -1;
 }
 
 // 현재 선택된 필터/정렬 옵션 저장

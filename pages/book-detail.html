@@ -21,53 +21,363 @@
 <html lang="ko" data-theme="heritage">
 <head>
   <!-- ====================================
-       META & BASIC SETUP
-       기본 메타 정보 및 설정
+       META & COMPATIBILITY SETUP
+       기본 메타 정보 및 호환성 설정
   ===================================== -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- 모바일 화면 최적화: 줄이기 방지, 초기 스케일 1.0 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+  <!-- iOS Safari 판덕 바 스타일링 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- Android Chrome 테마 색상 -->
+  <meta name="theme-color" content="#2C2C2C">
+  <meta name="msapplication-navbutton-color" content="#2C2C2C">
+  <!-- Windows Phone 타이틀 바 색상 -->
+  <meta name="msapplication-TileColor" content="#2C2C2C">
+  <!-- 검색 엔진 옵티마이제이션 -->
+  <meta name="description" content="교환독서 프로젝트 - 책 상세 정보와 리뷰">
+  <meta name="keywords" content="독서, 교환, 리뷰, 책">
+  <!-- SNS 공유 메타 태그 -->
+  <meta property="og:title" content="교환독서 - 책 상세">
+  <meta property="og:description" content="책 상세 정보와 리뷰를 확인하세요">
+  <meta property="og:type" content="website">
+  <!-- 펰비콘 -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
   <title>교환독서 – 책 상세</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    .detail-wrap{display:grid;gap:1.25rem;grid-template-columns: 1fr;}
-    @media(min-width:900px){.detail-wrap{grid-template-columns: 320px 1fr}}
-    .cover{aspect-ratio:2/3;border:1px solid var(--line);border-radius:.8rem;background:linear-gradient(135deg, color-mix(in oklab,var(--accent) 30%, var(--paper)), var(--paper));display:grid;place-items:center;box-shadow:0 2px 0 rgba(0,0,0,.04),0 12px 28px rgba(0,0,0,.08)}
-    .cover img{width:100%;height:100%;object-fit:cover;border-radius:.8rem}
-    .cover .placeholder{font-family:'Nanum Myeongjo',serif;color:#000a;font-size:1.1rem;text-align:center;padding:1rem}
-    .meta{display:grid;gap:.4rem}
-    .rating{display:flex;align-items:center;gap:.5rem}
-    .stars{--size:22px;display:inline-flex;gap:2px}
-    .star{width:var(--size);height:var(--size);fill:gold;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12))}
-    .star.empty{fill:#ccc}
-    .star.half{fill:gold}
-    .pill{display:inline-flex;align-items:center;gap:.25rem;margin-right:.35rem;padding:.25rem .6rem;background:color-mix(in oklab,var(--accent) 15%, var(--paper));border-radius:.5rem;font-size:.9rem;color:#333;font-weight:500}
-    .review-form{display:grid;gap:.5rem;margin-top:1rem}
-    .review-form textarea{min-height:88px;resize:vertical;padding:.6rem;border-radius:.6rem;border:1px solid var(--line)}
-    .review{border-top:1px solid var(--line);padding:.75rem 0}
-    .review .who{font-weight:700;margin-right:.4rem}
+    /* ==============================================
+       반응형 레이아웃 - 모든 화면 크기에서 작동
+    ============================================== */
+    .detail-wrap{
+      display:grid;
+      gap:1.25rem;
+      grid-template-columns: 1fr;
+      padding:1rem;
+    }
     
-    /* 답글 스타일 */
-    .replies{margin-left:1.5rem;margin-top:.8rem;margin-bottom:.6rem;padding:.6rem .8rem;background:color-mix(in oklab,var(--book-color) 8%, var(--paper));border-radius:.5rem;border-left:3px solid var(--book-color)}
-    .reply{padding:.5rem 0;font-size:.9rem;position:relative;line-height:1.5}
-    .reply:not(:last-child){border-bottom:1px solid color-mix(in oklab,var(--book-color) 15%, var(--paper))}
-    .reply .who{font-weight:600;margin-right:.5rem;color:var(--book-color);opacity:.9}
-    .reply .who::before{content:'↳';margin-right:.3rem;opacity:.6}
-    .reply-form{display:grid;gap:.3rem;margin-top:.6rem;padding:.5rem;background:color-mix(in oklab,var(--accent) 5%, var(--paper));border-radius:.5rem}
-    .reply-form input{padding:.4rem;border:1px solid var(--line);border-radius:.4rem;font-size:.85rem}
-    .reply-btn{padding:.3rem .6rem;font-size:.8rem;cursor:pointer;background:none;border:1px solid var(--line);border-radius:.4rem;color:var(--spine);transition:all .2s;margin-top:.3rem}
-    .reply-btn:hover{background:var(--accent);border-color:var(--line-strong)}
-
-    /* 별점 입력 (라디오) */
-    .star-input{display:inline-flex;flex-direction:row-reverse;gap:.05rem}
-    .star-input input{display:none}
-    .star-input label{cursor:pointer;font-size:1.6rem;color:#ccc;filter:drop-shadow(0 1px 0 rgba(0,0,0,.12));position:relative}
-    .star-input label.half-star{width:0.5em;overflow:hidden;margin-right:-0.5em}
+    /* 태블릿 및 데스크톱 (768px 이상) */
+    @media(min-width:768px){
+      .detail-wrap{
+        padding:1.5rem;
+        gap:1.5rem;
+      }
+    }
+    
+    /* 대형 화면 (900px 이상) */
+    @media(min-width:900px){
+      .detail-wrap{
+        grid-template-columns: 320px 1fr;
+        padding:2rem;
+      }
+    }
+    
+    /* 극소형 화면 (320px 미만) 대응 */
+    @media(max-width:319px){
+      .detail-wrap{
+        padding:0.5rem;
+        gap:1rem;
+      }
+    }
+    
+    /* 책 표지 - 모든 기기에서 잘 보이도록 */
+    .cover{
+      aspect-ratio:2/3;
+      border:1px solid var(--line);
+      border-radius:.8rem;
+      background:linear-gradient(135deg, color-mix(in oklab,var(--accent) 30%, var(--paper)), var(--paper));
+      display:grid;
+      place-items:center;
+      box-shadow:0 2px 0 rgba(0,0,0,.04),0 12px 28px rgba(0,0,0,.08);
+      max-width:100%;
+      height:auto;
+    }
+    
+    .cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:.8rem;
+      /* 이미지 로딩 에러 방지 */
+      background-color:#f5f5f5;
+    }
+    
+    /* 모바일에서 텍스트 가독성 개선 */
+    .cover .placeholder{
+      font-family:'Nanum Myeongjo',serif,-apple-system,BlinkMacSystemFont,sans-serif;
+      color:#555;
+      font-size:1rem;
+      text-align:center;
+      padding:1rem;
+      line-height:1.5;
+    }
+    
+    @media(min-width:768px){
+      .cover .placeholder{
+        font-size:1.1rem;
+      }
+    }
+    /* ==============================================
+       인터랙션 요소 - 모바일 터치 최적화
+    ============================================== */
+    .meta{display:grid;gap:.4rem;}
+    .rating{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+    
+    .stars{
+      --size:20px;
+      display:inline-flex;
+      gap:2px;
+      /* 터치 기기에서 쉬게 누를 수 있도록 */
+      min-height:24px;
+    }
+    
+    /* 태블릿에서 별점 크기 증가 */
+    @media(min-width:768px){
+      .stars{--size:22px;}
+    }
+    
+    .star{
+      width:var(--size);
+      height:var(--size);
+      fill:gold;
+      filter:drop-shadow(0 1px 0 rgba(0,0,0,.12));
+      /* 액세시블리티 개선 */
+      role:"img";
+      aria-label:"별점";
+    }
+    
+    .star.empty{fill:#ccc;}
+    .star.half{fill:gold;}
+    
+    /* 태그 - 모바일에서 줄바꿈 */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.25rem;
+      margin:.2rem .35rem .2rem 0;
+      padding:.3rem .7rem;
+      background:color-mix(in oklab,var(--accent) 15%, var(--paper));
+      border-radius:.6rem;
+      font-size:.85rem;
+      color:#333;
+      font-weight:500;
+      line-height:1.2;
+      /* 모바일 터치 반응 */
+      touch-action:manipulation;
+    }
+    
+    @media(min-width:768px){
+      .pill{
+        font-size:.9rem;
+        margin-right:.35rem;
+        margin-top:0;
+        margin-bottom:0;
+      }
+    }
+    /* ==============================================
+       폼과 리뷰 - 모바일 친화적 디자인
+    ============================================== */
+    .review-form{
+      display:grid;
+      gap:.7rem;
+      margin-top:1rem;
+    }
+    
+    .review-form textarea{
+      min-height:100px;
+      resize:vertical;
+      padding:.8rem;
+      border-radius:.6rem;
+      border:1px solid var(--line);
+      font-family:inherit;
+      font-size:1rem;
+      line-height:1.5;
+      /* iOS Safari 줄이기 방지 */
+      -webkit-appearance:none;
+      /* 모바일 키보드 최적화 */
+      touch-action:manipulation;
+    }
+    
+    @media(max-width:767px){
+      .review-form textarea{
+        min-height:80px;
+        padding:.6rem;
+      }
+    }
+    
+    .review{
+      border-top:1px solid var(--line);
+      padding:.75rem 0;
+      /* 모바일 스크롤 개선 */
+      scroll-margin-top:2rem;
+    }
+    
+    .review .who{
+      font-weight:700;
+      margin-right:.4rem;
+      /* 모바일에서 줄바꿈 */
+      word-break:keep-all;
+    }
+    
+    /* 답글 시스템 - 모바일 최적화 */
+    
+    .replies{
+      margin:1rem 0 .6rem 1rem;
+      padding:.6rem .8rem;
+      background:color-mix(in oklab,var(--book-color) 8%, var(--paper));
+      border-radius:.5rem;
+      border-left:3px solid var(--book-color);
+    }
+    
+    /* 모바일에서 답글 여백 조정 */
+    @media(max-width:767px){
+      .replies{
+        margin-left:.5rem;
+        padding:.5rem .6rem;
+      }
+    }
+    
+    .reply{
+      padding:.5rem 0;
+      font-size:.9rem;
+      position:relative;
+      line-height:1.5;
+      word-wrap:break-word;
+    }
+    
+    .reply:not(:last-child){
+      border-bottom:1px solid color-mix(in oklab,var(--book-color) 15%, var(--paper));
+    }
+    
+    .reply .who{
+      font-weight:600;
+      margin-right:.5rem;
+      color:var(--book-color);
+      opacity:.9;
+    }
+    
+    .reply .who::before{
+      content:'↳';
+      margin-right:.3rem;
+      opacity:.6;
+    }
+    
+    .reply-form{
+      display:grid;
+      gap:.4rem;
+      margin-top:.6rem;
+      padding:.6rem;
+      background:color-mix(in oklab,var(--accent) 5%, var(--paper));
+      border-radius:.5rem;
+    }
+    
+    .reply-form input{
+      padding:.5rem;
+      border:1px solid var(--line);
+      border-radius:.4rem;
+      font-size:.9rem;
+      /* iOS 줄이기 방지 */
+      -webkit-appearance:none;
+    }
+    
+    @media(max-width:767px){
+      .reply-form input{
+        padding:.4rem;
+        font-size:.85rem;
+      }
+    }
+    
+    .reply-btn{
+      padding:.4rem .8rem;
+      font-size:.8rem;
+      cursor:pointer;
+      background:none;
+      border:1px solid var(--line);
+      border-radius:.4rem;
+      color:var(--spine);
+      transition:all .2s;
+      margin-top:.3rem;
+      /* 모바일 터치 최적화 */
+      touch-action:manipulation;
+      min-height:44px;
+    }
+    
+    .reply-btn:hover,.reply-btn:focus{
+      background:var(--accent);
+      border-color:var(--line-strong);
+    }
+    
+    /* 별점 입력 - 모바일 터치 최적화 */
+    .star-input{
+      display:inline-flex;
+      flex-direction:row-reverse;
+      gap:.1rem;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    
+    @media(min-width:768px){
+      .star-input{
+        gap:.05rem;
+        justify-content:flex-start;
+      }
+    }
+    
+    .star-input input{display:none;}
+    
+    .star-input label{
+      cursor:pointer;
+      font-size:1.8rem;
+      color:#ccc;
+      filter:drop-shadow(0 1px 0 rgba(0,0,0,.12));
+      position:relative;
+      /* 모바일 터치 영역 확대 */
+      padding:.2rem;
+      touch-action:manipulation;
+      min-width:40px;
+      min-height:40px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    
+    @media(min-width:768px){
+      .star-input label{
+        font-size:1.6rem;
+        padding:.1rem;
+        min-width:auto;
+        min-height:auto;
+      }
+    }
+    
+    .star-input label.half-star{
+      width:0.5em;
+      overflow:hidden;
+      margin-right:-0.5em;
+    }
+    
     .star-input input:checked ~ label,
     .star-input label:hover,
-    .star-input label:hover ~ label{color:gold}
+    .star-input label:hover ~ label{
+      color:gold;
+    }
+    
+    /* 모바일에서 hover 효과 비활성화 */
+    @media (hover: none) {
+      .star-input label:hover,
+      .star-input label:hover ~ label {
+        color:#ccc;
+      }
+      
+      .star-input input:checked ~ label {
+        color:gold;
+      }
+    }
   </style>
 </head>
 <body class="subpage" data-page="book-detail">
@@ -151,11 +461,54 @@
 
   <script src="../js/bookData.js"></script>
   <script>
-    // URL에서 파라미터 가져오기 (?id=book1 식으로)
-    function qs(k){return new URL(location.href).searchParams.get(k)}
+    // ==============================================
+    // 브라우저 호환성 및 오류 처리 강화
+    // ==============================================
     
-    // 평점에 따라 별 그리기 (반별 지원)
+    // URL에서 파라미터 가져오기 (구형 브라우저 대응)
+    function qs(k){
+      try {
+        // URLSearchParams 지원 여부 확인
+        if (typeof URLSearchParams !== 'undefined') {
+          return new URLSearchParams(location.search).get(k);
+        } else {
+          // 구형 브라우저를 위한 폴백
+          const params = location.search.substring(1).split('&');
+          for (let i = 0; i < params.length; i++) {
+            const pair = params[i].split('=');
+            if (decodeURIComponent(pair[0]) === k) {
+              return decodeURIComponent(pair[1] || '');
+            }
+          }
+          return null;
+        }
+      } catch (e) {
+        console.warn('파라미터 파싱 오류:', e);
+        return null;
+      }
+    }
+    
+    // 평점에 따라 별 그리기 (반별 지원, IE 호환)
     function renderStars(avg){
+      if (typeof avg !== 'number' || isNaN(avg)) avg = 0;
+      
+      var s = [];
+      var fullStars = Math.floor(avg);
+      var decimal = avg - fullStars;
+      var hasHalf = decimal >= 0.25 && decimal < 0.75;
+      var roundUp = decimal >= 0.75;
+      
+      for(var i=1; i<=5; i++){
+        if(i <= fullStars || (i === fullStars + 1 && roundUp)) {
+          s.push('<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>');
+        } else if(i === fullStars + 1 && hasHalf) {
+          s.push('<svg class="star half" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="half"><stop offset="50%" stop-color="gold"/><stop offset="50%" stop-color="#ccc"/></linearGradient></defs><path fill="url(#half)" d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>');
+        } else {
+          s.push('<svg class="star empty" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.787 1.402 8.168L12 18.896 4.664 23.166l1.402-8.168L.132 9.211l8.2-1.193z"/></svg>');
+        }
+      }
+      return '<div class="stars" aria-hidden="true">' + s.join('') + '</div>';
+    }
       const s = [];
       const fullStars = Math.floor(avg);
       const decimal = avg - fullStars;
@@ -175,20 +528,31 @@
     }
 
     // 현재 페이지의 책 ID 가져오기
-    const id = qs('id');
-    const book = getBookById(id); // bookData.js에서 책 정보 찾기
+    var id = qs('id');
+    var book = null;
     
-    // DOM 엘리먼트들 참조 저장
-    const coverEl = document.getElementById('cover');
-    const titleEl = document.getElementById('title');
-    const authorEl = document.getElementById('author');
-    const bookInfoEl = document.getElementById('bookInfo');
-    const ratingEl = document.getElementById('rating');
-    const descEl = document.getElementById('desc');
-    const tagsEl = document.getElementById('tags');
-    const reviewsEl = document.getElementById('reviews');
+    // bookData.js 로드 여부 및 데이터 유효성 검사
+    try {
+      if (typeof getBookById === 'function') {
+        book = getBookById(id);
+      } else {
+        console.error('getBookById 함수를 찾을 수 없습니다.');
+      }
+    } catch (e) {
+      console.error('책 데이터 로드 오류:', e);
+    }
     
-    let reviewSortOrder = 'recent'; // 리뷰 정렬 순서
+    // DOM 엘리먼트들 안전하게 참조 저장 (널 체크 포함)
+    var coverEl = document.getElementById('cover');
+    var titleEl = document.getElementById('title');
+    var authorEl = document.getElementById('author');
+    var bookInfoEl = document.getElementById('bookInfo');
+    var ratingEl = document.getElementById('rating');
+    var descEl = document.getElementById('desc');
+    var tagsEl = document.getElementById('tags');
+    var reviewsEl = document.getElementById('reviews');
+    
+    var reviewSortOrder = 'recent'; // 리뷰 정렬 순서
 
     // 책 정보와 리뷰를 화면에 표시하는 함수
     function render(){
@@ -222,17 +586,41 @@
       } else {
         bookInfoEl.style.display = 'none';
       }
-      
-      const avg = computeAverageRating(book);
-      ratingEl.innerHTML = `${renderStars(avg)} <strong>${avg || '0.0'}</strong><span class="muted"> / 5</span>`;
-      descEl.textContent = book.description || '';
-      tagsEl.innerHTML = (book.tags||[]).map(t=>`<span class="pill">#${t}</span>`).join('');
+        
+        // 평점 표시 (안전하게 처리)
+        if (ratingEl && typeof computeAverageRating === 'function') {
+          try {
+            var avg = computeAverageRating(book);
+            ratingEl.innerHTML = renderStars(avg) + ' <strong>' + (avg || '0.0') + '</strong><span class="muted"> / 5</span>';
+          } catch (e) {
+            console.warn('평점 계산 오류:', e);
+            ratingEl.innerHTML = '<span class="muted">평점 없음</span>';
+          }
+        }
+        
+        // 설명과 태그 표시
+        if (descEl) descEl.textContent = book.description || '';
+        if (tagsEl && book.tags) {
+          var tagsHtml = '';
+          for (var i = 0; i < book.tags.length; i++) {
+            tagsHtml += '<span class="pill">#' + book.tags[i] + '</span>';
+          }
+          tagsEl.innerHTML = tagsHtml;
+        }
 
-      if(book.cover){
-        coverEl.innerHTML = `<img src="${book.cover}" alt="${book.title} 표지">`;
-      }else{
-        coverEl.innerHTML = `<div class="placeholder">${book.title}\n표지 이미지가 없어요</div>`;
-      }
+        // 표지 이미지 처리 (오류 대비)
+        if(book.cover){
+          var img = new Image();
+          img.onload = function() {
+            coverEl.innerHTML = '<img src="' + book.cover + '" alt="' + book.title + ' 표지">';
+          };
+          img.onerror = function() {
+            coverEl.innerHTML = '<div class="placeholder">' + book.title + '\n표지 이미지를 로드할 수 없어요</div>';
+          };
+          img.src = book.cover;
+        } else {
+          coverEl.innerHTML = '<div class="placeholder">' + book.title + '\n표지 이미지가 없어요</div>';
+        }
 
       // 리뷰 렌더링
       const locals = getLocalReviews(book.id);
